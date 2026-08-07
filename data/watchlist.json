@@ -23,5 +23,16 @@
   { "id": "hypergryph", "name": "鹰角网络", "url": "https://career.hypergryph.com/" },
   { "id": "wanmei", "name": "完美世界", "url": "https://campus.wanmei.com/" },
   { "id": "qisan", "name": "三七互娱", "url": "https://campus.37.com/" },
-  { "id": "netease_game", "name": "网易游戏（互娱/雷火）", "url": "https://game.campus.163.com/" }
+  { "id": "netease_game", "name": "网易游戏（互娱/雷火）", "url": "https://campus.game.163.com/" },
+  { "id": "dji", "name": "大疆", "url": "https://careers.dji.com/" },
+  { "id": "insta360", "name": "影石Insta360", "url": "https://www.insta360.com/cn/jobs" },
+  { "id": "antgroup", "name": "蚂蚁集团", "url": "https://talent.antgroup.com/campus" },
+  { "id": "tencentmusic", "name": "腾讯音乐", "url": "https://join.tencentmusic.com/campus" },
+  { "id": "weibo", "name": "微博（新浪）", "url": "https://hr.sina.com.cn/" },
+  { "id": "qihoo360", "name": "360集团", "url": "http://campus.360.cn/" },
+  { "id": "wps", "name": "金山办公", "url": "https://join.wps.cn/" },
+  { "id": "iqiyi", "name": "爱奇艺", "url": "https://careers.iqiyi.com/" },
+  { "id": "huya", "name": "虎牙", "url": "https://hr.huya.com/" },
+  { "id": "dewu", "name": "得物", "url": "https://campus.dewu.com/" },
+  { "id": "qunar", "name": "去哪儿旅行", "url": "https://campus.qunar.com" }
 ]

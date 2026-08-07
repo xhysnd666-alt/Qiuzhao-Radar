@@ -2,6 +2,7 @@
   "use strict";
 
   var DATA = window.QIUZHAO_DATA || { companies: [], feedback: [], reviewQueue: [] };
+  var APPLICATIONS = window.QIUZHAO_APPLICATIONS || [];
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
@@ -61,6 +62,12 @@
     return parseInt(p[1], 10) + "/" + parseInt(p[2], 10);
   }
 
+  function companyById(id) {
+    var found = null;
+    (DATA.companies || []).forEach(function (c) { if (c.id === id) found = c; });
+    return found;
+  }
+
   function getProgress() {
     try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
     catch (e) { return {}; }
@@ -70,6 +77,17 @@
     try { localStorage.setItem(LS_KEY, JSON.stringify(progress)); }
     catch (e) { /* 隐私模式等场景下静默失败 */ }
   }
+
+  function appKey(app) {
+    return app.companyId + "::" + app.position;
+  }
+
+  function stageOf(app) {
+    var o = progress[appKey(app)];
+    return o && o.stage ? o.stage : (app.stage || "已投递");
+  }
+
+  var currentCompany = null;
 
   function renderStats() {
     var companies = DATA.companies || [];
@@ -147,14 +165,33 @@
   }
 
   function renderDetail(c) {
+    currentCompany = c;
     var st = statusOf(c);
-    var saved = progress[c.id] || {};
     var panel = $("#detail");
     panel.hidden = false;
 
-    var stageOptions = ["未投递", "已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
-      return '<option' + (saved.stage === s ? " selected" : "") + ">" + s + "</option>";
-    }).join("");
+    var apps = APPLICATIONS.filter(function (a) { return a.companyId === c.id; });
+    var progressHtml;
+    if (apps.length) {
+      progressHtml = '<ul class="app-list">' + apps.map(function (app) {
+        var key = appKey(app);
+        var cur = stageOf(app);
+        var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
+          return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
+        }).join("");
+        return "<li class=\"app-row\">" +
+          "<div><b>" + esc(app.position) + "</b>" +
+          (app.companyName !== c.name ? ' <span class="badge badge-muted">' + esc(app.companyName) + "</span>" : "") +
+          '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div></div>" +
+          '<div class="row">' +
+          '<select class="select progress-select" aria-label="' + esc(app.position) + ' 的进度">' + opts + "</select>" +
+          '<button class="btn btn-primary" type="button" data-progress-action="save" data-key="' + esc(key) + '">保存</button>' +
+          '<button class="btn" type="button" data-progress-action="clear" data-key="' + esc(key) + '">恢复默认</button>' +
+          "</div></li>";
+      }).join("") + "</ul>";
+    } else {
+      progressHtml = '<div class="text-small muted">暂无投递记录——你在「秋招简历投递.xlsx」里更新后告诉我，我会同步到这里。</div>';
+    }
 
     var feed = feedbackFor(c.name);
     var feedHtml = feed.length
@@ -171,7 +208,10 @@
         (c.verified ? "" : '<span class="badge badge-muted">字段待核实</span>') +
         '<button class="btn btn-ghost" type="button" id="detail-close">关闭</button>' +
       "</div>" +
-      '<div class="detail-meta text-small muted">' + esc(c.note || "") + " · 来源：" + esc(c.source || "") + "</div>" +
+      '<div class="detail-meta text-small muted">' + esc(c.note || "") + "</div>" +
+      (c.sourceUrl
+        ? '<div class="detail-meta text-small">信息来源：<a class="source-link" href="' + esc(c.sourceUrl) + '" target="_blank" rel="noopener">' + esc(c.sourceLabel || c.source || "官方来源") + "</a></div>"
+        : "") +
       '<div class="row">' +
         '<a class="btn" href="' + esc(c.careerUrl) + '" target="_blank" rel="noopener">官方校招页</a>' +
         '<a class="btn btn-primary" href="' + esc(c.applyUrl) + '" target="_blank" rel="noopener">去投递</a>' +
@@ -180,45 +220,32 @@
         "<div><b>批次</b><div class=\"text-small\">" + esc(c.batch) + " · " + fmtDate(c.startDate) + " 开启 · " + fmtDate(c.endDate) + " 截止</div></div>" +
         "<div><b>岗位方向</b><div class=\"text-small\">" + esc(c.positions.join(" / ")) + "</div></div>" +
       "</div>" +
-      '<div class="row">' +
-        "<label class=\"text-small muted\" for=\"progress-select\">我的进度</label>" +
-        '<select class="select progress-select" id="progress-select" aria-label="我的投递进度">' + stageOptions + "</select>" +
-        '<button class="btn btn-primary save-progress" type="button">保存</button>' +
-        '<button class="btn clear-progress" type="button">清除</button>' +
-      "</div>" +
+      '<div class="detail-meta"><b>我的投递</b>' + progressHtml + "</div>" +
       '<div class="detail-meta"><b>相关反馈</b>' + feedHtml + "</div>";
-
-    $("#detail-close").addEventListener("click", function () { panel.hidden = true; });
-    panel.querySelector(".save-progress").addEventListener("click", function () {
-      progress[c.id] = { stage: panel.querySelector(".progress-select").value, updatedAt: todayStr(), position: (c.positions || [])[0] || "" };
-      saveProgress();
-      renderApplications();
-      renderDetail(c);
-    });
-    panel.querySelector(".clear-progress").addEventListener("click", function () {
-      delete progress[c.id];
-      saveProgress();
-      renderApplications();
-      renderDetail(c);
-    });
   }
 
   function showDetail(id) {
-    var found = null;
-    (DATA.companies || []).forEach(function (c) { if (c.id === id) found = c; });
+    var found = companyById(id);
     if (found) renderDetail(found);
   }
 
   function renderApplications() {
     var cols = $("#application-cols");
+    var groups = {};
+    STAGES.forEach(function (s) { groups[s] = []; });
+    APPLICATIONS.forEach(function (app) {
+      var st = stageOf(app);
+      if (!groups[st]) groups[st] = [];
+      groups[st].push(app);
+    });
     cols.innerHTML = STAGES.map(function (stage) {
-      var items = (DATA.companies || []).filter(function (c) { return progress[c.id] && progress[c.id].stage === stage; });
-      var cards = items.map(function (c) {
-        var p = progress[c.id];
+      var items = groups[stage];
+      var cards = items.map(function (app) {
+        var c = companyById(app.companyId);
         return '<div class="kanban-card">' +
-          '<div class="kanban-title">' + esc(c.name) + "</div>" +
-          '<div class="text-small muted">' + esc(p.position || "岗位未填") + " · " + esc(p.updatedAt || "") + "</div>" +
-          '<button class="btn btn-ghost remove-progress" type="button" data-id="' + esc(c.id) + '">移除</button>' +
+          '<div class="kanban-title">' + esc(app.companyName || (c && c.name) || "未知公司") + "</div>" +
+          '<div class="text-small">' + esc(app.position) + "</div>" +
+          '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
           "</div>";
       }).join("");
       return '<div class="kanban-col"><h4>' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
@@ -304,12 +331,24 @@
       if (btn) showDetail(btn.getAttribute("data-detail"));
     });
 
-    $("#application-cols").addEventListener("click", function (e) {
-      var btn = e.target && e.target.closest ? e.target.closest("button.remove-progress") : null;
-      if (!btn) return;
-      delete progress[btn.getAttribute("data-id")];
+    $("#detail").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "detail-close") {
+        $("#detail").hidden = true;
+        return;
+      }
+      var btn = e.target && e.target.closest ? e.target.closest("button[data-progress-action]") : null;
+      if (!btn || !currentCompany) return;
+      var key = btn.getAttribute("data-key");
+      var action = btn.getAttribute("data-progress-action");
+      if (action === "save") {
+        var select = btn.parentElement.querySelector(".progress-select");
+        progress[key] = { stage: select.value, updatedAt: todayStr() };
+      } else {
+        delete progress[key];
+      }
       saveProgress();
       renderApplications();
+      renderDetail(currentCompany);
     });
 
     $("#review-list").addEventListener("click", function (e) {
