@@ -5,6 +5,8 @@
   var APPLICATIONS = window.QIUZHAO_APPLICATIONS || [];
   var SOURCES = window.QIUZHAO_SOURCES || [];
   var ZHUDI = window.QIUZHAO_ZHUDI || { rows: [], codes: [] };
+  var INTERVIEWS = window.QIUZHAO_INTERVIEWS || { items: [], generalQuestions: [] };
+  var GUOQI = window.QIUZHAO_GUOQI || { items: [] };
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
@@ -266,6 +268,12 @@
     return (DATA.feedback || []).filter(function (f) { return f.company === companyName; });
   }
 
+  function interviewsFor(companyName) {
+    return (INTERVIEWS.items || []).filter(function (i) {
+      return i.company !== "通用" && (companyName.indexOf(i.company) !== -1 || i.company.indexOf(companyName) !== -1);
+    });
+  }
+
   function renderDetail(c) {
     currentCompany = c;
     var st = statusOf(c);
@@ -295,12 +303,18 @@
       progressHtml = '<div class="text-small muted">暂无投递记录——你在「秋招简历投递.xlsx」里更新后告诉我，我会同步到这里。</div>';
     }
 
-    var feed = feedbackFor(c.name);
-    var feedHtml = feed.length
-      ? '<ul class="feedback-list">' + feed.map(function (f) {
-          return "<li><a class=\"feedback-title\" href=\"" + esc(f.url) + "\" target=\"_blank\" rel=\"noopener\">" + esc(f.title) + "</a><span class=\"badge " + (PLATFORM_CLASS[f.platform] || "") + "\">" + esc(f.platform) + "</span></li>";
-        }).join("") + "</ul>"
-      : '<div class="text-small muted">还没有相关反馈，可以到「反馈池」添加</div>';
+    var related = interviewsFor(c.name);
+    var feedHtml;
+    if (related.length) {
+      feedHtml = '<ul class="feedback-list">' + related.map(function (f) {
+        return "<li><div><a class=\"feedback-title\" href=\"" + esc(f.url) + "\" target=\"_blank\" rel=\"noopener\">" + esc(f.title) + "</a>" +
+          '<div class="text-small muted">' + esc(f.summary || "") + "</div></div>" +
+          '<span class="badge ' + (PLATFORM_CLASS[f.platform] || "") + '">' + esc(f.platform) + "</span>" +
+          '<span class="badge">' + esc(f.category || "面经") + "</span></li>";
+      }).join("") + "</ul>";
+    } else {
+      feedHtml = '<div class="text-small muted">还没有相关面经，可以到「面经库」添加</div>';
+    }
 
     panel.innerHTML =
       '<div class="row">' +
@@ -323,7 +337,7 @@
         "<div><b>岗位方向</b><div class=\"text-small\">" + esc(c.positions.join(" / ")) + "</div></div>" +
       "</div>" +
       '<div class="detail-meta"><b>我的投递</b>' + progressHtml + "</div>" +
-      '<div class="detail-meta"><b>相关反馈</b>' + feedHtml + "</div>";
+      '<div class="detail-meta"><b>相关面经/咨询</b>' + feedHtml + "</div>";
   }
 
   function showDetail(id) {
@@ -560,6 +574,80 @@
         : "");
   }
 
+  function renderInterviewFilters() {
+    var platforms = [];
+    var cats = [];
+    INTERVIEWS.items.forEach(function (i) {
+      if (i.platform && platforms.indexOf(i.platform) === -1) platforms.push(i.platform);
+      if (i.category && cats.indexOf(i.category) === -1) cats.push(i.category);
+    });
+    platforms.sort();
+    cats.sort();
+    $("#interview-platform").innerHTML = '<option value="">全部平台</option>' + platforms.map(function (p) {
+      return '<option value="' + esc(p) + '">' + esc(p) + "</option>";
+    }).join("");
+    $("#interview-category").innerHTML = '<option value="">全部类型</option>' + cats.map(function (c) {
+      return '<option value="' + esc(c) + '">' + esc(c) + "</option>";
+    }).join("");
+  }
+
+  function renderInterviews() {
+    var view = "items";
+    $$("[data-interview-view]").forEach(function (b) {
+      if (b.getAttribute("aria-selected") === "true") view = b.getAttribute("data-interview-view");
+    });
+    var q = ($("#interview-search").value || "").trim().toLowerCase();
+    $("#interview-list").hidden = view !== "items";
+    $("#interview-general").hidden = view !== "general";
+
+    if (view === "general") {
+      $("#interview-summary").textContent = "共 " + INTERVIEWS.generalQuestions.length + " 个通用问题（初版）";
+      $("#interview-general").innerHTML = '<div class="panel"><ol class="question-list">' +
+        INTERVIEWS.generalQuestions.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") +
+        "</ol></div>";
+      return;
+    }
+
+    var pf = $("#interview-platform").value;
+    var cat = $("#interview-category").value;
+    var items = INTERVIEWS.items.filter(function (i) {
+      if (q && (i.company + " " + i.title + " " + i.platform + " " + (i.tags || []).join(" ")).toLowerCase().indexOf(q) === -1) return false;
+      if (pf && i.platform !== pf) return false;
+      if (cat && i.category !== cat) return false;
+      return true;
+    });
+    var mians = items.filter(function (i) { return i.category === "面经"; }).length;
+    var neitui = items.filter(function (i) { return i.category === "内推"; }).length;
+    $("#interview-summary").textContent = "共 " + items.length + " 条 · 面经 " + mians + " · 内推 " + neitui;
+    $("#interview-list").innerHTML = items.map(function (i) {
+      return '<div class="clue-row">' +
+        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" +
+        '<span class="badge ' + (PLATFORM_CLASS[i.platform] || "") + '">' + esc(i.platform) + "</span>" +
+        '<span class="badge">' + esc(i.category) + "</span>" +
+        (i.company !== "通用" ? '<span class="badge">' + esc(i.company) + "</span>" : "") +
+        "</div>" +
+        '<div class="text-small muted">' + esc(i.summary || "") +
+        (i.tags && i.tags.length ? " · 标签：" + esc(i.tags.join("、")) : "") +
+        "</div></div>";
+    }).join("") || '<div class="empty-box">暂无匹配内容</div>';
+  }
+
+  function renderGuoqi() {
+    var q = ($("#guoqi-search").value || "").trim().toLowerCase();
+    var items = GUOQI.items.filter(function (i) {
+      return !q || i.name.toLowerCase().indexOf(q) !== -1;
+    });
+    $("#guoqi-list").innerHTML =
+      '<div class="text-small muted" style="margin-bottom:8px">共 ' + items.length + " 家单位</div>" +
+      items.map(function (i) {
+        var link = isUrl(i.url)
+          ? '<a class="btn btn-ghost" href="' + esc(i.url) + '" target="_blank" rel="noopener">官网</a>'
+          : '<span class="badge badge-muted">无链接</span>';
+        return '<div class="clue-row"><div class="row"><b>' + esc(i.name) + "</b>" + link + "</div></div>";
+      }).join("") ||
+      '<div class="empty-box">没有匹配的单位</div>';
+  }
+
   function switchView(name) {
     $$("[data-view-btn]").forEach(function (b) {
       b.setAttribute("aria-selected", b.getAttribute("data-view-btn") === name ? "true" : "false");
@@ -580,6 +668,9 @@
     $("#zhudi-date").textContent = ZHUDI.updatedAt || "";
     renderZhudiFilters();
     renderZhudi();
+    renderInterviewFilters();
+    renderInterviews();
+    renderGuoqi();
     renderFeedback();
     renderReview();
 
@@ -700,6 +791,19 @@
         renderZhudi();
       }
     });
+
+    $("#interview-search").addEventListener("input", renderInterviews);
+    $("#interview-platform").addEventListener("change", renderInterviews);
+    $("#interview-category").addEventListener("change", renderInterviews);
+    $$("[data-interview-view]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        $$("[data-interview-view]").forEach(function (b) {
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+        renderInterviews();
+      });
+    });
+    $("#guoqi-search").addEventListener("input", renderGuoqi);
   }
 
   init();

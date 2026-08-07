@@ -12,6 +12,7 @@
 
 - **L1 官方数据**（`data/companies.js`）：只有官方来源能确认的信息才会入库，否则标「待核实」。
 - **L2 线索/信息源**（`data/sources.js`、`data/zhudi.js`）：小红书账号推荐清单、朱迪学姐秋招汇总表等，用来发现机会和准备面试，不代表官方数据。
+- **L3 面经/反馈**（`data/interviews.js`、`data/companies.js` 里的 `feedback`）：面经链接 + 摘要，只存链接不搬原文；通用面试问题为初版整理。
 - **L3 经验/反馈**（`data/companies.js` 里的 `feedback`）：面经链接 + 摘要，只存链接不搬原文。
 
 小红书、脉脉等平台没有开放接口，无法稳定全自动采集；L2/L3 的价值是「人工发现线索 + AI 摘要 + 链接收藏」，发现后仍要去 L1 的官方页面核实。
@@ -44,6 +45,8 @@ data/companies.js         公司/批次/岗位/反馈数据（手动维护的主
 data/applications.js      你的投递记录（由 Excel 导入生成，请勿手改）
 data/sources.js           信息源清单（小红书/公众号推荐账号）
 data/zhudi.js             朱迪学姐汇总表（2027届岗位 + 内推码，由本地脚本生成）
+data/interviews.js        面经库（真实链接 + 通用问题初版）
+data/guoqi.js             央国企&事业单位名录（由本地脚本生成）
 data/watchlist.json       自动检测的官网清单
 data/page_hashes.json     上次抓取的页面指纹
 data/review_queue.json    检测到的待确认变化
@@ -119,6 +122,14 @@ scripts/check_career_pages.mjs  自动检测脚本
 
 重新生成方法（本机）：运行 `work/build_zhudi.mjs`（使用本地 artifact-tool 依赖），
 重新导出最新 xlsx 后覆盖 `data/zhudi.js` 即可。该数据属第三方整理，投递前请以公告链接中的官方信息为准。
+
+## 面经库 & 央国企名录
+
+- 「面经库」：企业面经/内推/日程/资讯/咨询的真实链接，按公司挂在对应公司的详情页里，
+  也可在面经库页按平台和类型筛选；「通用问题」为初版整理的常见面试题。
+  朱迪学姐的面经表/常见问题表导出后，替换 `data/interviews.js` 即可。
+- 「央国企名录」：119 家央国企与事业单位，含官方网址，按单位名称搜索；
+  重新生成方法同朱迪表（`work/build_guoqi.mjs`）。
 
 ## 部署到 GitHub Pages
 

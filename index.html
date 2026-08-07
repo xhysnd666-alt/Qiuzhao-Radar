@@ -21,6 +21,8 @@
       <button class="tab" type="button" data-view-btn="overview" aria-selected="true">总览</button>
       <button class="tab" type="button" data-view-btn="applications" aria-selected="false">我的投递</button>
       <button class="tab" type="button" data-view-btn="zhudi" aria-selected="false">朱迪汇总</button>
+      <button class="tab" type="button" data-view-btn="interviews" aria-selected="false">面经库</button>
+      <button class="tab" type="button" data-view-btn="guoqi" aria-selected="false">央国企名录</button>
       <button class="tab" type="button" data-view-btn="sources" aria-selected="false">信息源</button>
       <button class="tab" type="button" data-view-btn="feedback" aria-selected="false">反馈池</button>
       <button class="tab" type="button" data-view-btn="review" aria-selected="false">待确认</button>
@@ -116,6 +118,32 @@
       <div id="zhudi-codes" hidden></div>
     </section>
 
+    <section class="view" data-view="interviews">
+      <div class="text-small muted" style="margin-bottom:10px">面经与咨询：只存链接+摘要；小红书/知乎需登录时可在 App 内搜索标题 · 通用问题为初版，朱迪表导出后可替换</div>
+      <div class="app-toolbar">
+        <div class="seg" role="group" aria-label="面经视图">
+          <button class="seg-btn" type="button" data-interview-view="items" aria-selected="true">企业面经</button>
+          <button class="seg-btn" type="button" data-interview-view="general" aria-selected="false">通用问题</button>
+        </div>
+        <div class="text-small muted" id="interview-summary"></div>
+      </div>
+      <div class="filters">
+        <input class="input" id="interview-search" type="search" placeholder="搜索公司 / 标题 / 平台…" aria-label="搜索面经库">
+        <select class="select" id="interview-platform" aria-label="按平台筛选"></select>
+        <select class="select" id="interview-category" aria-label="按类型筛选"></select>
+      </div>
+      <div id="interview-list"></div>
+      <div id="interview-general" hidden></div>
+    </section>
+
+    <section class="view" data-view="guoqi">
+      <div class="text-small muted" style="margin-bottom:10px">央国企&事业单位名录（朱迪表导出）· 点击进入官网/招聘页</div>
+      <div class="filters">
+        <input class="input" id="guoqi-search" type="search" placeholder="搜索单位名称…" aria-label="搜索央国企名录">
+      </div>
+      <div id="guoqi-list"></div>
+    </section>
+
     <section class="view" data-view="sources">
       <div class="text-small muted" style="margin-bottom:10px">线索/经验层：帮你发现机会和准备面试，不代表官方数据；是否开秋招、截止时间一律以官方页面为准</div>
       <div id="sources-list"></div>
@@ -139,6 +167,8 @@
   <script src="data/applications.js"></script>
   <script src="data/sources.js"></script>
   <script src="data/zhudi.js"></script>
+  <script src="data/interviews.js"></script>
+  <script src="data/guoqi.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -282,6 +282,7 @@ body::after {
 .clue-row .actions { margin-top: 6px; }
 .btn-block { display: block; width: 100%; text-align: center; margin-top: 8px; }
 .applied-note { color: var(--ok); }
+.question-list { margin: 0; padding-left: 22px; line-height: 2; }
 
 .source-group { margin-bottom: 10px; }
 .source-group h4 { margin: 0 0 6px; font-size: 13px; font-weight: 500; }
