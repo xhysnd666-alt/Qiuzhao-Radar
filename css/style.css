@@ -80,31 +80,63 @@ body::after {
   box-shadow: 0 2px 12px rgba(31, 45, 61, 0.05);
 }
 .brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
   font-size: 20px;
   font-weight: 500;
+}
+.logo {
+  width: 30px;
+  height: 30px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #2f6fed, #a855f7);
+  box-shadow: 0 4px 12px rgba(47, 111, 237, 0.30);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.logo::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #fff;
+}
+.brand-text {
   background: linear-gradient(90deg, #2f6fed, #a855f7);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
-.brand span {
+.brand-year {
   background: linear-gradient(90deg, #0f9d6e, #2f6fed);
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
 }
 
-.tabs { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 16px; }
-.tab {
-  border: 1px solid var(--border);
+.tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 14px 0 16px;
+  padding: 4px;
   background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+}
+.tab {
+  border: none;
+  background: transparent;
   color: var(--text);
-  border-radius: 8px;
-  padding: 6px 12px;
+  border-radius: 9px;
+  padding: 7px 14px;
   font-size: 13px;
   cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
 }
-.tab[aria-selected="true"] { background: var(--primary); border-color: var(--primary); color: #fff; }
+.tab[aria-selected="true"] { background: var(--primary); color: #fff; box-shadow: 0 2px 8px rgba(47, 111, 237, 0.28); }
 
 .view { display: none; }
 .view.active { display: block; }
@@ -117,8 +149,12 @@ body::after {
 }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 12px; }
-.stat { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; }
-.stat b { display: block; font-size: 18px; font-weight: 500; }
+.stat { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.stat::before { content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--primary); }
+.stat:nth-child(2)::before { background: var(--warn); }
+.stat:nth-child(3)::before { background: #a855f7; }
+.stat:nth-child(4)::before { background: var(--green); }
+.stat b { display: block; font-size: 22px; font-weight: 500; }
 .stat span { color: var(--muted); font-size: 12px; }
 
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
@@ -132,6 +168,8 @@ body::after {
 }
 .input { flex: 1 1 180px; }
 .select { flex: 0 1 auto; }
+.check { display: inline-flex; gap: 6px; align-items: center; font-size: 13px; color: var(--muted); cursor: pointer; }
+.check input { accent-color: var(--primary); width: 15px; height: 15px; }
 
 .app-toolbar { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; justify-content: space-between; margin-bottom: 10px; }
 .seg { display: inline-flex; gap: 4px; padding: 3px; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; }
@@ -171,6 +209,7 @@ body::after {
 .badge-red { background: #fdecea; color: var(--red); border-color: transparent; }
 .badge-blue { background: #e8efff; color: var(--blue); border-color: transparent; }
 .badge-green { background: #e2f7f0; color: var(--green); border-color: transparent; }
+.badge-purple { background: #f3e8ff; color: #9333ea; border-color: transparent; }
 .badge-warn { animation: qm-soft-pulse 2.4s ease-in-out infinite; }
 
 @keyframes qm-soft-pulse {
@@ -185,6 +224,7 @@ body::after {
   .badge-red { background: #3d1b18; }
   .badge-blue { background: #1c2b47; }
   .badge-green { background: #16332a; }
+  .badge-purple { background: #2c1a3f; color: #c084fc; }
   body::before { background: linear-gradient(135deg, #0d1117 0%, #10151f 45%, #161019 100%); }
   body::after {
     background:
@@ -192,8 +232,9 @@ body::after {
       radial-gradient(520px 300px at 88% 16%, rgba(168, 85, 247, 0.12), transparent 65%),
       radial-gradient(760px 380px at 50% 105%, rgba(20, 184, 166, 0.10), transparent 65%);
   }
-  .brand { background: linear-gradient(90deg, #6fa1ff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .brand span { background: linear-gradient(90deg, #55c793, #6fa1ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .logo { background: linear-gradient(135deg, #6fa1ff, #c084fc); box-shadow: 0 4px 12px rgba(111, 161, 255, 0.30); }
+  .brand-text { background: linear-gradient(90deg, #6fa1ff, #c084fc); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .brand-year { background: linear-gradient(90deg, #55c793, #6fa1ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
 }
 
 .btn {
@@ -250,6 +291,8 @@ body::after {
 .feedback-list { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
 .feedback-list li { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .feedback-list li:last-child { border-bottom: none; }
+.feedback-list li { transition: background 0.15s ease; }
+.feedback-list li:hover { background: var(--surface2); }
 .feedback-title { color: var(--primary); text-decoration: none; font-weight: 500; }
 
 .empty-box { background: var(--surface); border: 1px dashed var(--border); border-radius: 10px; padding: 22px 16px; color: var(--muted); text-align: center; }
@@ -259,6 +302,7 @@ body::after {
 .muted { color: var(--muted); }
 .text-small { font-size: 12px; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
 
 @media (max-width: 640px) {
   .hide-sm { display: none; }

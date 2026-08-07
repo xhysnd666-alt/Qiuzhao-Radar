@@ -9,7 +9,11 @@
 <body>
   <div class="wrap">
     <header class="top">
-      <div class="brand">秋招雷达 <span>2027届</span></div>
+      <div class="brand">
+        <span class="logo" aria-hidden="true"></span>
+        <span class="brand-text">秋招雷达</span>
+        <span class="brand-year">2027届</span>
+      </div>
       <div class="date muted text-small">今日自动更新 · 数据截至 <span id="data-date"></span></div>
     </header>
 
@@ -104,6 +108,7 @@
         <input class="input" id="zhudi-search" type="search" placeholder="搜索公司 / 岗位 / 内推码公司…" aria-label="搜索朱迪汇总表">
         <select class="select" id="zhudi-industry" aria-label="按行业筛选"></select>
         <select class="select" id="zhudi-batch" aria-label="按批次筛选"></select>
+        <label class="check"><input type="checkbox" id="zhudi-no-intern" checked> 过滤实习</label>
       </div>
       <div id="zhudi-list"></div>
       <div id="zhudi-codes" hidden></div>
@@ -115,6 +120,7 @@
     </section>
 
     <section class="view" data-view="feedback">
+      <div class="text-small muted" style="margin-bottom:10px">只存链接和摘要，不搬原文；小红书/知乎链接可能需要登录，打不开时可在 App 内搜索标题</div>
       <ul class="feedback-list" id="feedback-list"></ul>
     </section>
 

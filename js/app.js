@@ -364,6 +364,14 @@
     return /^https?:\/\//i.test(s || "");
   }
 
+  function batchClass(b) {
+    if (!b) return "";
+    if (b.indexOf("秋招") !== -1) return "badge-primary";
+    if (b.indexOf("提前批") !== -1) return "badge-purple";
+    if (b.indexOf("春招") !== -1) return "badge-ok";
+    return "";
+  }
+
   function clueRowHtml(r) {
     var apply = isUrl(r.applyUrl)
       ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>'
@@ -376,7 +384,7 @@
     else if (r.exam && r.exam !== "/" && r.exam !== "未明确" && r.exam !== "待定") exam = '<span class="badge">' + esc(r.exam) + "</span>";
     return '<div class="clue-row">' +
       '<div class="row"><b>' + esc(r.company) + "</b>" +
-      '<span class="badge badge-primary">' + esc(r.batch || "待定") + "</span>" +
+      '<span class="badge ' + batchClass(r.batch) + '">' + esc(r.batch || "待定") + "</span>" +
       '<span class="badge">' + esc(r.industry || "待定") + "</span>" +
       exam +
       "</div>" +
@@ -433,15 +441,17 @@
     }
     var ind = $("#zhudi-industry").value;
     var bat = $("#zhudi-batch").value;
+    var noIntern = $("#zhudi-no-intern") && $("#zhudi-no-intern").checked;
     var rows = ZHUDI.rows.filter(function (r) {
       if (q && (r.company + " " + r.positions + " " + r.industry).toLowerCase().indexOf(q) === -1) return false;
       if (ind && r.industry !== ind) return false;
       if (bat && r.batch !== bat) return false;
+      if (noIntern && r.batch && (r.batch.indexOf("实习") !== -1 || r.batch.indexOf("训练营") !== -1)) return false;
       return true;
     });
     var noExam = rows.filter(function (r) { return r.exam && r.exam.indexOf("免笔试") !== -1; }).length;
     var autumn = rows.filter(function (r) { return r.batch && r.batch.indexOf("秋招") !== -1; }).length;
-    $("#zhudi-summary").textContent = "共 " + rows.length + " 条 · 秋招/提前批 " + autumn + " · 免笔试 " + noExam;
+    $("#zhudi-summary").textContent = "共 " + rows.length + " 条" + (noIntern ? "（已过滤实习）" : "") + " · 秋招/提前批 " + autumn + " · 免笔试 " + noExam;
     var slice = rows.slice(0, zhudiShown);
     $("#zhudi-list").innerHTML = slice.map(clueRowHtml).join("") +
       (rows.length > zhudiShown
@@ -544,6 +554,10 @@
       renderZhudi();
     });
     $("#zhudi-batch").addEventListener("change", function () {
+      zhudiShown = 50;
+      renderZhudi();
+    });
+    $("#zhudi-no-intern").addEventListener("change", function () {
       zhudiShown = 50;
       renderZhudi();
     });

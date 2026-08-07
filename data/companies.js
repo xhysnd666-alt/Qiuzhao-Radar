@@ -52,10 +52,18 @@ window.QIUZHAO_DATA = {
     { id: "vip", name: "唯品会", industry: "互联网", batch: "正式批", startDate: "", endDate: "", status: "待核实", positions: ["人力资源", "运营", "市场"], applyUrl: "https://job.vip.com/", careerUrl: "https://job.vip.com/", note: "2027届实习生2月起已开启；秋招正式批待关注", source: "高校就业网+官网", sourceUrl: "https://job.vip.com/", sourceLabel: "唯品会招聘官网", verified: true }
   ],
   feedback: [
-    { id: "fb-1", company: "米哈游", platform: "小红书", title: "米哈游 2027届 秋招/面经 搜索", url: "https://www.xiaohongshu.com/search_result?keyword=%E7%B1%B3%E5%93%88%E6%B8%B8%202027%E5%B1%8A%20%E9%9D%A2%E7%BB%8F", summary: "示例：后续可把具体帖子链接放进来，AI 只存摘要不搬原文", status: "待确认", sample: true, addedAt: "2026-08-08" },
-    { id: "fb-2", company: "腾讯", platform: "牛客", title: "腾讯 2027 秋招 讨论", url: "https://www.nowcoder.com/search/all?query=%E8%85%BE%E8%AE%AF%202027%E7%A7%8B%E6%8B%9B", summary: "示例：牛客上有提前批/正式批时间线与面经讨论", status: "待确认", sample: true, addedAt: "2026-08-08" },
-    { id: "fb-3", company: "字节跳动", platform: "小红书", title: "字节跳动 2027届 校招 面经 搜索", url: "https://www.xiaohongshu.com/search_result?keyword=%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%202027%E5%B1%8A%20%E9%9D%A2%E7%BB%8F", summary: "示例：搜索链接占位，等待替换为具体帖子", status: "待确认", sample: true, addedAt: "2026-08-08" },
-    { id: "fb-4", company: "网易游戏（互娱/雷火）", platform: "牛客", title: "网易游戏 2027 秋招 面经 搜索", url: "https://www.nowcoder.com/search/all?query=%E7%BD%91%E6%98%93%E6%B8%B8%E6%88%8F%202027%20%E9%9D%A2%E7%BB%8F", summary: "示例：后续替换为具体面经链接", status: "待确认", sample: true, addedAt: "2026-08-08" }
+    { id: "fb-1", company: "通用", platform: "牛客", title: "27届算法岗秋招春招时间线（提前批/正式批安排）", url: "https://www.nowcoder.com/feed/main/detail/f67a86240b5042fd8750a47c5b4d94e9", summary: "2027届秋招整体节奏：7-8月提前批、9-11月正式批、12月补录", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-2", company: "通用", platform: "牛客", title: "27届秋招信息汇总（7.24更新）", url: "https://www.nowcoder.com/feed/main/detail/a0d03e2f91284960b4dbf89301dc9838", summary: "汇总各厂开岗、内推码与截止信息，可作查漏补缺", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-3", company: "通用", platform: "牛客", title: "秋招时间轴讨论（各阶段做什么）", url: "https://www.nowcoder.com/discuss/752936274406707200", summary: "从准备实习到提前批、正式批、补录的月度节奏参考", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-4", company: "字节跳动", platform: "力扣", title: "字节跳动 2027 校招提前批内推帖", url: "https://leetcode.cn/discuss/post/4007650/zi-jie-tiao-dong-2027-xiao-zhao-ti-qian-e2s0l/", summary: "提前批内推通道与投递建议", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-5", company: "拼多多", platform: "力扣", title: "拼多多集团 2027届秋招提前批内推帖", url: "https://leetcode.cn/discuss/post/4005613/pin-duo-duo-ji-tuan-2027jie-qiu-zhao-ti-3fgq6/", summary: "提前批8/23前投递，结果不影响正式批", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-6", company: "360集团", platform: "牛客", title: "360集团校园招聘内推讨论", url: "https://www.nowcoder.com/discuss/353158312373985280", summary: "校招官网 campus.360.cn，早投递早笔试", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-7", company: "去哪儿旅行", platform: "牛客", title: "去哪儿旅行 2027 校招日程页", url: "https://www.nowcoder.com/enterprise/141?pageSource=5014&channel=recruitmentSchedule", summary: "网申 8/6 起，城市北京/上海", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-8", company: "微博（新浪）", platform: "牛客", title: "新浪&微博校招日程页", url: "https://www.nowcoder.com/enterprise/812?pageSource=5011&recruitType=1&channel=newCompanyPage", summary: "27届实习批次 5/8-6/8，正式批待更新", status: "已收录", addedAt: "2026-08-08" },
+    { id: "fb-9", company: "阅文集团", platform: "小红书", title: "阅文集团春招速码笔记", url: "https://www.xiaohongshu.com/discovery/item/69cb68ad000000001b00296c", summary: "2027届春招信息参考；小红书需登录查看", status: "待确认", addedAt: "2026-08-08" },
+    { id: "fb-10", company: "米哈游", platform: "小红书", title: "米哈游 2027届 秋招/面经 搜索", url: "https://www.xiaohongshu.com/search_result?keyword=%E7%B1%B3%E5%93%88%E6%B8%B8%202027%E5%B1%8A%20%E9%9D%A2%E7%BB%8F", summary: "小红书内搜索面经；App 内打开", status: "待确认", addedAt: "2026-08-08" },
+    { id: "fb-11", company: "字节跳动", platform: "小红书", title: "字节跳动 2027届 校招 面经 搜索", url: "https://www.xiaohongshu.com/search_result?keyword=%E5%AD%97%E8%8A%82%E8%B7%B3%E5%8A%A8%202027%E5%B1%8A%20%E9%9D%A2%E7%BB%8F", summary: "小红书内搜索面经；App 内打开", status: "待确认", addedAt: "2026-08-08" },
+    { id: "fb-12", company: "通用", platform: "知乎", title: "2027届 秋招 面经与咨询 搜索", url: "https://www.zhihu.com/search?type=content&q=2027%E5%B1%8A%20%E7%A7%8B%E6%8B%9B%20%E9%9D%A2%E7%BB%8F", summary: "知乎综合搜索：面经、薪资、公司评价", status: "待确认", addedAt: "2026-08-08" }
   ],
   reviewQueue: []
 };
