@@ -47,6 +47,7 @@ data/sources.js           信息源清单（小红书/公众号推荐账号）
 data/zhudi.js             朱迪学姐汇总表（2027届岗位 + 内推码，由本地脚本生成）
 data/interviews.js        面经库（真实链接 + 通用问题初版）
 data/guoqi.js             央国企&事业单位名录（由本地脚本生成）
+data/ai_tips.js           AI 面试助手（朱迪注意事项 + 面试锦囊 + 公司定制提示）
 data/watchlist.json       自动检测的官网清单
 data/page_hashes.json     上次抓取的页面指纹
 data/review_queue.json    检测到的待确认变化
@@ -133,6 +134,14 @@ scripts/check_career_pages.mjs  自动检测脚本
 - 重新生成方法（本机）：运行 `work/build_interviews.py`（解析 PDF 后覆盖 `data/interviews.js`）。
 - 「央国企名录」：119 家央国企与事业单位，含官方网址，按单位名称搜索；
   重新生成方法同朱迪表（`work/build_guoqi.mjs`）。
+
+## AI 面试助手
+
+- 面经库 tab 第三个视图「AI 建议」：朱迪表格使用说明的注意事项（原样收录）、
+  Codex 预生成的 10 条面试锦囊、30 家重点公司定制提示。
+- 公司面经弹窗顶部有「AI 小提示」；「问 AI」按钮会把你的背景 + 问题生成一段提示词
+  复制到剪贴板，粘贴到任意 AI 对话即可获得个性化回答（纯静态站点不直接调用 AI 接口）。
+- 通用问题每题也有「问 AI」按钮，可基于你的心理学背景生成个性化参考答案。
 
 ## 部署到 GitHub Pages
 

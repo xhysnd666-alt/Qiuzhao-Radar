@@ -68,6 +68,7 @@
           <tbody id="company-rows"></tbody>
         </table>
       </div>
+      <div id="overview-more" class="overview-more"></div>
 
       <div id="detail" class="panel" hidden></div>
     </section>
@@ -125,6 +126,7 @@
         <div class="seg" role="group" aria-label="面经视图">
           <button class="seg-btn" type="button" data-interview-view="items" aria-selected="true">企业面经</button>
           <button class="seg-btn" type="button" data-interview-view="general" aria-selected="false">通用问题</button>
+          <button class="seg-btn" type="button" data-interview-view="ai" aria-selected="false">AI 建议</button>
         </div>
         <div class="text-small muted" id="interview-summary"></div>
       </div>
@@ -175,12 +177,15 @@
     </div>
   </div>
 
+  <div id="toast" class="toast" role="status" hidden></div>
+
   <script src="data/companies.js"></script>
   <script src="data/applications.js"></script>
   <script src="data/sources.js"></script>
   <script src="data/zhudi.js"></script>
   <script src="data/interviews.js"></script>
   <script src="data/guoqi.js"></script>
+  <script src="data/ai_tips.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

@@ -7,6 +7,7 @@
   var ZHUDI = window.QIUZHAO_ZHUDI || { rows: [], codes: [] };
   var INTERVIEWS = window.QIUZHAO_INTERVIEWS || { items: [], generalQuestions: [] };
   var GUOQI = window.QIUZHAO_GUOQI || { items: [] };
+  var AI_TIPS = window.QIUZHAO_AI_TIPS || { profile: "", zhudiNotes: [], generalTips: [], companyTips: {} };
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
@@ -263,9 +264,11 @@
         '<td><span class="badge ' + (STATUS_CLASS[r.status] || "") + '">' + esc(r.status) + "</span></td>" +
         '<td class="actions-cell">' + links + "</td>" +
         "</tr>";
-    }).join("") + (rows.length > overviewShown
-      ? '<tr><td colspan="7"><button class="btn btn-block" type="button" id="table-more">加载更多（' + (rows.length - overviewShown) + "）</button></td></tr>"
-      : "");
+    }).join("");
+    var more = $("#overview-more");
+    more.innerHTML = rows.length > overviewShown
+      ? '<button class="btn btn-block" type="button" id="table-more">加载更多（' + (rows.length - overviewShown) + "）</button>"
+      : "";
   }
 
   function feedbackFor(companyName) {
@@ -276,6 +279,43 @@
     return (INTERVIEWS.items || []).filter(function (i) {
       return i.company !== "通用" && (companyName.indexOf(i.company) !== -1 || i.company.indexOf(companyName) !== -1);
     });
+  }
+
+  function companyTipFor(name) {
+    if (AI_TIPS.companyTips && AI_TIPS.companyTips[name]) return AI_TIPS.companyTips[name];
+    var key = null;
+    Object.keys(AI_TIPS.companyTips || {}).forEach(function (k) {
+      if (!key && (name.indexOf(k) !== -1 || k.indexOf(name) !== -1)) key = k;
+    });
+    if (key) return AI_TIPS.companyTips[key];
+    return "这家公司暂未定制提示。通用准备：1) 打开官方校招页看 JD 和业务；2) 准备一个和目标岗位相关的项目/实习案例（STAR 结构）；3) 了解公司核心产品与近半年动态；4) 反问环节准备 2-3 个问题。";
+  }
+
+  function fallbackCopy(text) {
+    var ta = document.createElement("textarea");
+    ta.value = text;
+    ta.style.position = "fixed";
+    ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    try { document.execCommand("copy"); } catch (e) { /* ignore */ }
+    document.body.removeChild(ta);
+  }
+
+  function copyText(text, label) {
+    function done() {
+      var toast = $("#toast");
+      toast.textContent = label + "已复制，可粘贴到任意 AI 对话";
+      toast.hidden = false;
+      clearTimeout(copyText._timer);
+      copyText._timer = setTimeout(function () { toast.hidden = true; }, 2200);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, function () { fallbackCopy(text); done(); });
+    } else {
+      fallbackCopy(text);
+      done();
+    }
   }
 
   function renderDetail(c) {
@@ -616,20 +656,46 @@
       if (b.getAttribute("aria-selected") === "true") view = b.getAttribute("data-interview-view");
     });
     var q = ($("#interview-search").value || "").trim().toLowerCase();
-    $("#interview-list").hidden = view !== "items";
+    $("#interview-list").hidden = view === "general";
     $("#interview-general").hidden = view !== "general";
 
     if (view === "general") {
       var qs = INTERVIEWS.generalQuestions || [];
       $("#interview-summary").textContent = "共 " + qs.length + " 个通用问题（朱迪版）";
       $("#interview-general").innerHTML = '<div class="panel">' + qs.map(function (q, idx) {
-        return '<details class="qa-item"><summary class="iv-summary"><b>' + (idx + 1) + ". " + esc(q.question) + '</b><span class="badge">' + esc(q.section) + "</span></summary>" +
+        return '<details class="qa-item"><summary class="iv-summary"><b>' + (idx + 1) + ". " + esc(q.question) + '</b><span class="badge">' + esc(q.section) + '</span><button class="btn btn-ghost ask-ai" type="button" data-ask-ai="question" data-q="' + esc(q.question) + '">问 AI</button></summary>' +
           '<div class="clue-content">' +
           (q.intent ? "<p><b>考查意图：</b>" + esc(q.intent) + "</p>" : "") +
           (q.keypoints ? "<p><b>回答思路：</b>" + esc(q.keypoints) + "</p>" : "") +
           (q.answer ? "<p><b>参考答案：</b>" + esc(q.answer) + "</p>" : "") +
           "</div></details>";
       }).join("") + "</div>";
+      return;
+    }
+
+    if (view === "ai") {
+      var tips = (AI_TIPS.generalTips || []).filter(function (t) {
+        return !q || t.title.indexOf(q) !== -1 || t.content.indexOf(q) !== -1;
+      });
+      var companies = Object.keys(AI_TIPS.companyTips || {}).filter(function (n) {
+        return !q || n.indexOf(q) !== -1;
+      });
+      $("#interview-summary").textContent = "锦囊 " + tips.length + " 条 · 公司提示 " + companies.length + " 家 · 朱迪注意事项 " + (AI_TIPS.zhudiNotes || []).length + " 条";
+      var html = "";
+      html += '<div class="panel"><div class="row" style="margin-bottom:8px"><b>朱迪表使用说明 · 注意事项</b></div>' +
+        (AI_TIPS.zhudiNotes || []).map(function (n) {
+          return '<details class="qa-item"><summary class="iv-summary"><b>' + esc(n.title) + "</b></summary><div class=\"clue-content\">" + esc(n.content) + "</div></details>";
+        }).join("") +
+        "</div>";
+      html += tips.map(function (t) {
+        return '<div class="ai-tip"><div class="ai-tip-head"><b>' + esc(t.title) + '</b><button class="btn btn-ghost ask-ai" type="button" data-ask-ai="tip" data-tip="' + esc(t.title) + '">问 AI</button></div><div class="ai-tip-content">' + esc(t.content) + "</div></div>";
+      }).join("");
+      html += '<div class="panel"><div class="row" style="margin-bottom:8px"><b>重点公司定制提示</b></div>' +
+        companies.map(function (name) {
+          return '<details class="qa-item"><summary class="iv-summary"><b>' + esc(name) + "</b></summary><div class=\"clue-content\">" + esc(companyTipFor(name)) + "</div></details>";
+        }).join("") +
+        "</div>";
+      $("#interview-list").innerHTML = html;
       return;
     }
 
@@ -667,10 +733,13 @@
     var items = (INTERVIEWS.items || []).filter(function (i) {
       return i.company !== "通用" && (companyName.indexOf(i.company) !== -1 || i.company.indexOf(companyName) !== -1);
     });
+    var tipHtml = '<div class="ai-tip"><div class="ai-tip-head"><b>AI 小提示</b>' +
+      '<button class="btn btn-ghost ask-ai" type="button" data-ask-ai="company" data-company="' + esc(companyName) + '">问 AI 定制准备</button></div>' +
+      '<div class="ai-tip-content">' + esc(companyTipFor(companyName)) + "</div></div>";
     $("#iv-modal-title").textContent = companyName + " · 面经库（" + items.length + "）";
-    $("#iv-modal-list").innerHTML = items.length
+    $("#iv-modal-list").innerHTML = tipHtml + (items.length
       ? items.map(interviewCardHtml).join("")
-      : '<div class="empty-box">暂无该公司的面经</div>';
+      : '<div class="empty-box">暂无该公司的面经</div>');
     $("#iv-modal").hidden = false;
     document.body.style.overflow = "hidden";
   }
@@ -727,11 +796,6 @@
     });
 
     $("#company-rows").addEventListener("click", function (e) {
-      if (e.target && e.target.id === "table-more") {
-        overviewShown += 30;
-        renderTable();
-        return;
-      }
       var ivBtn = e.target && e.target.closest ? e.target.closest("button.btn-iv") : null;
       if (ivBtn) {
         openInterviewModal(ivBtn.getAttribute("data-iv-company"));
@@ -739,6 +803,15 @@
       }
       var btn = e.target && e.target.closest ? e.target.closest("button[data-detail]") : null;
       if (btn) showDetail(btn.getAttribute("data-detail"));
+    });
+
+    $("#overview-more").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "table-more") {
+        overviewShown += 30;
+        renderTable();
+        var more = $("#overview-more");
+        if (more && more.scrollIntoView) more.scrollIntoView({ block: "nearest", behavior: "smooth" });
+      }
     });
 
     $$("[data-app-view]").forEach(function (btn) {
@@ -851,6 +924,22 @@
       });
     });
     $("#guoqi-search").addEventListener("input", renderGuoqi);
+
+    document.addEventListener("click", function (e) {
+      var btn = e.target && e.target.closest ? e.target.closest("button[data-ask-ai]") : null;
+      if (!btn) return;
+      var kind = btn.getAttribute("data-ask-ai");
+      var profile = AI_TIPS.profile || "";
+      var prompt = "";
+      if (kind === "question") {
+        prompt = "我是" + profile + "面试官问我：「" + btn.getAttribute("data-q") + "」。请给我一个符合我背景的个性化参考答案，不要太像通用模板。";
+      } else if (kind === "company") {
+        prompt = "我是" + profile + "请以面试官视角帮我准备「" + btn.getAttribute("data-company") + "」的面试：1) 这家公司/岗位可能重点考察什么；2) 给出 3 个最可能被问的问题并示范回答；3) 结合我的背景给差异化建议。";
+      } else if (kind === "tip") {
+        prompt = "我是" + profile + "关于「" + btn.getAttribute("data-tip") + "」，请给我具体可执行的准备建议和示例。";
+      }
+      copyText(prompt, "提问已生成 · ");
+    });
 
     $("#iv-modal-close").addEventListener("click", closeInterviewModal);
     $("#iv-modal").addEventListener("click", function (e) {
