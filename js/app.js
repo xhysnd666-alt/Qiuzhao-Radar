@@ -242,13 +242,17 @@
       var batchBadge = r._clue
         ? '<span class="badge ' + batchClass(r.batch) + '">' + esc(r.batch || "待定") + "</span>"
         : '<span class="badge' + (r.batch === "提前批" ? " badge-primary" : "") + '">' + esc(r.batch) + "</span>";
+      var ivCount = interviewsFor(r.name).length;
+      var ivBtn = ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(r.name) + '">面经 ' + ivCount + "</button>" : "";
       var links;
       if (r._clue) {
         links = (isUrl(r.applyUrl) ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' : "") +
-          (isUrl(r.announceUrl) && r.announceUrl !== r.applyUrl ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>' : "");
+          (isUrl(r.announceUrl) && r.announceUrl !== r.applyUrl ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>' : "") +
+          ivBtn;
       } else {
         links = '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' +
-          '<button class="btn btn-ghost" type="button" data-detail="' + esc(r.id) + '">详情</button>';
+          '<button class="btn btn-ghost" type="button" data-detail="' + esc(r.id) + '">详情</button>' +
+          ivBtn;
       }
       return "<tr>" +
         "<td><b>" + esc(r.name) + "</b>" + appliedBadge + sourceBadge + appliedNote + "</td>" +
@@ -353,10 +357,13 @@
       var items = groups[stage];
       var cards = items.map(function (app) {
         var c = companyById(app.companyId);
+        var ivCount = c ? interviewsFor(c.name).length : 0;
+        var ivBtn = ivCount ? '<div class="row actions"><button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button></div>" : "";
         return '<div class="kanban-card">' +
           '<div class="kanban-title">' + esc(app.companyName || (c && c.name) || "未知公司") + "</div>" +
           '<div class="text-small">' + esc(app.position) + "</div>" +
           '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
+          ivBtn +
           "</div>";
       }).join("");
       return '<div class="kanban-col"><h4>' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
@@ -379,17 +386,19 @@
       var key = appKey(app);
       var cur = stageOf(app);
       var o = progress[key];
+      var ivCount = c ? interviewsFor(c.name).length : 0;
       var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
         return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
       }).join("");
       return "<tr>" +
         "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b></td>" +
         "<td>" + esc(app.position) + "</td>" +
+        "<td>" + (ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : '<span class="text-small muted">—</span>') + "</td>" +
         '<td class="hide-sm">' + fmtDate(app.appliedAt) + "</td>" +
         '<td><select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select></td>" +
         '<td class="hide-sm">' + (o && o.updatedAt ? esc(o.updatedAt) : '<span class="text-small muted">默认</span>') + "</td>" +
         "</tr>";
-    }).join("") || '<tr><td colspan="5" class="empty-cell">暂无投递记录</td></tr>';
+    }).join("") || '<tr><td colspan="6" class="empty-cell">暂无投递记录</td></tr>';
   }
 
   function renderFeedback() {
@@ -654,6 +663,23 @@
       '<div class="empty-box">没有匹配的单位</div>';
   }
 
+  function openInterviewModal(companyName) {
+    var items = (INTERVIEWS.items || []).filter(function (i) {
+      return i.company !== "通用" && (companyName.indexOf(i.company) !== -1 || i.company.indexOf(companyName) !== -1);
+    });
+    $("#iv-modal-title").textContent = companyName + " · 面经库（" + items.length + "）";
+    $("#iv-modal-list").innerHTML = items.length
+      ? items.map(interviewCardHtml).join("")
+      : '<div class="empty-box">暂无该公司的面经</div>';
+    $("#iv-modal").hidden = false;
+    document.body.style.overflow = "hidden";
+  }
+
+  function closeInterviewModal() {
+    $("#iv-modal").hidden = true;
+    document.body.style.overflow = "";
+  }
+
   function switchView(name) {
     $$("[data-view-btn]").forEach(function (b) {
       b.setAttribute("aria-selected", b.getAttribute("data-view-btn") === name ? "true" : "false");
@@ -706,6 +732,11 @@
         renderTable();
         return;
       }
+      var ivBtn = e.target && e.target.closest ? e.target.closest("button.btn-iv") : null;
+      if (ivBtn) {
+        openInterviewModal(ivBtn.getAttribute("data-iv-company"));
+        return;
+      }
       var btn = e.target && e.target.closest ? e.target.closest("button[data-detail]") : null;
       if (btn) showDetail(btn.getAttribute("data-detail"));
     });
@@ -728,6 +759,16 @@
       progress[key] = { stage: sel.value, updatedAt: todayStr() };
       saveProgress();
       renderApplications();
+    });
+
+    $("#application-cols").addEventListener("click", function (e) {
+      var ivBtn = e.target && e.target.closest ? e.target.closest("button.btn-iv") : null;
+      if (ivBtn) openInterviewModal(ivBtn.getAttribute("data-iv-company"));
+    });
+
+    $("#application-table-rows").addEventListener("click", function (e) {
+      var ivBtn = e.target && e.target.closest ? e.target.closest("button.btn-iv") : null;
+      if (ivBtn) openInterviewModal(ivBtn.getAttribute("data-iv-company"));
     });
 
     $("#detail").addEventListener("click", function (e) {
@@ -810,6 +851,14 @@
       });
     });
     $("#guoqi-search").addEventListener("input", renderGuoqi);
+
+    $("#iv-modal-close").addEventListener("click", closeInterviewModal);
+    $("#iv-modal").addEventListener("click", function (e) {
+      if (e.target && e.target.hasAttribute && e.target.hasAttribute("data-iv-close")) closeInterviewModal();
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "Escape" && $("#iv-modal") && !$("#iv-modal").hidden) closeInterviewModal();
+    });
   }
 
   init();

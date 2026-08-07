@@ -288,6 +288,23 @@ body::after {
 .iv-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; cursor: pointer; font-size: 13px; }
 .qa-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
 
+.modal { position: fixed; inset: 0; z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(15, 18, 22, 0.45); backdrop-filter: blur(2px); }
+.modal-card {
+  position: relative;
+  width: min(680px, 100%);
+  max-height: 82vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.20);
+  animation: qm-fade-up 0.2s ease both;
+}
+.modal-head { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 14px 16px; border-bottom: 1px solid var(--border); }
+.modal-body { overflow-y: auto; padding: 14px 16px; }
+
 .source-group { margin-bottom: 10px; }
 .source-group h4 { margin: 0 0 6px; font-size: 13px; font-weight: 500; }
 .source-list { list-style: none; margin: 0; padding: 0; }

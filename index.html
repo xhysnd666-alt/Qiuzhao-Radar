@@ -89,6 +89,7 @@
             <tr>
               <th>公司</th>
               <th>岗位</th>
+              <th>面经</th>
               <th class="hide-sm">投递时间</th>
               <th>阶段</th>
               <th class="hide-sm">更新时间</th>
@@ -161,6 +162,17 @@
     <footer class="foot muted text-small">
       <span id="source-note"></span>
     </footer>
+  </div>
+
+  <div id="iv-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-iv-close></div>
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="iv-modal-title">
+      <div class="modal-head">
+        <b id="iv-modal-title"></b>
+        <button class="btn btn-ghost" type="button" id="iv-modal-close">关闭</button>
+      </div>
+      <div id="iv-modal-list" class="modal-body"></div>
+    </div>
   </div>
 
   <script src="data/companies.js"></script>
