@@ -3,6 +3,7 @@
 
   var DATA = window.QIUZHAO_DATA || { companies: [], feedback: [], reviewQueue: [] };
   var APPLICATIONS = window.QIUZHAO_APPLICATIONS || [];
+  var SOURCES = window.QIUZHAO_SOURCES || [];
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
@@ -297,6 +298,38 @@
     }).join("");
   }
 
+  function renderSources() {
+    var wrap = $("#sources-list");
+    if (!SOURCES.length) {
+      wrap.innerHTML = '<div class="empty-box">暂无信息源，后续补充</div>';
+      return;
+    }
+    var groups = [];
+    SOURCES.forEach(function (s) {
+      var g = null;
+      groups.forEach(function (item) { if (item.name === s.group) g = item; });
+      if (!g) {
+        g = { name: s.group, items: [] };
+        groups.push(g);
+      }
+      g.items.push(s);
+    });
+    var PRIORITY_CLASS = { "核心": "badge-ok", "参考": "badge-primary", "补充": "badge-muted" };
+    wrap.innerHTML = groups.map(function (g) {
+      return '<div class="panel source-group"><h4>' + esc(g.name) + "</h4><ul class=\"source-list\">" +
+        g.items.map(function (s) {
+          return "<li class=\"source-item\">" +
+            "<div><b>" + esc(s.name) + "</b>" +
+            ' <span class="badge ' + (PRIORITY_CLASS[s.priority] || "") + '">' + esc(s.priority) + "</span>" +
+            ' <span class="badge">' + esc(s.platform) + "</span>" +
+            '<div class="text-small muted">' + esc(s.note || "") + "</div></div>" +
+            '<a class="btn btn-ghost" href="' + esc(s.url) + '" target="_blank" rel="noopener">打开</a>' +
+            "</li>";
+        }).join("") +
+        "</ul></div>";
+    }).join("");
+  }
+
   function switchView(name) {
     $$("[data-view-btn]").forEach(function (b) {
       b.setAttribute("aria-selected", b.getAttribute("data-view-btn") === name ? "true" : "false");
@@ -313,6 +346,7 @@
     renderFilters();
     renderTable();
     renderApplications();
+    renderSources();
     renderFeedback();
     renderReview();
 

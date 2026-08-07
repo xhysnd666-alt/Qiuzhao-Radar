@@ -153,6 +153,12 @@ body {
 .app-row:last-child { border-bottom: none; }
 .source-link { color: var(--primary); text-decoration: none; }
 
+.source-group { margin-bottom: 10px; }
+.source-group h4 { margin: 0 0 6px; font-size: 13px; font-weight: 500; }
+.source-list { list-style: none; margin: 0; padding: 0; }
+.source-item { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; padding: 8px 2px; border-bottom: 1px solid var(--border); }
+.source-item:last-child { border-bottom: none; }
+
 .feedback-list { list-style: none; margin: 0; padding: 0; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
 .feedback-list li { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; justify-content: space-between; padding: 10px 12px; border-bottom: 1px solid var(--border); }
 .feedback-list li:last-child { border-bottom: none; }
