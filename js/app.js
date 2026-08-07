@@ -232,6 +232,14 @@
       tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">没有符合条件的公司，试试放宽筛选</td></tr>';
       return;
     }
+    rows.sort(function (a, b) {
+      var ia = interviewsFor(a.name).length > 0 ? 1 : 0;
+      var ib = interviewsFor(b.name).length > 0 ? 1 : 0;
+      if (ia !== ib) return ib - ia;
+      var aa = applicationsForRow(a).length > 0 ? 1 : 0;
+      var ab = applicationsForRow(b).length > 0 ? 1 : 0;
+      return ab - aa;
+    });
     var slice = rows.slice(0, overviewShown);
     tbody.innerHTML = slice.map(function (r) {
       var apps = applicationsForRow(r);
