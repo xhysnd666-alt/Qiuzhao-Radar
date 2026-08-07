@@ -251,6 +251,35 @@
       }).join("");
       return '<div class="kanban-col"><h4>' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
     }).join("");
+
+    var summary = $("#app-summary");
+    if (summary) {
+      var total = APPLICATIONS.length;
+      var active = APPLICATIONS.filter(function (a) {
+        var s = stageOf(a);
+        return s !== "Offer" && s !== "已挂";
+      }).length;
+      summary.textContent = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length + " · 已结束 " + groups["已挂"].length;
+    }
+
+    var tbody = $("#application-table-rows");
+    if (!tbody) return;
+    tbody.innerHTML = APPLICATIONS.map(function (app) {
+      var c = companyById(app.companyId);
+      var key = appKey(app);
+      var cur = stageOf(app);
+      var o = progress[key];
+      var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
+        return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
+      }).join("");
+      return "<tr>" +
+        "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b></td>" +
+        "<td>" + esc(app.position) + "</td>" +
+        '<td class="hide-sm">' + fmtDate(app.appliedAt) + "</td>" +
+        '<td><select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select></td>" +
+        '<td class="hide-sm">' + (o && o.updatedAt ? esc(o.updatedAt) : '<span class="text-small muted">默认</span>') + "</td>" +
+        "</tr>";
+    }).join("") || '<tr><td colspan="5" class="empty-cell">暂无投递记录</td></tr>';
   }
 
   function renderFeedback() {
@@ -363,6 +392,26 @@
     $("#company-rows").addEventListener("click", function (e) {
       var btn = e.target && e.target.closest ? e.target.closest("button[data-detail]") : null;
       if (btn) showDetail(btn.getAttribute("data-detail"));
+    });
+
+    $$("[data-app-view]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        var v = btn.getAttribute("data-app-view");
+        $$("[data-app-view]").forEach(function (b) {
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+        $("#application-cols").hidden = v !== "kanban";
+        $("#application-table").hidden = v !== "table";
+      });
+    });
+
+    $("#application-table-rows").addEventListener("change", function (e) {
+      var sel = e.target && e.target.closest ? e.target.closest("select.app-stage-select") : null;
+      if (!sel) return;
+      var key = sel.getAttribute("data-key");
+      progress[key] = { stage: sel.value, updatedAt: todayStr() };
+      saveProgress();
+      renderApplications();
     });
 
     $("#detail").addEventListener("click", function (e) {

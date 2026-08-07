@@ -65,7 +65,29 @@
 
     <section class="view" data-view="applications">
       <div class="text-small muted" style="margin-bottom:10px">数据来源：秋招简历投递.xlsx · 你在表格里更新后告诉我，我会同步到这里</div>
+      <div class="app-toolbar">
+        <div class="seg" role="group" aria-label="投递视图切换">
+          <button class="seg-btn" type="button" data-app-view="kanban" aria-selected="true">看板</button>
+          <button class="seg-btn" type="button" data-app-view="table" aria-selected="false">表格</button>
+        </div>
+        <div class="text-small muted" id="app-summary"></div>
+      </div>
       <div class="kanban" id="application-cols"></div>
+      <div id="application-table" class="table-wrap" hidden>
+        <table class="table">
+          <caption class="sr-only">投递记录表格</caption>
+          <thead>
+            <tr>
+              <th>公司</th>
+              <th>岗位</th>
+              <th class="hide-sm">投递时间</th>
+              <th>阶段</th>
+              <th class="hide-sm">更新时间</th>
+            </tr>
+          </thead>
+          <tbody id="application-table-rows"></tbody>
+        </table>
+      </div>
     </section>
 
     <section class="view" data-view="sources">
