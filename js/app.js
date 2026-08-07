@@ -4,6 +4,7 @@
   var DATA = window.QIUZHAO_DATA || { companies: [], feedback: [], reviewQueue: [] };
   var APPLICATIONS = window.QIUZHAO_APPLICATIONS || [];
   var SOURCES = window.QIUZHAO_SOURCES || [];
+  var ZHUDI = window.QIUZHAO_ZHUDI || { rows: [], codes: [] };
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
@@ -359,6 +360,95 @@
     }).join("");
   }
 
+  function isUrl(s) {
+    return /^https?:\/\//i.test(s || "");
+  }
+
+  function clueRowHtml(r) {
+    var apply = isUrl(r.applyUrl)
+      ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>'
+      : "";
+    var announce = isUrl(r.announceUrl)
+      ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>'
+      : "";
+    var exam = "";
+    if (r.exam && r.exam.indexOf("免笔试") !== -1) exam = '<span class="badge badge-ok">免笔试</span>';
+    else if (r.exam && r.exam !== "/" && r.exam !== "未明确" && r.exam !== "待定") exam = '<span class="badge">' + esc(r.exam) + "</span>";
+    return '<div class="clue-row">' +
+      '<div class="row"><b>' + esc(r.company) + "</b>" +
+      '<span class="badge badge-primary">' + esc(r.batch || "待定") + "</span>" +
+      '<span class="badge">' + esc(r.industry || "待定") + "</span>" +
+      exam +
+      "</div>" +
+      '<div class="text-small muted">岗位：' + esc(r.positions || "见公告") + "</div>" +
+      '<div class="text-small muted">' + esc(r.locations || "地点待定") + " · " + esc(r.grad || "") + " · 开始 " + esc(r.startDate || "待定") + " · 截止 " + esc(r.endDate || "待定") + "</div>" +
+      '<div class="row actions">' + apply + announce + "</div>" +
+      "</div>";
+  }
+
+  var zhudiShown = 50;
+  var zhudiCodesShown = 100;
+
+  function renderZhudiFilters() {
+    var industries = [];
+    var batches = [];
+    ZHUDI.rows.forEach(function (r) {
+      if (r.industry && industries.indexOf(r.industry) === -1) industries.push(r.industry);
+      if (r.batch && batches.indexOf(r.batch) === -1) batches.push(r.batch);
+    });
+    industries.sort();
+    batches.sort();
+    $("#zhudi-industry").innerHTML = '<option value="">全部行业</option>' + industries.map(function (i) {
+      return '<option value="' + esc(i) + '">' + esc(i) + "</option>";
+    }).join("");
+    $("#zhudi-batch").innerHTML = '<option value="">全部批次</option>' + batches.map(function (b) {
+      return '<option value="' + esc(b) + '">' + esc(b) + "</option>";
+    }).join("");
+  }
+
+  function renderZhudiCodes(q) {
+    var codes = ZHUDI.codes.filter(function (c) {
+      return !q || c.company.toLowerCase().indexOf(q) !== -1;
+    });
+    $("#zhudi-summary").textContent = "共 " + codes.length + " 个内推码";
+    var slice = codes.slice(0, zhudiCodesShown);
+    $("#zhudi-codes").innerHTML = slice.map(function (c) {
+      return '<div class="clue-row code-row"><div class="row"><b>' + esc(c.company) + '</b><span class="badge badge-primary">' + esc(c.code) + "</span></div></div>";
+    }).join("") + (codes.length > zhudiCodesShown
+      ? '<button class="btn btn-block" type="button" id="zhudi-codes-more">加载更多（' + (codes.length - zhudiCodesShown) + "）</button>"
+      : "");
+  }
+
+  function renderZhudi() {
+    var view = "rows";
+    $$("[data-zhudi-view]").forEach(function (b) {
+      if (b.getAttribute("aria-selected") === "true") view = b.getAttribute("data-zhudi-view");
+    });
+    var q = ($("#zhudi-search").value || "").trim().toLowerCase();
+    $("#zhudi-list").hidden = view !== "rows";
+    $("#zhudi-codes").hidden = view !== "codes";
+    if (view === "codes") {
+      renderZhudiCodes(q);
+      return;
+    }
+    var ind = $("#zhudi-industry").value;
+    var bat = $("#zhudi-batch").value;
+    var rows = ZHUDI.rows.filter(function (r) {
+      if (q && (r.company + " " + r.positions + " " + r.industry).toLowerCase().indexOf(q) === -1) return false;
+      if (ind && r.industry !== ind) return false;
+      if (bat && r.batch !== bat) return false;
+      return true;
+    });
+    var noExam = rows.filter(function (r) { return r.exam && r.exam.indexOf("免笔试") !== -1; }).length;
+    var autumn = rows.filter(function (r) { return r.batch && r.batch.indexOf("秋招") !== -1; }).length;
+    $("#zhudi-summary").textContent = "共 " + rows.length + " 条 · 秋招/提前批 " + autumn + " · 免笔试 " + noExam;
+    var slice = rows.slice(0, zhudiShown);
+    $("#zhudi-list").innerHTML = slice.map(clueRowHtml).join("") +
+      (rows.length > zhudiShown
+        ? '<button class="btn btn-block" type="button" id="zhudi-more">加载更多（' + (rows.length - zhudiShown) + "）</button>"
+        : "");
+  }
+
   function switchView(name) {
     $$("[data-view-btn]").forEach(function (b) {
       b.setAttribute("aria-selected", b.getAttribute("data-view-btn") === name ? "true" : "false");
@@ -376,6 +466,9 @@
     renderTable();
     renderApplications();
     renderSources();
+    $("#zhudi-date").textContent = ZHUDI.updatedAt || "";
+    renderZhudiFilters();
+    renderZhudi();
     renderFeedback();
     renderReview();
 
@@ -439,6 +532,42 @@
       if (!btn) return;
       btn.textContent = btn.getAttribute("data-action") === "confirm" ? "已确认（本地）" : "已忽略（本地）";
       btn.disabled = true;
+    });
+
+    $("#zhudi-search").addEventListener("input", function () {
+      zhudiShown = 50;
+      zhudiCodesShown = 100;
+      renderZhudi();
+    });
+    $("#zhudi-industry").addEventListener("change", function () {
+      zhudiShown = 50;
+      renderZhudi();
+    });
+    $("#zhudi-batch").addEventListener("change", function () {
+      zhudiShown = 50;
+      renderZhudi();
+    });
+    $$("[data-zhudi-view]").forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        $$("[data-zhudi-view]").forEach(function (b) {
+          b.setAttribute("aria-selected", b === btn ? "true" : "false");
+        });
+        zhudiShown = 50;
+        zhudiCodesShown = 100;
+        renderZhudi();
+      });
+    });
+    $("#zhudi-list").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "zhudi-more") {
+        zhudiShown += 50;
+        renderZhudi();
+      }
+    });
+    $("#zhudi-codes").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "zhudi-codes-more") {
+        zhudiCodesShown += 100;
+        renderZhudi();
+      }
     });
   }
 

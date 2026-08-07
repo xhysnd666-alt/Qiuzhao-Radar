@@ -16,6 +16,7 @@
     <nav class="tabs" aria-label="页面切换">
       <button class="tab" type="button" data-view-btn="overview" aria-selected="true">总览</button>
       <button class="tab" type="button" data-view-btn="applications" aria-selected="false">我的投递</button>
+      <button class="tab" type="button" data-view-btn="zhudi" aria-selected="false">朱迪汇总</button>
       <button class="tab" type="button" data-view-btn="sources" aria-selected="false">信息源</button>
       <button class="tab" type="button" data-view-btn="feedback" aria-selected="false">反馈池</button>
       <button class="tab" type="button" data-view-btn="review" aria-selected="false">待确认</button>
@@ -90,6 +91,24 @@
       </div>
     </section>
 
+    <section class="view" data-view="zhudi">
+      <div class="text-small muted" style="margin-bottom:10px">朱迪学姐汇总表（第三方整理 · 线索层）· 数据截至 <span id="zhudi-date"></span> · 投递前请以官方公告为准</div>
+      <div class="app-toolbar">
+        <div class="seg" role="group" aria-label="朱迪表视图">
+          <button class="seg-btn" type="button" data-zhudi-view="rows" aria-selected="true">岗位汇总</button>
+          <button class="seg-btn" type="button" data-zhudi-view="codes" aria-selected="false">内推码</button>
+        </div>
+        <div class="text-small muted" id="zhudi-summary"></div>
+      </div>
+      <div class="filters">
+        <input class="input" id="zhudi-search" type="search" placeholder="搜索公司 / 岗位 / 内推码公司…" aria-label="搜索朱迪汇总表">
+        <select class="select" id="zhudi-industry" aria-label="按行业筛选"></select>
+        <select class="select" id="zhudi-batch" aria-label="按批次筛选"></select>
+      </div>
+      <div id="zhudi-list"></div>
+      <div id="zhudi-codes" hidden></div>
+    </section>
+
     <section class="view" data-view="sources">
       <div class="text-small muted" style="margin-bottom:10px">线索/经验层：帮你发现机会和准备面试，不代表官方数据；是否开秋招、截止时间一律以官方页面为准</div>
       <div id="sources-list"></div>
@@ -111,6 +130,7 @@
   <script src="data/companies.js"></script>
   <script src="data/applications.js"></script>
   <script src="data/sources.js"></script>
+  <script src="data/zhudi.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
