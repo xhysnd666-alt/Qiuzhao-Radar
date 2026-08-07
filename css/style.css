@@ -283,6 +283,10 @@ body::after {
 .btn-block { display: block; width: 100%; text-align: center; margin-top: 8px; }
 .applied-note { color: var(--ok); }
 .question-list { margin: 0; padding-left: 22px; line-height: 2; }
+.clue-content { white-space: pre-wrap; margin-top: 8px; color: var(--muted); font-size: 13px; line-height: 1.7; }
+.clue-content p { margin: 0 0 8px; }
+.iv-summary { display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; cursor: pointer; font-size: 13px; }
+.qa-item { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin-bottom: 8px; }
 
 .source-group { margin-bottom: 10px; }
 .source-group h4 { margin: 0 0 6px; font-size: 13px; font-weight: 500; }

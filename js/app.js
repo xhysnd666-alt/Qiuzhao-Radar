@@ -306,12 +306,7 @@
     var related = interviewsFor(c.name);
     var feedHtml;
     if (related.length) {
-      feedHtml = '<ul class="feedback-list">' + related.map(function (f) {
-        return "<li><div><a class=\"feedback-title\" href=\"" + esc(f.url) + "\" target=\"_blank\" rel=\"noopener\">" + esc(f.title) + "</a>" +
-          '<div class="text-small muted">' + esc(f.summary || "") + "</div></div>" +
-          '<span class="badge ' + (PLATFORM_CLASS[f.platform] || "") + '">' + esc(f.platform) + "</span>" +
-          '<span class="badge">' + esc(f.category || "面经") + "</span></li>";
-      }).join("") + "</ul>";
+      feedHtml = related.map(interviewCardHtml).join("");
     } else {
       feedHtml = '<div class="text-small muted">还没有相关面经，可以到「面经库」添加</div>';
     }
@@ -591,6 +586,21 @@
     }).join("");
   }
 
+  function interviewCardHtml(i) {
+    var badges =
+      '<span class="badge ' + (PLATFORM_CLASS[i.platform] || "") + '">' + esc(i.platform) + "</span>" +
+      '<span class="badge">' + esc(i.category || "面经") + "</span>" +
+      (i.company && i.company !== "通用" ? '<span class="badge">' + esc(i.company) + "</span>" : "");
+    if (i.url) {
+      return '<div class="clue-row">' +
+        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" + badges + "</div>" +
+        '<div class="text-small muted">' + esc(i.summary || "") + (i.tags && i.tags.length ? " · 标签：" + esc(i.tags.join("、")) : "") + "</div></div>";
+    }
+    return '<details class="clue-row iv-item"><summary class="iv-summary">' +
+      "<b>" + esc(i.title) + "</b>" + badges +
+      "</summary><div class=\"clue-content\">" + esc(i.content || i.summary || "") + "</div></details>";
+  }
+
   function renderInterviews() {
     var view = "items";
     $$("[data-interview-view]").forEach(function (b) {
@@ -601,10 +611,16 @@
     $("#interview-general").hidden = view !== "general";
 
     if (view === "general") {
-      $("#interview-summary").textContent = "共 " + INTERVIEWS.generalQuestions.length + " 个通用问题（初版）";
-      $("#interview-general").innerHTML = '<div class="panel"><ol class="question-list">' +
-        INTERVIEWS.generalQuestions.map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") +
-        "</ol></div>";
+      var qs = INTERVIEWS.generalQuestions || [];
+      $("#interview-summary").textContent = "共 " + qs.length + " 个通用问题（朱迪版）";
+      $("#interview-general").innerHTML = '<div class="panel">' + qs.map(function (q, idx) {
+        return '<details class="qa-item"><summary class="iv-summary"><b>' + (idx + 1) + ". " + esc(q.question) + '</b><span class="badge">' + esc(q.section) + "</span></summary>" +
+          '<div class="clue-content">' +
+          (q.intent ? "<p><b>考查意图：</b>" + esc(q.intent) + "</p>" : "") +
+          (q.keypoints ? "<p><b>回答思路：</b>" + esc(q.keypoints) + "</p>" : "") +
+          (q.answer ? "<p><b>参考答案：</b>" + esc(q.answer) + "</p>" : "") +
+          "</div></details>";
+      }).join("") + "</div>";
       return;
     }
 
@@ -619,17 +635,7 @@
     var mians = items.filter(function (i) { return i.category === "面经"; }).length;
     var neitui = items.filter(function (i) { return i.category === "内推"; }).length;
     $("#interview-summary").textContent = "共 " + items.length + " 条 · 面经 " + mians + " · 内推 " + neitui;
-    $("#interview-list").innerHTML = items.map(function (i) {
-      return '<div class="clue-row">' +
-        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" +
-        '<span class="badge ' + (PLATFORM_CLASS[i.platform] || "") + '">' + esc(i.platform) + "</span>" +
-        '<span class="badge">' + esc(i.category) + "</span>" +
-        (i.company !== "通用" ? '<span class="badge">' + esc(i.company) + "</span>" : "") +
-        "</div>" +
-        '<div class="text-small muted">' + esc(i.summary || "") +
-        (i.tags && i.tags.length ? " · 标签：" + esc(i.tags.join("、")) : "") +
-        "</div></div>";
-    }).join("") || '<div class="empty-box">暂无匹配内容</div>';
+    $("#interview-list").innerHTML = items.map(interviewCardHtml).join("") || '<div class="empty-box">暂无匹配内容</div>';
   }
 
   function renderGuoqi() {
