@@ -321,6 +321,8 @@ body::after {
 .modal-body { overflow-y: auto; padding: 14px 16px; }
 
 .overview-more { margin-top: 8px; }
+.detail-tr td { padding: 6px 12px; }
+.detail-tr .panel { margin-top: 0; }
 .toast {
   position: fixed;
   left: 50%;

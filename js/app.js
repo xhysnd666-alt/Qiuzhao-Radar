@@ -208,6 +208,8 @@
   }
 
   function renderTable() {
+    detachDetail();
+    currentCompany = null;
     var q = ($("#search").value || "").trim().toLowerCase();
     var ind = $("#filter-industry").value;
     var pos = $("#filter-position").value;
@@ -318,10 +320,25 @@
     }
   }
 
+  function detachDetail() {
+    var panel = $("#detail");
+    if (!panel) return;
+    var tr = panel.closest("tr.detail-tr");
+    if (tr) {
+      panel.hidden = true;
+      var tableWrap = document.querySelector(".table-wrap");
+      if (tableWrap) tableWrap.insertAdjacentElement("afterend", panel);
+      tr.remove();
+    } else {
+      panel.hidden = true;
+    }
+  }
+
   function renderDetail(c) {
     currentCompany = c;
     var st = statusOf(c);
     var panel = $("#detail");
+    detachDetail();
     panel.hidden = false;
 
     var apps = APPLICATIONS.filter(function (a) { return a.companyId === c.id; });
@@ -377,11 +394,35 @@
       "</div>" +
       '<div class="detail-meta"><b>我的投递</b>' + progressHtml + "</div>" +
       '<div class="detail-meta"><b>相关面经/咨询</b>' + feedHtml + "</div>";
+
+    var tbody = $("#company-rows");
+    var targetRow = null;
+    tbody.querySelectorAll("button[data-detail]").forEach(function (btn) {
+      if (btn.getAttribute("data-detail") === c.id) targetRow = btn.closest("tr");
+    });
+    if (!targetRow) {
+      panel.hidden = true;
+      return;
+    }
+    var tr = document.createElement("tr");
+    tr.className = "detail-tr";
+    var td = document.createElement("td");
+    td.colSpan = 7;
+    td.appendChild(panel);
+    tr.appendChild(td);
+    targetRow.insertAdjacentElement("afterend", tr);
   }
 
   function showDetail(id) {
     var found = companyById(id);
-    if (found) renderDetail(found);
+    if (!found) return;
+    var openTr = $("#company-rows").querySelector("tr.detail-tr");
+    if (openTr && currentCompany && currentCompany.id === id) {
+      detachDetail();
+      currentCompany = null;
+      return;
+    }
+    renderDetail(found);
   }
 
   function renderApplications() {
@@ -870,7 +911,8 @@
 
     $("#detail").addEventListener("click", function (e) {
       if (e.target && e.target.id === "detail-close") {
-        $("#detail").hidden = true;
+        detachDetail();
+        currentCompany = null;
         return;
       }
       var btn = e.target && e.target.closest ? e.target.closest("button[data-progress-action]") : null;
