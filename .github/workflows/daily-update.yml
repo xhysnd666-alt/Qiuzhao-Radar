@@ -1,0 +1,38 @@
+name: Daily career check
+
+on:
+  schedule:
+    # UTC 17:00 = 北京时间次日 01:00
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run career page check
+        run: node scripts/check_career_pages.mjs
+        env:
+          DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
+          DEEPSEEK_MODEL: ${{ secrets.DEEPSEEK_MODEL }}
+
+      - name: Commit and push changes
+        run: |
+          git config user.name "qiuzhao-radar[bot]"
+          git config user.email "qiuzhao-radar[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "chore: daily career page check $(date -u +%Y-%m-%d)"
+            git push
+          fi
