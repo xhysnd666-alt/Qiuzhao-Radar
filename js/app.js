@@ -61,6 +61,7 @@
   function fmtDate(s) {
     if (!s) return "待定";
     var p = s.split("-");
+    if (p.length !== 3 || isNaN(parseInt(p[1], 10)) || isNaN(parseInt(p[2], 10))) return s;
     return parseInt(p[1], 10) + "/" + parseInt(p[2], 10);
   }
 
@@ -69,6 +70,76 @@
     (DATA.companies || []).forEach(function (c) { if (c.id === id) found = c; });
     return found;
   }
+
+  var TARGET_KEYWORDS = ["人力资源", "游戏运营", "游戏发行", "游戏营销"];
+
+  function isInternBatch(b) {
+    return b && (b.indexOf("实习") !== -1 || b.indexOf("训练营") !== -1);
+  }
+
+  function overviewNoIntern() {
+    var el = $("#overview-no-intern");
+    return !el || el.checked;
+  }
+
+  function applicationsForRow(row) {
+    if (row._clue) {
+      return APPLICATIONS.filter(function (a) {
+        return a.companyName.indexOf(row.name) !== -1 || row.name.indexOf(a.companyName) !== -1;
+      });
+    }
+    return APPLICATIONS.filter(function (a) { return a.companyId === row.id; });
+  }
+
+  function overviewRows() {
+    var noIntern = overviewNoIntern();
+    var rows = (DATA.companies || []).map(function (c) {
+      return {
+        _clue: false,
+        id: c.id,
+        name: c.name,
+        industry: c.industry,
+        batch: c.batch,
+        positions: c.positions.join(" / "),
+        startDate: c.startDate,
+        endDate: c.endDate,
+        status: statusOf(c),
+        applyUrl: c.applyUrl,
+        announceUrl: c.careerUrl,
+        verified: c.verified,
+        data: c
+      };
+    });
+    var seen = {};
+    (ZHUDI.rows || []).forEach(function (r) {
+      if (noIntern && isInternBatch(r.batch)) return;
+      var hit = TARGET_KEYWORDS.some(function (k) { return r.positions && r.positions.indexOf(k) !== -1; });
+      if (!hit) return;
+      var dup = rows.some(function (x) {
+        return x.name === r.company || x.name.indexOf(r.company) !== -1 || r.company.indexOf(x.name) !== -1;
+      });
+      if (dup || seen[r.company]) return;
+      seen[r.company] = true;
+      rows.push({
+        _clue: true,
+        id: r.company,
+        name: r.company,
+        industry: r.industry || "",
+        batch: r.batch || "",
+        positions: r.positions || "",
+        startDate: r.startDate || "",
+        endDate: r.endDate || "",
+        status: "待核实",
+        applyUrl: r.applyUrl || "",
+        announceUrl: r.announceUrl || "",
+        verified: false,
+        data: r
+      });
+    });
+    return rows;
+  }
+
+  var overviewShown = 30;
 
   function getProgress() {
     try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
@@ -102,17 +173,25 @@
     $("#stat-active").textContent = active.length;
     $("#stat-expiring").textContent = expiring.length;
     $("#stat-early").textContent = early.length;
-    $("#stat-review").textContent = (DATA.reviewQueue || []).length;
+    $("#stat-applied").textContent = APPLICATIONS.length;
   }
 
   function renderFilters() {
+    var rows = overviewRows();
     var industries = [];
-    (DATA.companies || []).forEach(function (c) {
-      if (industries.indexOf(c.industry) === -1) industries.push(c.industry);
+    var batches = [];
+    rows.forEach(function (r) {
+      if (r.industry && industries.indexOf(r.industry) === -1) industries.push(r.industry);
+      if (r.batch && batches.indexOf(r.batch) === -1) batches.push(r.batch);
     });
     industries.sort();
+    batches.sort();
     $("#filter-industry").innerHTML = '<option value="">全部行业</option>' + industries.map(function (i) {
       return '<option value="' + esc(i) + '">' + esc(i) + "</option>";
+    }).join("");
+
+    $("#filter-batch").innerHTML = '<option value="">全部批次</option>' + batches.map(function (b) {
+      return '<option value="' + esc(b) + '">' + esc(b) + "</option>";
     }).join("");
 
     $("#filter-position").innerHTML = '<option value="">全部岗位</option>' + POSITION_OPTIONS.map(function (p) {
@@ -131,14 +210,15 @@
     var pos = $("#filter-position").value;
     var bat = $("#filter-batch").value;
     var sta = $("#filter-status").value;
+    var hideApplied = $("#overview-hide-applied") && $("#overview-hide-applied").checked;
 
-    var rows = (DATA.companies || []).filter(function (c) {
-      if (q && (c.name + " " + c.positions.join(" ")).toLowerCase().indexOf(q) === -1) return false;
-      if (ind && c.industry !== ind) return false;
-      if (pos && c.positions.indexOf(pos) === -1) return false;
-      if (bat && c.batch !== bat) return false;
-      var st = statusOf(c);
-      if (sta && st !== sta) return false;
+    var rows = overviewRows().filter(function (r) {
+      if (q && (r.name + " " + r.positions + " " + r.industry).toLowerCase().indexOf(q) === -1) return false;
+      if (ind && r.industry !== ind) return false;
+      if (pos && r.positions.indexOf(pos) === -1) return false;
+      if (bat && r.batch !== bat) return false;
+      if (sta && r.status !== sta) return false;
+      if (hideApplied && applicationsForRow(r).length) return false;
       return true;
     });
 
@@ -147,19 +227,39 @@
       tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">没有符合条件的公司，试试放宽筛选</td></tr>';
       return;
     }
-    tbody.innerHTML = rows.map(function (c) {
-      var st = statusOf(c);
+    var slice = rows.slice(0, overviewShown);
+    tbody.innerHTML = slice.map(function (r) {
+      var apps = applicationsForRow(r);
+      var appliedBadge = apps.length ? ' <span class="badge badge-ok">已投</span>' : "";
+      var sourceBadge = r._clue
+        ? ' <span class="badge badge-muted">朱迪线索</span>'
+        : (r.verified ? "" : ' <span class="badge badge-muted">待核实</span>');
+      var appliedNote = apps.length
+        ? '<div class="text-small applied-note">已投：' + esc(apps.map(function (a) { return a.position; }).join("、")) + "</div>"
+        : "";
+      var batchBadge = r._clue
+        ? '<span class="badge ' + batchClass(r.batch) + '">' + esc(r.batch || "待定") + "</span>"
+        : '<span class="badge' + (r.batch === "提前批" ? " badge-primary" : "") + '">' + esc(r.batch) + "</span>";
+      var links;
+      if (r._clue) {
+        links = (isUrl(r.applyUrl) ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' : "") +
+          (isUrl(r.announceUrl) && r.announceUrl !== r.applyUrl ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>' : "");
+      } else {
+        links = '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' +
+          '<button class="btn btn-ghost" type="button" data-detail="' + esc(r.id) + '">详情</button>';
+      }
       return "<tr>" +
-        "<td><b>" + esc(c.name) + "</b>" + (c.verified ? "" : ' <span class="badge badge-muted">待核实</span>') + "</td>" +
-        "<td>" + esc(c.positions.join(" / ")) + "</td>" +
-        '<td><span class="badge' + (c.batch === "提前批" ? " badge-primary" : "") + '">' + esc(c.batch) + "</span></td>" +
-        '<td class="hide-sm">' + fmtDate(c.startDate) + "</td>" +
-        '<td class="hide-sm">' + fmtDate(c.endDate) + "</td>" +
-        '<td><span class="badge ' + (STATUS_CLASS[st] || "") + '">' + esc(st) + "</span></td>" +
-        '<td class="actions-cell"><a class="btn btn-ghost" href="' + esc(c.applyUrl) + '" target="_blank" rel="noopener">投递</a>' +
-        '<button class="btn btn-ghost" type="button" data-detail="' + esc(c.id) + '">详情</button></td>' +
+        "<td><b>" + esc(r.name) + "</b>" + appliedBadge + sourceBadge + appliedNote + "</td>" +
+        "<td>" + esc(r.positions) + "</td>" +
+        "<td>" + batchBadge + "</td>" +
+        '<td class="hide-sm">' + fmtDate(r.startDate) + "</td>" +
+        '<td class="hide-sm">' + fmtDate(r.endDate) + "</td>" +
+        '<td><span class="badge ' + (STATUS_CLASS[r.status] || "") + '">' + esc(r.status) + "</span></td>" +
+        '<td class="actions-cell">' + links + "</td>" +
         "</tr>";
-    }).join("");
+    }).join("") + (rows.length > overviewShown
+      ? '<tr><td colspan="7"><button class="btn btn-block" type="button" id="table-more">加载更多（' + (rows.length - overviewShown) + "）</button></td></tr>"
+      : "");
   }
 
   function feedbackFor(companyName) {
@@ -400,9 +500,10 @@
   function renderZhudiFilters() {
     var industries = [];
     var batches = [];
+    var noIntern = $("#zhudi-no-intern") && $("#zhudi-no-intern").checked;
     ZHUDI.rows.forEach(function (r) {
       if (r.industry && industries.indexOf(r.industry) === -1) industries.push(r.industry);
-      if (r.batch && batches.indexOf(r.batch) === -1) batches.push(r.batch);
+      if (r.batch && batches.indexOf(r.batch) === -1 && !(noIntern && isInternBatch(r.batch))) batches.push(r.batch);
     });
     industries.sort();
     batches.sort();
@@ -484,8 +585,18 @@
 
     ["search", "filter-industry", "filter-position", "filter-batch", "filter-status"].forEach(function (id) {
       var el = $("#" + id);
-      el.addEventListener("input", renderTable);
-      el.addEventListener("change", renderTable);
+      el.addEventListener("input", function () { overviewShown = 30; renderTable(); });
+      el.addEventListener("change", function () { overviewShown = 30; renderTable(); });
+    });
+
+    $("#overview-no-intern").addEventListener("change", function () {
+      overviewShown = 30;
+      renderFilters();
+      renderTable();
+    });
+    $("#overview-hide-applied").addEventListener("change", function () {
+      overviewShown = 30;
+      renderTable();
     });
 
     $$("[data-view-btn]").forEach(function (b) {
@@ -493,6 +604,11 @@
     });
 
     $("#company-rows").addEventListener("click", function (e) {
+      if (e.target && e.target.id === "table-more") {
+        overviewShown += 30;
+        renderTable();
+        return;
+      }
       var btn = e.target && e.target.closest ? e.target.closest("button[data-detail]") : null;
       if (btn) showDetail(btn.getAttribute("data-detail"));
     });
@@ -559,6 +675,7 @@
     });
     $("#zhudi-no-intern").addEventListener("change", function () {
       zhudiShown = 50;
+      renderZhudiFilters();
       renderZhudi();
     });
     $$("[data-zhudi-view]").forEach(function (btn) {

@@ -31,7 +31,7 @@
         <div class="stat"><b id="stat-active">0</b><span>重点公司在招</span></div>
         <div class="stat"><b id="stat-expiring">0</b><span>即将截止（3天内）</span></div>
         <div class="stat"><b id="stat-early">0</b><span>提前批进行中</span></div>
-        <div class="stat"><b id="stat-review">0</b><span>待确认线索</span></div>
+        <div class="stat"><b id="stat-applied">0</b><span>已投递（条）</span></div>
       </div>
 
       <div class="filters">
@@ -45,6 +45,8 @@
           <option>补录</option>
         </select>
         <select class="select" id="filter-status" aria-label="按状态筛选"></select>
+        <label class="check"><input type="checkbox" id="overview-no-intern" checked> 过滤实习</label>
+        <label class="check"><input type="checkbox" id="overview-hide-applied"> 隐藏已投</label>
       </div>
 
       <div class="table-wrap">
