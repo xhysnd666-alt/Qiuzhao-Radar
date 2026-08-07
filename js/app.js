@@ -640,14 +640,38 @@
       '<span class="badge ' + (PLATFORM_CLASS[i.platform] || "") + '">' + esc(i.platform) + "</span>" +
       '<span class="badge">' + esc(i.category || "面经") + "</span>" +
       (i.company && i.company !== "通用" ? '<span class="badge">' + esc(i.company) + "</span>" : "");
+    var round = roundOf(i.title);
+    var roundBadge = round ? '<span class="round-badge">' + esc(round) + "</span>" : "";
     if (i.url) {
       return '<div class="clue-row">' +
-        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" + badges + "</div>" +
+        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" + roundBadge + badges + "</div>" +
         '<div class="text-small muted">' + esc(i.summary || "") + (i.tags && i.tags.length ? " · 标签：" + esc(i.tags.join("、")) : "") + "</div></div>";
     }
     return '<details class="clue-row iv-item"><summary class="iv-summary">' +
-      "<b>" + esc(i.title) + "</b>" + badges +
-      "</summary><div class=\"clue-content\">" + esc(i.content || i.summary || "") + "</div></details>";
+      "<b>" + esc(i.title) + "</b>" + roundBadge + badges +
+      "</summary><div class=\"clue-content\">" + formatContent(i.content || i.summary || "") + "</div></details>";
+  }
+
+  var ROUND_RE = /(一面|二面|三面|四面|五面|终面|群面|HR面|业务面|初面|二轮|一轮|笔试|电面)/;
+
+  function roundOf(title) {
+    var m = String(title || "").match(ROUND_RE);
+    return m ? m[1] : "";
+  }
+
+  function formatContent(text) {
+    var qRe = /^(\d+[.、．]|Q\d|q\d)/;
+    var labelRe = /^(面试官考查意图|回答思路要点|参考答案|反问|自我介绍|面试流程|面试时间|面试配置|面试题目|问题整理)/;
+    var out = [];
+    String(text || "").split("\n").forEach(function (line) {
+      var t = line.trim();
+      if (!t) return;
+      var cls = "";
+      if (qRe.test(t)) cls = "iv-q";
+      else if (labelRe.test(t)) cls = "iv-label";
+      out.push('<div class="' + cls + '">' + esc(t) + "</div>");
+    });
+    return out.join("");
   }
 
   function renderInterviews() {
