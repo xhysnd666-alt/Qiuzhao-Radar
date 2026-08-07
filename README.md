@@ -87,6 +87,27 @@ scripts/check_career_pages.mjs  自动检测脚本
 
 局限：很多校招官网是前端渲染的单页应用，静态抓取可能检测不到变化；后续计划升级为无头浏览器方案。
 
+## 飞书多维表格同步（可选）
+
+你分享的秋招信息飞书表格（`acnr1ayjzqxf.feishu.cn/base/ISNobVuXAagJBFssvszcYeqQnfb`）
+是实时更新的第三方整理源。飞书页面是前端加载的，程序无法直接抓取内容，有三种接入方式：
+
+**方案 A（最快，推荐先跑起来）**：把表格导出为 Excel/CSV 发给 Codex，按「投递记录」一样
+导入。频率由你定，每次导出即可。
+
+**方案 B（全自动）**：用飞书开放平台的 Bitable API 每天自动读取。需要：
+
+1. 到飞书开放平台（https://open.feishu.cn/）创建企业自建应用，获取 App ID / App Secret（免费）。
+2. 给应用开通「多维表格」读取权限，并把应用添加为这个多维表格的协作者（可查看）。
+3. 在 GitHub 仓库 Secrets 里配置 `FEISHU_APP_ID`、`FEISHU_APP_SECRET`、
+   `FEISHU_BASE_TOKEN`、`FEISHU_TABLE_ID`。
+4. `.github/workflows/sync-feishu.yml` 每天自动运行 `scripts/sync_feishu.mjs`，
+   把新增/变化的记录写入 `data/review_queue.json`（待确认队列），确认并核实官方来源后再入库。
+
+**方案 C（最省事）**：每天把新增或变化的行复制粘贴给 Codex，由 AI 整理入库。
+
+注意：第三方整理表属于线索层，自动同步只进「待确认」，不会直接污染正式数据。
+
 ## 部署到 GitHub Pages
 
 1. 仓库 Settings → Pages → Source 选择 GitHub Actions。
