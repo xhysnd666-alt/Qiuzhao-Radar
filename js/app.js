@@ -74,7 +74,7 @@
     return found;
   }
 
-  var TARGET_KEYWORDS = ["人力资源", "游戏运营", "游戏发行", "游戏营销"];
+  var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
 
   function isInternBatch(b) {
     return b && (b.indexOf("实习") !== -1 || b.indexOf("训练营") !== -1);
@@ -233,12 +233,12 @@
       return;
     }
     rows.sort(function (a, b) {
-      var ia = interviewsFor(a.name).length > 0 ? 1 : 0;
-      var ib = interviewsFor(b.name).length > 0 ? 1 : 0;
-      if (ia !== ib) return ib - ia;
       var aa = applicationsForRow(a).length > 0 ? 1 : 0;
       var ab = applicationsForRow(b).length > 0 ? 1 : 0;
-      return ab - aa;
+      if (aa !== ab) return ab - aa;
+      var ia = interviewsFor(a.name).length > 0 ? 1 : 0;
+      var ib = interviewsFor(b.name).length > 0 ? 1 : 0;
+      return ib - ia;
     });
     var slice = rows.slice(0, overviewShown);
     tbody.innerHTML = slice.map(function (r) {
