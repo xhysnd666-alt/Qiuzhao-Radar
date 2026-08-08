@@ -8,7 +8,7 @@
   { "id": "jd", "name": "京东", "url": "https://careers.jd.com/" },
   { "id": "baidu", "name": "百度", "url": "https://talent.baidu.com/" },
   { "id": "xiaohongshu", "name": "小红书", "url": "https://jobs.xiaohongshu.com/" },
-  { "id": "bilibili", "name": "哔哩哔哩", "url": "https://careers.bilibili.com/" },
+  { "id": "bilibili", "name": "哔哩哔哩", "url": "https://jobs.bilibili.com/campus" },
   { "id": "xiaomi", "name": "小米", "url": "https://hr.xiaomi.com/" },
   { "id": "huawei", "name": "华为", "url": "https://career.huawei.com/" },
   { "id": "didi", "name": "滴滴", "url": "https://campus.didiglobal.com/" },
@@ -28,7 +28,7 @@
   { "id": "insta360", "name": "影石Insta360", "url": "https://www.insta360.com/cn/jobs" },
   { "id": "antgroup", "name": "蚂蚁集团", "url": "https://talent.antgroup.com/campus" },
   { "id": "tencentmusic", "name": "腾讯音乐", "url": "https://join.tencentmusic.com/campus" },
-  { "id": "weibo", "name": "微博（新浪）", "url": "https://hr.sina.com.cn/" },
+  { "id": "weibo", "name": "微博（新浪）", "url": "https://career.sina.com.cn/campus-recruitment/sina/43536" },
   { "id": "qihoo360", "name": "360集团", "url": "https://campus.360.cn/" },
   { "id": "wps", "name": "金山办公", "url": "https://join.wps.cn/" },
   { "id": "iqiyi", "name": "爱奇艺", "url": "https://careers.iqiyi.com/" },
@@ -43,5 +43,5 @@
   { "id": "gbits", "name": "吉比特", "url": "https://hr.g-bits.com/" },
   { "id": "shengqu", "name": "盛趣游戏", "url": "https://www.shengqugames.com/" },
   { "id": "zhihu", "name": "知乎", "url": "https://app.mokahr.com/campus_apply/zhihu/68321" },
-  { "id": "vip", "name": "唯品会", "url": "https://job.vip.com/" }
+  { "id": "vip", "name": "唯品会", "url": "https://campus.vip.com/" }
 ]
