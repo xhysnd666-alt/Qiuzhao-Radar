@@ -9,6 +9,14 @@
   var GUOQI = window.QIUZHAO_GUOQI || { items: [] };
   var AI_TIPS = window.QIUZHAO_AI_TIPS || { profile: "", zhudiNotes: [], generalTips: [], companyTips: {} };
   var LS_KEY = "qiuzhao-radar-progress-v1";
+  var edgeOpen = true;
+  try { edgeOpen = localStorage.getItem("qiuzhao-edge-open") !== "0"; } catch (e) { /* ignore */ }
+
+  function extHref(url) {
+    if (!edgeOpen) return url;
+    if (/Edg\//.test(navigator.userAgent || "")) return url;
+    return "microsoft-edge:" + url;
+  }
   var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
   var STATUS_CLASS = {
@@ -257,11 +265,11 @@
       var ivBtn = ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(r.name) + '">面经 ' + ivCount + "</button>" : "";
       var links;
       if (r._clue) {
-        links = (isUrl(r.applyUrl) ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' : "") +
-          (isUrl(r.announceUrl) && r.announceUrl !== r.applyUrl ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>' : "") +
+        links = (isUrl(r.applyUrl) ? '<a class="btn btn-ghost" href="' + esc(extHref(r.applyUrl)) + '" target="_blank" rel="noopener">投递</a>' : "") +
+          (isUrl(r.announceUrl) && r.announceUrl !== r.applyUrl ? '<a class="btn btn-ghost" href="' + esc(extHref(r.announceUrl)) + '" target="_blank" rel="noopener">公告</a>' : "") +
           ivBtn;
       } else {
-        links = '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>' +
+        links = '<a class="btn btn-ghost" href="' + esc(extHref(r.applyUrl)) + '" target="_blank" rel="noopener">投递</a>' +
           '<button class="btn btn-ghost" type="button" data-detail="' + esc(r.id) + '">详情</button>' +
           ivBtn;
       }
@@ -390,11 +398,11 @@
       "</div>" +
       '<div class="detail-meta text-small muted">' + esc(c.note || "") + "</div>" +
       (c.sourceUrl
-        ? '<div class="detail-meta text-small">信息来源：<a class="source-link" href="' + esc(c.sourceUrl) + '" target="_blank" rel="noopener">' + esc(c.sourceLabel || c.source || "官方来源") + "</a></div>"
+        ? '<div class="detail-meta text-small">信息来源：<a class="source-link" href="' + esc(extHref(c.sourceUrl)) + '" target="_blank" rel="noopener">' + esc(c.sourceLabel || c.source || "官方来源") + "</a></div>"
         : "") +
       '<div class="row">' +
-        '<a class="btn" href="' + esc(c.careerUrl) + '" target="_blank" rel="noopener">官方校招页</a>' +
-        '<a class="btn btn-primary" href="' + esc(c.applyUrl) + '" target="_blank" rel="noopener">去投递</a>' +
+        '<a class="btn" href="' + esc(extHref(c.careerUrl)) + '" target="_blank" rel="noopener">官方校招页</a>' +
+        '<a class="btn btn-primary" href="' + esc(extHref(c.applyUrl)) + '" target="_blank" rel="noopener">去投递</a>' +
       "</div>" +
       '<div class="row detail-meta">' +
         "<div><b>批次</b><div class=\"text-small\">" + esc(c.batch) + " · " + fmtDate(c.startDate) + " 开启 · " + fmtDate(c.endDate) + " 截止</div></div>" +
@@ -500,7 +508,7 @@
     list.innerHTML = items.map(function (f) {
       return "<li>" +
         "<div>" +
-          '<a class="feedback-title" href="' + esc(f.url) + '" target="_blank" rel="noopener">' + esc(f.title) + "</a>" +
+          '<a class="feedback-title" href="' + esc(extHref(f.url)) + '" target="_blank" rel="noopener">' + esc(f.title) + "</a>" +
           (f.sample ? ' <span class="badge badge-muted">示例</span>' : "") +
           '<div class="text-small muted">' + esc(f.platform) + " · " + esc(f.company) + " · " + esc(f.addedAt || "") + "</div>" +
           '<div class="text-small muted">' + esc(f.summary || "") + "</div>" +
@@ -560,7 +568,7 @@
             ' <span class="badge ' + (PRIORITY_CLASS[s.priority] || "") + '">' + esc(s.priority) + "</span>" +
             ' <span class="badge">' + esc(s.platform) + "</span>" +
             '<div class="text-small muted">' + esc(s.note || "") + "</div></div>" +
-            '<a class="btn btn-ghost" href="' + esc(s.url) + '" target="_blank" rel="noopener">打开</a>' +
+      '<a class="btn btn-ghost" href="' + esc(extHref(s.url)) + '" target="_blank" rel="noopener">打开</a>' +
             "</li>";
         }).join("") +
         "</ul></div>";
@@ -581,10 +589,10 @@
 
   function clueRowHtml(r) {
     var apply = isUrl(r.applyUrl)
-      ? '<a class="btn btn-ghost" href="' + esc(r.applyUrl) + '" target="_blank" rel="noopener">投递</a>'
+      ? '<a class="btn btn-ghost" href="' + esc(extHref(r.applyUrl)) + '" target="_blank" rel="noopener">投递</a>'
       : "";
     var announce = isUrl(r.announceUrl)
-      ? '<a class="btn btn-ghost" href="' + esc(r.announceUrl) + '" target="_blank" rel="noopener">公告</a>'
+      ? '<a class="btn btn-ghost" href="' + esc(extHref(r.announceUrl)) + '" target="_blank" rel="noopener">公告</a>'
       : "";
     var exam = "";
     if (r.exam && r.exam.indexOf("免笔试") !== -1) exam = '<span class="badge badge-ok">免笔试</span>';
@@ -693,7 +701,7 @@
     var roundBadge = round ? '<span class="round-badge">' + esc(round) + "</span>" : "";
     if (i.url) {
       return '<div class="clue-row">' +
-        '<div class="row"><a class="feedback-title" href="' + esc(i.url) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" + roundBadge + badges + "</div>" +
+        '<div class="row"><a class="feedback-title" href="' + esc(extHref(i.url)) + '" target="_blank" rel="noopener">' + esc(i.title) + "</a>" + roundBadge + badges + "</div>" +
         '<div class="text-small muted">' + esc(i.summary || "") + (i.tags && i.tags.length ? " · 标签：" + esc(i.tags.join("、")) : "") + "</div></div>";
     }
     return '<details class="clue-row iv-item"><summary class="iv-summary">' +
@@ -795,7 +803,7 @@
       '<div class="text-small muted" style="margin-bottom:8px">共 ' + items.length + " 家单位</div>" +
       items.map(function (i) {
         var link = isUrl(i.url)
-          ? '<a class="btn btn-ghost" href="' + esc(i.url) + '" target="_blank" rel="noopener">官网</a>'
+          ? '<a class="btn btn-ghost" href="' + esc(extHref(i.url)) + '" target="_blank" rel="noopener">官网</a>'
           : '<span class="badge badge-muted">无链接</span>';
         return '<div class="clue-row"><div class="row"><b>' + esc(i.name) + "</b>" + link + "</div></div>";
       }).join("") ||
@@ -834,6 +842,8 @@
   function init() {
     $("#data-date").textContent = DATA.updatedAt || "";
     $("#source-note").textContent = DATA.sourceNote || "";
+    var edgeCheck = $("#edge-open");
+    if (edgeCheck) edgeCheck.checked = edgeOpen;
     renderStats();
     renderFilters();
     renderTable();
@@ -998,6 +1008,21 @@
       });
     });
     $("#guoqi-search").addEventListener("input", renderGuoqi);
+
+    if (edgeCheck) {
+      edgeCheck.addEventListener("change", function () {
+        edgeOpen = edgeCheck.checked;
+        try { localStorage.setItem("qiuzhao-edge-open", edgeOpen ? "1" : "0"); } catch (e) { /* ignore */ }
+        detachDetail();
+        renderTable();
+        renderApplications();
+        renderSources();
+        renderZhudi();
+        renderInterviews();
+        renderFeedback();
+        renderGuoqi();
+      });
+    }
 
     document.addEventListener("click", function (e) {
       var btn = e.target && e.target.closest ? e.target.closest("button[data-ask-ai]") : null;
