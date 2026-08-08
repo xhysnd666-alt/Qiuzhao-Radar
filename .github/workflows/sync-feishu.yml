@@ -20,7 +20,12 @@ jobs:
           node-version: 20
 
       - name: Sync Feishu base
-        run: node scripts/sync_feishu.mjs
+        run: |
+          if [ -z "$FEISHU_APP_ID" ] || [ -z "$FEISHU_APP_SECRET" ]; then
+            echo "FEISHU_APP_ID / FEISHU_APP_SECRET not configured, skip sync"
+            exit 0
+          fi
+          node scripts/sync_feishu.mjs
         env:
           FEISHU_APP_ID: ${{ secrets.FEISHU_APP_ID }}
           FEISHU_APP_SECRET: ${{ secrets.FEISHU_APP_SECRET }}

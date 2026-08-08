@@ -20,7 +20,12 @@ jobs:
           node-version: 20
 
       - name: Run career page check
-        run: node scripts/check_career_pages.mjs
+        run: |
+          if [ -z "$DEEPSEEK_API_KEY" ]; then
+            echo "DEEPSEEK_API_KEY not configured, skip daily check"
+            exit 0
+          fi
+          node scripts/check_career_pages.mjs
         env:
           DEEPSEEK_API_KEY: ${{ secrets.DEEPSEEK_API_KEY }}
           DEEPSEEK_MODEL: ${{ secrets.DEEPSEEK_MODEL }}
