@@ -151,6 +151,37 @@
   }
 
   var overviewShown = 30;
+  var quickFilter = null;
+
+  function activeStatuses() {
+    return ["进行中", "即将截止", "即将开启"];
+  }
+
+  function setQuickFilter(key) {
+    if (key === "applied") {
+      switchView("applications");
+      return;
+    }
+    quickFilter = quickFilter === key ? null : key;
+    overviewShown = 30;
+    updateQuickUI();
+    renderTable();
+  }
+
+  function clearQuickFilter() {
+    if (quickFilter) {
+      quickFilter = null;
+      updateQuickUI();
+    }
+  }
+
+  function updateQuickUI() {
+    $$(".stat").forEach(function (el) {
+      var on = el.getAttribute("data-quick") === quickFilter;
+      el.classList.toggle("active", on);
+      el.setAttribute("aria-pressed", on ? "true" : "false");
+    });
+  }
 
   function getProgress() {
     try { return JSON.parse(localStorage.getItem(LS_KEY)) || {}; }
@@ -234,6 +265,13 @@
       if (hideApplied && applicationsForRow(r).length) return false;
       return true;
     });
+    if (quickFilter === "active") {
+      rows = rows.filter(function (r) { return !r._clue && activeStatuses().indexOf(r.status) !== -1; });
+    } else if (quickFilter === "expiring") {
+      rows = rows.filter(function (r) { return r.status === "即将截止"; });
+    } else if (quickFilter === "early") {
+      rows = rows.filter(function (r) { return !r._clue && r.batch === "提前批" && activeStatuses().indexOf(r.status) !== -1; });
+    }
 
     var tbody = $("#company-rows");
     if (!rows.length) {
@@ -847,6 +885,7 @@
     renderStats();
     renderFilters();
     renderTable();
+    updateQuickUI();
     renderApplications();
     renderSources();
     $("#zhudi-date").textContent = ZHUDI.updatedAt || "";
@@ -860,18 +899,30 @@
 
     ["search", "filter-industry", "filter-position", "filter-batch", "filter-status"].forEach(function (id) {
       var el = $("#" + id);
-      el.addEventListener("input", function () { overviewShown = 30; renderTable(); });
-      el.addEventListener("change", function () { overviewShown = 30; renderTable(); });
+      el.addEventListener("input", function () { clearQuickFilter(); overviewShown = 30; renderTable(); });
+      el.addEventListener("change", function () { clearQuickFilter(); overviewShown = 30; renderTable(); });
     });
 
     $("#overview-no-intern").addEventListener("change", function () {
+      clearQuickFilter();
       overviewShown = 30;
       renderFilters();
       renderTable();
     });
     $("#overview-hide-applied").addEventListener("change", function () {
+      clearQuickFilter();
       overviewShown = 30;
       renderTable();
+    });
+
+    $$(".stat[data-quick]").forEach(function (el) {
+      el.addEventListener("click", function () { setQuickFilter(el.getAttribute("data-quick")); });
+      el.addEventListener("keydown", function (e) {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          setQuickFilter(el.getAttribute("data-quick"));
+        }
+      });
     });
 
     $$("[data-view-btn]").forEach(function (b) {

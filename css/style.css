@@ -150,13 +150,15 @@ body::after {
 }
 
 .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 12px; }
-.stat { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+.stat { position: relative; overflow: hidden; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 12px 14px; cursor: pointer; user-select: none; }
 .stat::before { content: ""; position: absolute; top: 0; left: 0; bottom: 0; width: 4px; background: var(--primary); }
 .stat:nth-child(2)::before { background: var(--warn); }
 .stat:nth-child(3)::before { background: #a855f7; }
 .stat:nth-child(4)::before { background: var(--green); }
 .stat b { display: block; font-size: 22px; font-weight: 500; }
 .stat span { color: var(--muted); font-size: 13px; }
+.stat.active { border-color: var(--primary); box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary) 25%, transparent); }
+.stat.active span::after { content: " · 点击取消"; color: var(--primary); font-weight: 600; }
 
 .filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
 .input, .select {
