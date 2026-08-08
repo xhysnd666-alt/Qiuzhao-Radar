@@ -1024,6 +1024,18 @@
       });
     }
 
+    var openInEdge = $("#open-in-edge");
+    if (openInEdge) {
+      openInEdge.addEventListener("click", function () {
+        var url = location.href;
+        if (location.protocol === "file:") {
+          copyText(url, "本地文件无法直接调起 Edge，地址已复制 · ");
+          return;
+        }
+        location.href = "microsoft-edge:" + url;
+      });
+    }
+
     document.addEventListener("click", function (e) {
       var btn = e.target && e.target.closest ? e.target.closest("button[data-ask-ai]") : null;
       if (!btn) return;
