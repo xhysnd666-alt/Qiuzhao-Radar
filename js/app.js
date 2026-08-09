@@ -77,6 +77,57 @@
     return parseInt(p[1], 10) + "/" + parseInt(p[2], 10);
   }
 
+  function batchBadgeHtml(batch) {
+    var cls = batch === "提前批" ? " badge-early" : (batch === "正式批" ? " badge-official" : (batch === "补录" ? " badge-supply" : ""));
+    return '<span class="badge' + cls + '">' + esc(batch || "待定") + "</span>";
+  }
+
+  function statusBadgeHtml(row) {
+    var cls = {
+      "进行中": "badge-live",
+      "即将截止": "badge-urgent",
+      "即将开启": "badge-soon",
+      "未开始": "badge-wait",
+      "已结束": "badge-done",
+      "待核实": "badge-muted badge-dashed"
+    }[row.status] || "";
+    return '<span class="badge ' + cls + '">' + esc(row.status) + "</span>";
+  }
+
+  function progressBarHtml(row) {
+    if (!row.startDate || !row.endDate) return "";
+    var s = new Date(row.startDate + "T00:00:00").getTime();
+    var e = new Date(row.endDate + "T00:00:00").getTime();
+    var now = new Date().getTime();
+    if (e <= s) return "";
+    var pct = Math.max(0, Math.min(100, (now - s) / (e - s) * 100));
+    var cls = pct >= 100 ? "bar-done" : (pct >= 90 ? "bar-urgent" : (pct >= 75 ? "bar-soon" : "bar-ok"));
+    return '<span class="deadline-bar"><i class="' + cls + '" style="width:' + pct.toFixed(0) + '%"></i></span>';
+  }
+
+  function startCellHtml(row) {
+    var d = daysUntil(row.startDate);
+    var chip = "";
+    if (d !== null && d >= 0 && d <= 3) {
+      chip = d === 0 ? '<span class="chip chip-hot">今日开启</span>' : '<span class="chip chip-soon">' + d + " 天后开启</span>";
+    }
+    return fmtDate(row.startDate) + chip;
+  }
+
+  function deadlineCellHtml(row) {
+    var d = daysUntil(row.endDate);
+    var chip = "";
+    var bar = "";
+    if (d !== null) {
+      if (d < 0) chip = '<span class="chip chip-done">已截止</span>';
+      else if (d <= 3) chip = '<span class="chip chip-urgent">剩 ' + d + " 天</span>";
+      else if (d <= 7) chip = '<span class="chip chip-soon">剩 ' + d + " 天</span>";
+      else chip = '<span class="chip chip-ok">剩 ' + d + " 天</span>";
+      bar = progressBarHtml(row);
+    }
+    return fmtDate(row.endDate) + chip + bar;
+  }
+
   function companyById(id) {
     var found = null;
     (DATA.companies || []).forEach(function (c) { if (c.id === id) found = c; });
@@ -213,6 +264,29 @@
 
   var currentCompany = null;
 
+  function renderAlert() {
+    var el = $("#overview-alert");
+    if (!el) return;
+    var items = [];
+    (DATA.companies || []).forEach(function (c) {
+      var ds = daysUntil(c.startDate);
+      if (ds !== null && ds >= 0 && ds <= 7) {
+        var openLbl = ds === 0 ? "今天开启" : (ds === 1 ? "明天开启" : ds + " 天后开启");
+        items.push({ sort: ds, html: "<b>" + esc(c.name) + "</b> " + fmtDate(c.startDate) + " " + openLbl });
+      }
+      var de = daysUntil(c.endDate);
+      if (de !== null && de >= 0 && de <= 14) {
+        var endLbl = de === 0 ? "今天截止" : (de === 1 ? "明天截止" : "剩 " + de + " 天截止");
+        items.push({ sort: de + 100, html: "<b>" + esc(c.name) + "</b> " + fmtDate(c.endDate) + " " + endLbl });
+      }
+    });
+    items.sort(function (a, b) { return a.sort - b.sort; });
+    if (!items.length) { el.hidden = true; return; }
+    el.innerHTML = '<span class="alert-ico" aria-hidden="true">⏰</span><span class="alert-title">最近节点</span>' +
+      items.slice(0, 4).map(function (i) { return '<span class="alert-item">' + i.html + "</span>"; }).join("");
+    el.hidden = false;
+  }
+
   function renderStats() {
     var companies = DATA.companies || [];
     var active = companies.filter(function (c) {
@@ -225,6 +299,7 @@
     $("#stat-expiring").textContent = expiring.length;
     $("#stat-early").textContent = early.length;
     $("#stat-applied").textContent = APPLICATIONS.length;
+    renderAlert();
   }
 
   function renderFilters() {
@@ -308,9 +383,7 @@
       var appliedNote = apps.length
         ? '<div class="text-small applied-note">已投：' + esc(apps.map(function (a) { return a.position; }).join("、")) + "</div>"
         : "";
-      var batchBadge = r._clue
-        ? '<span class="badge ' + batchClass(r.batch) + '">' + esc(r.batch || "待定") + "</span>"
-        : '<span class="badge' + (r.batch === "提前批" ? " badge-primary" : "") + '">' + esc(r.batch) + "</span>";
+      var batchBadge = batchBadgeHtml(r.batch);
       var ivCount = interviewsFor(r.name).length;
       var ivBtn = ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(r.name) + '">面经 ' + ivCount + "</button>" : "";
       var links;
@@ -323,13 +396,14 @@
           '<button class="btn btn-ghost" type="button" data-detail="' + esc(r.id) + '">详情</button>' +
           ivBtn;
       }
-      return "<tr>" +
+      var rowCls = (apps.length ? " row-applied" : "") + (r._clue ? " row-clue" : "");
+      return '<tr class="' + rowCls + '">' +
         "<td><b>" + esc(r.name) + "</b>" + appliedBadge + sourceBadge + appliedNote + "</td>" +
         "<td>" + esc(r.positions) + "</td>" +
         "<td>" + batchBadge + "</td>" +
-        '<td class="hide-sm">' + fmtDate(r.startDate) + "</td>" +
-        '<td class="hide-sm">' + fmtDate(r.endDate) + "</td>" +
-        '<td><span class="badge ' + (STATUS_CLASS[r.status] || "") + '">' + esc(r.status) + "</span></td>" +
+        '<td class="hide-sm">' + startCellHtml(r) + "</td>" +
+        '<td class="hide-sm">' + deadlineCellHtml(r) + "</td>" +
+        "<td>" + statusBadgeHtml(r) + "</td>" +
         '<td class="actions-cell">' + links + "</td>" +
         "</tr>";
     }).join("");
