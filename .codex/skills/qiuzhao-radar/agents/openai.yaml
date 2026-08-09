@@ -1,0 +1,4 @@
+interface:
+  display_name: "秋招雷达"
+  short_description: "秋招雷达：每日更新校招信息、管理投递记录与面试准备"
+  default_prompt: "Use $qiuzhao-radar to 跑一次今天的秋招更新并汇总新增岗位。"
