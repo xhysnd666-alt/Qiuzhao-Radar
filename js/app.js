@@ -17,7 +17,8 @@
     if (/Edg\//.test(navigator.userAgent || "")) return url;
     return "microsoft-edge:" + url;
   }
-  var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "市场", "运营", "职能"];
+  var POSITION_OPTIONS = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划", "市场", "运营", "职能"];
+  var POSITION_PRIORITY = ["人力资源", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划"];
   var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
   var STATUS_CLASS = {
     "进行中": "badge-ok",
@@ -82,7 +83,15 @@
     return found;
   }
 
-  var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
+  var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
+
+  function positionRank(row) {
+    var s = row.positions || "";
+    for (var i = 0; i < POSITION_PRIORITY.length; i++) {
+      if (s.indexOf(POSITION_PRIORITY[i]) !== -1) return i;
+    }
+    return POSITION_PRIORITY.length;
+  }
 
   function isInternBatch(b) {
     return b && (b.indexOf("实习") !== -1 || b.indexOf("训练营") !== -1);
@@ -282,6 +291,9 @@
       var aa = applicationsForRow(a).length > 0 ? 1 : 0;
       var ab = applicationsForRow(b).length > 0 ? 1 : 0;
       if (aa !== ab) return ab - aa;
+      var ra = positionRank(a);
+      var rb = positionRank(b);
+      if (ra !== rb) return ra - rb;
       var ia = interviewsFor(a.name).length > 0 ? 1 : 0;
       var ib = interviewsFor(b.name).length > 0 ? 1 : 0;
       return ib - ia;
