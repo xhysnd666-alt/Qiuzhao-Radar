@@ -10,6 +10,7 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 ## 项目结构
 
 - `data/companies.js` — 45 家重点公司官方信息（唯一可信的官方层）
+- `data/apply_rules.js` — 每人可投递次数与规则（官方已核实层，未核实不写）
 - `data/applications.js` — 投递记录，由桌面「秋招简历投递.xlsx」生成，勿手改
 - `data/zhudi.js` — 朱迪学姐汇总表（第三方线索层）
 - `data/interviews.js` / `data/ai_tips.js` — 面经库与 AI 面试准备
@@ -28,7 +29,8 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 4. `applications.js` 由用户更新的 Excel 重新生成，不要手改。
 5. 每个新 URL 必须实际验证：`curl.exe -s -o NUL -L -w "%{http_code}" <url>`，DNS 解析失败 = 不可用，必须换官方新入口。
 6. 官网停用/改版时，用 web search 查新官方入口（常为 Moka、飞书、智联等校招系统域名），并同步更新 `watchlist.json`。
-7. 提交信息用英文（如 `feat: add xiaohongshu official campus info`），避免中文引号导致审批问题。
+7. 投递次数/规则只写官方已核实来源（校招官网 FAQ、官方公告、高校就业网发布的官方信息）；未核实的公司不加 `apply_rules.js` 条目，页面会默认提示以官网为准。
+8. 提交信息用英文（如 `feat: add xiaohongshu official campus info`），避免中文引号导致审批问题。
 
 ## 模式判断
 

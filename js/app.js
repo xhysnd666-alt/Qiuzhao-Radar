@@ -2,6 +2,7 @@
   "use strict";
 
   var DATA = window.QIUZHAO_DATA || { companies: [], feedback: [], reviewQueue: [] };
+  var APPLY_RULES = window.QIUZHAO_APPLY_RULES || {};
   var APPLICATIONS = window.QIUZHAO_APPLICATIONS || [];
   var SOURCES = window.QIUZHAO_SOURCES || [];
   var ZHUDI = window.QIUZHAO_ZHUDI || { rows: [], codes: [] };
@@ -126,6 +127,29 @@
       bar = progressBarHtml(row);
     }
     return fmtDate(row.endDate) + chip + bar;
+  }
+
+  function applyChanceCellHtml(row) {
+    var rule = APPLY_RULES[row.id];
+    if (!rule) return "";
+    var applied = applicationsForRow(row).length;
+    var title = rule.note ? ' title="' + esc(rule.note) + '"' : "";
+    var chips = [];
+    if (rule.unlimited) {
+      chips.push('<span class="chip chip-ok">无上限</span>');
+    } else if (rule.limit === "" || rule.limit == null) {
+      chips.push('<span class="chip chip-muted">以官网为准</span>');
+    } else {
+      var left = Math.max(0, rule.limit - applied);
+      if (rule.perScope && applied >= rule.limit) {
+        chips.push('<span class="chip chip-soon">按项目/集团计</span>');
+      } else {
+        var cls = left <= 0 ? "chip-done" : (left <= 1 ? "chip-urgent" : "chip-ok");
+        chips.push('<span class="chip ' + cls + '">剩 ' + left + " 次</span>");
+      }
+    }
+    if (applied) chips.push('<span class="text-small muted">已投 ' + applied + "</span>");
+    return '<span' + title + ">" + chips.join(" ") + "</span>";
   }
 
   function companyById(id) {
@@ -363,7 +387,7 @@
 
     var tbody = $("#company-rows");
     if (!rows.length) {
-      tbody.innerHTML = '<tr><td colspan="7" class="empty-cell">没有符合条件的公司，试试放宽筛选</td></tr>';
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-cell">没有符合条件的公司，试试放宽筛选</td></tr>';
       return;
     }
     rows.sort(function (a, b) {
@@ -404,6 +428,7 @@
       return '<tr class="' + rowCls + '">' +
         "<td><b>" + esc(r.name) + "</b>" + appliedBadge + sourceBadge + appliedNote + "</td>" +
         "<td>" + esc(r.positions) + "</td>" +
+        '<td class="hide-sm">' + applyChanceCellHtml(r) + "</td>" +
         "<td>" + batchBadge + "</td>" +
         '<td class="hide-sm">' + startCellHtml(r) + "</td>" +
         '<td class="hide-sm">' + deadlineCellHtml(r) + "</td>" +
@@ -516,6 +541,36 @@
       feedHtml = '<div class="text-small muted">还没有相关面经，可以到「面经库」添加</div>';
     }
 
+    var appliedCount = APPLICATIONS.filter(function (a) { return a.companyId === c.id; }).length;
+    var rule = APPLY_RULES[c.id];
+    var ruleHtml;
+    if (rule) {
+      var leftText = rule.unlimited
+        ? "投递次数无上限"
+        : (rule.limit === "" || rule.limit == null)
+          ? "官网未明确，投递前以官网为准"
+        : (rule.perScope && appliedCount >= rule.limit
+            ? "上限按集团/项目分别计算，详情见规则"
+            : "本轮剩余 <b>" + Math.max(0, rule.limit - appliedCount) + "</b> 次");
+      ruleHtml =
+        '<div class="detail-rule">' +
+          "<b>投递次数与规则</b>" +
+          '<div class="rule-note">' + esc(rule.note) + "</div>" +
+          '<div class="text-small">你已投 <b>' + appliedCount + "</b> 条 · " + leftText + "</div>" +
+          (rule.sourceUrl
+            ? '<div class="text-small">来源：<a class="source-link" href="' + esc(extHref(rule.sourceUrl)) + '" target="_blank" rel="noopener">' + esc(rule.sourceLabel || "官方来源") + "</a></div>"
+            : "") +
+          (rule.verified ? '<span class="badge badge-ok">官方已核实</span>' : "") +
+        "</div>";
+    } else {
+      ruleHtml =
+        '<div class="detail-rule">' +
+          "<b>投递次数与规则</b>" +
+          '<div class="text-small muted">官网暂未明确公布每人可投递次数，投递前请以官网为准</div>' +
+          '<div class="text-small">来源：<a class="source-link" href="' + esc(extHref(c.careerUrl)) + '" target="_blank" rel="noopener">' + esc(c.sourceLabel || c.careerUrl) + "</a></div>" +
+        "</div>";
+    }
+
     panel.innerHTML =
       '<div class="row">' +
         "<b>" + esc(c.name) + "</b>" +
@@ -536,6 +591,7 @@
         "<div><b>批次</b><div class=\"text-small\">" + esc(c.batch) + " · " + fmtDate(c.startDate) + " 开启 · " + fmtDate(c.endDate) + " 截止</div></div>" +
         "<div><b>岗位方向</b><div class=\"text-small\">" + esc(c.positions.join(" / ")) + "</div></div>" +
       "</div>" +
+      ruleHtml +
       '<div class="detail-meta"><b>我的投递</b>' + progressHtml + "</div>" +
       '<div class="detail-meta"><b>相关面经/咨询</b>' + feedHtml + "</div>";
 
@@ -551,7 +607,7 @@
     var tr = document.createElement("tr");
     tr.className = "detail-tr";
     var td = document.createElement("td");
-    td.colSpan = 7;
+    td.colSpan = 8;
     td.appendChild(panel);
     tr.appendChild(td);
     targetRow.insertAdjacentElement("afterend", tr);

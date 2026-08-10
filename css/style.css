@@ -347,6 +347,7 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
   font-weight: 600;
 }
 .chip-ok { background: #e3f5ec; color: var(--ok); }
+.chip-muted { background: var(--surface2); color: var(--muted); }
 .chip-soon { background: #fbf0dc; color: var(--warn); }
 .chip-urgent { background: #fdecea; color: var(--red); animation: qm-soft-pulse 1.6s ease-in-out infinite; }
 .chip-hot { background: #e7f0ff; color: var(--primary); }
@@ -441,6 +442,8 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 .btn-ghost { border-color: transparent; background: transparent; color: var(--primary); }
 
 .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px; margin-top: 10px; }
+.detail-rule { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 10px 12px; margin: 8px 0; }
+.rule-note { margin-top: 4px; font-size: 14px; line-height: 1.7; }
 .row { display: flex; flex-wrap: wrap; gap: 6px 12px; align-items: center; }
 .actions { margin-top: 10px; }
 .detail-meta { margin: 6px 0 10px; }

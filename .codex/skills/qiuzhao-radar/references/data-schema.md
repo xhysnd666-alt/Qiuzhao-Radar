@@ -38,6 +38,24 @@ window.QIUZHAO_DATA = {
 - `verified: true` 只代表入口可访问，不代表 2027 届已开；批次未开时 status 用「待核实」或「未开始」。
 - 同步维护 `data/watchlist.json` 里的监控 URL，避免监控盯旧地址。
 
+## data/apply_rules.js — 每人可投递次数与规则（官方已核实层）
+
+```js
+window.QIUZHAO_APPLY_RULES = {
+  "mihoyo": {
+    limit: 1,          // 数字 = 每人最多可投递次数；"" = 官方明确无上限/以官网为准
+    perScope: false,   // true = 上限按业务集团/事业群分别计算（如阿里、网易雷火/互娱）
+    unlimited: false,  // true = 官方明确投递无上限；limit 留 ""
+    note: "一句话规则说明",
+    sourceUrl: "https://...",  // 官方公告/高校就业网来源，必须可点开
+    sourceLabel: "北京理工大学就业资讯网（公司官方信息）",
+    verified: true
+  }
+};
+```
+
+规则：只收录官方公告、校招官网 FAQ、高校就业网发布的公司官方信息；未核实的公司不要加条目（页面会默认提示「以官网为准」）。`limit` 表示「当前批次/项目内每人最多可投递次数」，跨批次机会在 `note` 里说明（如提前批不占正式批）。
+
 ## data/applications.js — 投递记录（Excel 生成，勿手改）
 
 ```js
