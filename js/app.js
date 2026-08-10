@@ -135,12 +135,14 @@
   }
 
   var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
+  var COMPANY_NAME_ALIASES = { "G社": ["Garena"] };
 
   function positionRank(row) {
     var s = row.positions || "";
     for (var i = 0; i < POSITION_PRIORITY.length; i++) {
       if (s.indexOf(POSITION_PRIORITY[i]) !== -1) return i;
     }
+    if (s.indexOf("HR") !== -1) return 0;
     return POSITION_PRIORITY.length;
   }
 
@@ -156,7 +158,9 @@
   function applicationsForRow(row) {
     if (row._clue) {
       return APPLICATIONS.filter(function (a) {
-        return a.companyName.indexOf(row.name) !== -1 || row.name.indexOf(a.companyName) !== -1;
+        var aliases = COMPANY_NAME_ALIASES[a.companyName] || [];
+        return a.companyName.indexOf(row.name) !== -1 || row.name.indexOf(a.companyName) !== -1 ||
+          aliases.some(function (n) { return n.indexOf(row.name) !== -1 || row.name.indexOf(n) !== -1; });
       });
     }
     return APPLICATIONS.filter(function (a) { return a.companyId === row.id; });

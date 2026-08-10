@@ -79,5 +79,85 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-07",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "jd",
+    "companyName": "京东",
+    "position": "HR",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "lenovo",
+    "companyName": "联想",
+    "position": "人力资源培训方向",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "baidu",
+    "companyName": "百度",
+    "position": "人力资源招聘方向",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "oppo",
+    "companyName": "OPPO",
+    "position": "招聘经理",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "oppo",
+    "companyName": "OPPO",
+    "position": "人力资源经理",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "pinduoduo",
+    "companyName": "拼多多",
+    "position": "HR管培生",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里千问",
+    "position": "人力资源",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里灵犀互娱",
+    "position": "游戏运营",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bilibili",
+    "companyName": "b站",
+    "position": "slg产品运营",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "garena",
+    "companyName": "G社",
+    "position": "fps产品运营",
+    "appliedAt": "2026-08-10",
+    "stage": "已投递",
+    "note": ""
   }
 ];

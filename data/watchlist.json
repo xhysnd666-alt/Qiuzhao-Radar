@@ -25,6 +25,8 @@
   { "id": "wanmei", "name": "完美世界", "url": "https://jobs.games.wanmei.com/school.html" },
   { "id": "qisan", "name": "三七互娱", "url": "https://zhaopin.37.com/" },
   { "id": "netease_game", "name": "网易游戏（互娱/雷火）", "url": "https://campus.game.163.com/" },
+  { "id": "game4399", "name": "4399游戏", "url": "https://web.4399.com/campus" },
+  { "id": "duoyi", "name": "多益网络", "url": "https://xz.duoyi.com/ANa" },
   { "id": "dji", "name": "大疆", "url": "https://careers.dji.com/" },
   { "id": "insta360", "name": "影石Insta360", "url": "https://www.insta360.com/cn/jobs" },
   { "id": "antgroup", "name": "蚂蚁集团", "url": "https://talent.antgroup.com/campus" },
