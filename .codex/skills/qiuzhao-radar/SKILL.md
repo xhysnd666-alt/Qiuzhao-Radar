@@ -1,6 +1,6 @@
 ---
 name: qiuzhao-radar
-description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信息、维护投递记录与面经库、验证官方投递链接、运行数据校验并提交推送。当用户提到"跑一次今天的秋招"、"今天有哪些公司开秋招"、"更新投递表格/我投了XX"、"加公司/检查官网链接/网站打不开"、"更新面经/面试准备"、秋招雷达项目维护等时使用。
+description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信息、维护投递记录与面经库、验证官方投递链接、运行数据校验并提交推送。当用户提到"跑一次今天的秋招"、"今天有哪些公司开秋招"、"更新投递表格/我投了XX"、"加公司/检查官网链接/网站打不开"、"更新面经/面试准备"、发送「秋招简历投递.xlsx」或「朱迪学姐汇总表」xlsx 文件、秋招雷达项目维护等时使用。
 ---
 
 # 秋招雷达
@@ -15,7 +15,7 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 - `data/interviews.js` / `data/ai_tips.js` — 面经库与 AI 面试准备
 - `data/guoqi.js` / `data/sources.js` — 央国企名录 / 信息源
 - `data/watchlist.json` — 官网监控清单；`data/review_queue.json` — 待确认队列
-- `scripts/` — 官网检测、飞书同步、数据校验脚本
+- `scripts/` — 官网检测、飞书同步、Excel 导入、数据校验脚本
 - `.github/workflows/` — Pages 部署、每日检测、飞书同步
 
 所有数据文件字段定义见 `references/data-schema.md`，编辑数据前先读它。
@@ -70,10 +70,25 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 
 ## 模式 C：投递与进度管理
 
-1. 用户更新了「秋招简历投递.xlsx」：用表格工具读取，重新生成 `data/applications.js`（保持字段结构；`companyId` 尽量与 `companies.js` 对齐）。
+1. 用户更新了「秋招简历投递.xlsx」：运行 `python scripts/import_xlsx.py applications` 重新生成 `data/applications.js`（保持字段结构；`companyId` 尽量与 `companies.js` 对齐）。新增公司名若不在 `COMPANY_MAP`，先补映射再导入。
 2. 用户口头报告「投了 XX」：优先请用户更新 Excel 或授权直接改 Excel；若只临时更新站点，写入 `applications.js` 并注明下次以 Excel 为准。
 3. 页面上的进度（localStorage）只是本地视图；正式记录以 Excel 为准，导入后覆盖。
 4. 更新后跑模式 B 第 7 步的校验与提交。
+
+## 模式 D：文件自动导入（用户发文件时自动执行）
+
+触发条件：用户发送「秋招简历投递.xlsx」（桌面路径 `C:\Users\Lenovo\Desktop\秋招简历投递.xlsx`）或朱迪学姐汇总表（`C:\Users\Lenovo\Downloads\27-【暑期实习_秋招_春招】汇总表（持续更新）-朱迪学姐 .xlsx`）。两个文件可能只发一个，也可能一起发；如果用户直接拖了新文件但路径未变，以用户提供的文件为准并先检查 LastWriteTime 是否为最新。
+
+步骤：
+
+1. 运行导入脚本（用 Codex 桌面版自带 Python，含 openpyxl）：
+   - 只发投递表：`python scripts/import_xlsx.py applications`
+   - 只发朱迪表：`python scripts/import_xlsx.py zhudi`
+   - 两个都发：`python scripts/import_xlsx.py`
+2. 检查输出：投递条数应与表格行数一致（当前约 20 条）；朱迪 rows≈2400、codes≈300；`data/zhudi.js` 的 `updatedAt` 应为当天。
+3. 总览自动合并朱迪表中符合目标岗位（人力资源/游戏运营/游戏发行/游戏营销/用户研究/游戏策划等）的非实习公司为「朱迪线索」行，无需手动改 `js/app.js`；如发现值得升级官方层的公司（有可验证的官方投递入口），按模式 B 第 5 步核验后写入 `data/companies.js` 并同步 `data/watchlist.json`。
+4. 校验与提交（模式 B 第 7 步）：`node scripts/validate_data.mjs`、`node --check js/app.js`，通过后提交并推送。
+5. 总结：新增投递数、朱迪新增/变化行数、总览新增公司、需要用户投递的重点公司。
 
 ## 平台注意
 
@@ -81,8 +96,11 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 - GitHub Pages 部署要求仓库 Settings → Pages → Source = GitHub Actions；失败先看 `configure-pages` 步骤日志。
 - 定时任务：在 Codex 桌面端用平台自动化机制创建每日任务；应用没开时到点不跑，下次触发补跑。
 - 通知：本项目在 Windows，没有 macOS `osascript`；把每日总结写在回复里，或用平台支持的通知。
+- 推送：网络不稳时用备用 git 并加 HTTP/1.1 与缓冲参数：
+  `& 'C:\Users\Lenovo\.cache\codex-runtimes\codex-primary-runtime\dependencies\native\git\cmd\git.exe' -c http.version=HTTP/1.1 -c http.postBuffer=524288000 push origin main`
 
 ## 资源
 
 - `references/data-schema.md` — 全部数据文件字段说明（编辑前必读）
+- `scripts/import_xlsx.py` — 投递表/朱迪表 Excel 导入（模式 C/D 使用）
 - `scripts/validate_data.mjs` — 数据一致性校验（提交前必跑）

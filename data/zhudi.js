@@ -1,7 +1,7 @@
 // 自动生成：朱迪学姐秋招汇总表（2027届 + 内推码）
 // 来源为第三方整理，属线索层；投递前请以官方公告为准
 window.QIUZHAO_ZHUDI = {
-  "updatedAt": "2026-08-10",
+ "updatedAt": "2026-08-10",
  "source": "朱迪学姐汇总表（第三方整理）",
  "sourceUrl": "https://acnr1ayjzqxf.feishu.cn/base/ISNobVuXAagJBFssvszcYeqQnfb",
  "rows": [

@@ -93,6 +93,7 @@ The repo includes a Codex skill at `.codex/skills/qiuzhao-radar/` that lets the 
 | --- | --- |
 | "跑一次今天的秋招" (run today's update) | Runs Mode B automatically and pushes to GitHub |
 | "我投了 XX / 更新投递表格" (I applied / update the sheet) | Re-imports Excel and syncs applications |
+| Send the application sheet or the ZhuDi digest xlsx | Auto-imports applications/jobs, adds matching companies to the overview, and pushes to GitHub |
 | "加 XX 公司 / 检查官网链接" (add a company / check links) | Verifies the official entry before adding it |
 | "更新面经" (update interview library) | Parses your PDF / links into the library |
 
