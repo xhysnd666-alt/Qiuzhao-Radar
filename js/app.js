@@ -639,12 +639,28 @@
       var cards = items.map(function (app) {
         var c = companyById(app.companyId);
         var ivCount = c ? interviewsFor(c.name).length : 0;
-        var ivBtn = ivCount ? '<div class="row actions"><button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button></div>" : "";
-        return '<div class="kanban-card">' +
-          '<div class="kanban-title">' + esc(app.companyName || (c && c.name) || "未知公司") + "</div>" +
-          '<div class="text-small">' + esc(app.position) + "</div>" +
+        var key = appKey(app);
+        var cur = stageOf(app);
+        var opts = STAGES.map(function (s) {
+          return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
+        }).join("");
+        var ivBtn = ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : "";
+        var progUrl = c ? (c.progressUrl || c.careerUrl || "") : "";
+        var progBtn = progUrl
+          ? '<a class="btn btn-ghost app-progress-link" href="' + esc(extHref(progUrl)) + '" target="_blank" rel="noopener" title="登录官网后进入「投递记录/我的投递」查看进度">官网查进度</a>'
+          : "";
+        return '<div class="kanban-card stage-' + esc(cur) + '">' +
+          '<div class="kanban-top">' +
+            '<span class="kanban-title">' + esc(app.companyName || (c && c.name) || "未知公司") + "</span>" +
+            (c ? '<span class="badge badge-muted">' + esc(c.batch) + "</span>" : "") +
+          "</div>" +
+          '<div class="kanban-pos">' + esc(app.position) + "</div>" +
           '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
-          ivBtn +
+          '<div class="kanban-actions">' +
+            '<select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select>" +
+            ivBtn +
+            progBtn +
+          "</div>" +
           "</div>";
       }).join("");
       return '<div class="kanban-col"><h4>' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
@@ -657,7 +673,8 @@
         var s = stageOf(a);
         return s !== "Offer" && s !== "已挂";
       }).length;
-      summary.textContent = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length + " · 已结束 " + groups["已挂"].length;
+      summary.innerHTML = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length + " · 已结束 " + groups["已挂"].length +
+        '<div class="text-small muted">点「官网查进度」直达公司官网，登录后进入「投递记录 / 我的投递」查看实时状态</div>';
     }
 
     var tbody = $("#application-table-rows");
@@ -668,6 +685,10 @@
       var cur = stageOf(app);
       var o = progress[key];
       var ivCount = c ? interviewsFor(c.name).length : 0;
+      var progUrl = c ? (c.progressUrl || c.careerUrl || "") : "";
+      var progCell = progUrl
+        ? '<a class="btn btn-ghost app-progress-link" href="' + esc(extHref(progUrl)) + '" target="_blank" rel="noopener">官网查进度</a>'
+        : '<span class="text-small muted">—</span>';
       var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
         return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
       }).join("");
@@ -675,11 +696,12 @@
         "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b></td>" +
         "<td>" + esc(app.position) + "</td>" +
         "<td>" + (ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : '<span class="text-small muted">—</span>') + "</td>" +
+        '<td class="hide-sm">' + progCell + "</td>" +
         '<td class="hide-sm">' + fmtDate(app.appliedAt) + "</td>" +
         '<td><select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select></td>" +
         '<td class="hide-sm">' + (o && o.updatedAt ? esc(o.updatedAt) : '<span class="text-small muted">默认</span>') + "</td>" +
         "</tr>";
-    }).join("") || '<tr><td colspan="6" class="empty-cell">暂无投递记录</td></tr>';
+    }).join("") || '<tr><td colspan="7" class="empty-cell">暂无投递记录</td></tr>';
   }
 
   function renderFeedback() {
@@ -1117,6 +1139,15 @@
     $("#application-cols").addEventListener("click", function (e) {
       var ivBtn = e.target && e.target.closest ? e.target.closest("button.btn-iv") : null;
       if (ivBtn) openInterviewModal(ivBtn.getAttribute("data-iv-company"));
+    });
+
+    $("#application-cols").addEventListener("change", function (e) {
+      var sel = e.target && e.target.closest ? e.target.closest("select.app-stage-select") : null;
+      if (!sel) return;
+      var key = sel.getAttribute("data-key");
+      progress[key] = { stage: sel.value, updatedAt: todayStr() };
+      saveProgress();
+      renderApplications();
     });
 
     $("#application-table-rows").addEventListener("click", function (e) {

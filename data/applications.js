@@ -159,5 +159,53 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-10",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "dewu",
+    "companyName": "得物",
+    "position": "HR招聘",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "shengqu",
+    "companyName": "盛趣游戏",
+    "position": "游戏用研",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "qunar",
+    "companyName": "去哪儿旅行",
+    "position": "AI 产品运营",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "ztgame",
+    "companyName": "巨人网络",
+    "position": "游戏运营",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaomi",
+    "companyName": "小米",
+    "position": "人力资源招聘国际",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "antgroup",
+    "companyName": "蚂蚁集团",
+    "position": "游戏运营",
+    "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
   }
 ];

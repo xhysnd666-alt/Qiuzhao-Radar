@@ -457,6 +457,21 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 .kanban-col h4 { margin: 0 0 8px; font-size: 13px; font-weight: 500; }
 .kanban-card { background: var(--surface2); border-radius: 8px; padding: 9px 11px; margin-bottom: 8px; font-size: 13px; }
 .kanban-title { font-weight: 500; }
+.kanban-card {
+  border-left: 4px solid var(--border);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.kanban-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(31, 45, 61, 0.10); }
+.kanban-card.stage-已投递 { border-left-color: var(--blue); }
+.kanban-card.stage-笔试 { border-left-color: var(--warn); }
+.kanban-card.stage-面试 { border-left-color: #9333ea; }
+.kanban-card.stage-Offer { border-left-color: var(--green); }
+.kanban-card.stage-已挂 { border-left-color: var(--muted); }
+.kanban-top { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; justify-content: space-between; }
+.kanban-pos { margin-top: 4px; font-weight: 500; }
+.kanban-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
+.kanban-actions .app-stage-select { flex: 0 1 auto; }
+.app-progress-link { color: var(--primary); }
 
 .kanban::-webkit-scrollbar, .kanban-col::-webkit-scrollbar, .table-wrap::-webkit-scrollbar { height: 8px; width: 8px; }
 .kanban::-webkit-scrollbar-thumb, .kanban-col::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }

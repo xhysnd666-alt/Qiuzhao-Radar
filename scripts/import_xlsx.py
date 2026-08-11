@@ -21,11 +21,24 @@ import openpyxl
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 APPLICATIONS_XLSX = Path(r"C:\Users\Lenovo\Desktop\秋招简历投递.xlsx")
-ZHUDI_XLSX = Path(
-    r"C:\Users\Lenovo\Downloads\27-【暑期实习_秋招_春招】汇总表（持续更新）-朱迪学姐 .xlsx"
-)
 APPLICATIONS_OUT = REPO_ROOT / "data" / "applications.js"
 ZHUDI_OUT = REPO_ROOT / "data" / "zhudi.js"
+
+
+def newest_zhudi_xlsx() -> Path:
+    """自动选择 Downloads 里最新的朱迪学姐汇总表（支持带 (1) 的重复导出）。"""
+    pattern = "27-【暑期实习_秋招_春招】汇总表*.xlsx"
+    candidates = sorted(
+        (Path(r"C:\Users\Lenovo\Downloads").glob(pattern)),
+        key=lambda p: p.stat().st_mtime,
+        reverse=True,
+    )
+    if not candidates:
+        raise FileNotFoundError(f"未在 Downloads 找到 {pattern}")
+    return candidates[0]
+
+
+ZHUDI_XLSX = newest_zhudi_xlsx()
 
 COMPANY_MAP = {
     "米哈游": "mihoyo",
@@ -45,6 +58,12 @@ COMPANY_MAP = {
     "阿里灵犀互娱": "alibaba",
     "b站": "bilibili",
     "G社": "garena",
+    "得物": "dewu",
+    "盛趣游戏": "shengqu",
+    "去哪儿旅行": "qunar",
+    "巨人网络": "ztgame",
+    "小米": "xiaomi",
+    "蚂蚁集团": "antgroup",
 }
 
 

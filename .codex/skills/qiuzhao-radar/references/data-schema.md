@@ -20,6 +20,7 @@ window.QIUZHAO_DATA = {
       positions: ["人力资源", "运营"], // 岗位方向数组
       applyUrl: "https://...",    // 投递入口（必须官方且可访问）
       careerUrl: "https://...",   // 官网/总入口
+      progressUrl: "https://...", // 可选：投递进度查询直达页；未填时页面用 careerUrl 兜底
       note: "一句话备注",
       source: "官网",             // 来源类型
       sourceUrl: "https://...",   // 来源出处
