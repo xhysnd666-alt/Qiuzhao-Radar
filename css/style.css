@@ -467,6 +467,13 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 .kanban-card.stage-面试 { border-left-color: #9333ea; }
 .kanban-card.stage-Offer { border-left-color: var(--green); }
 .kanban-card.stage-已挂 { border-left-color: var(--muted); }
+.kanban-col-title.stage-rejected { color: var(--red); }
+.kanban-card.card-rejected { border-left-color: var(--red); }
+.kanban-card.card-rejected .kanban-title,
+.kanban-card.card-rejected .kanban-pos { color: var(--muted); text-decoration: line-through; }
+.app-row-rejected td { color: var(--muted); }
+.rejected-sum { color: var(--red); }
+.rejected-sum b { color: var(--red); }
 .kanban-top { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: center; justify-content: space-between; }
 .kanban-pos { margin-top: 4px; font-weight: 500; }
 .kanban-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }

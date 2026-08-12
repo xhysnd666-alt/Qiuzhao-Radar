@@ -64,6 +64,12 @@ COMPANY_MAP = {
     "巨人网络": "ztgame",
     "小米": "xiaomi",
     "蚂蚁集团": "antgroup",
+    "腾讯": "tencent",
+    "理想": "lixiang",
+    "的物": "dewu",
+    "掌趣": "zhangqu",
+    "作业帮": "zuoyebang",
+    "迅雷": "xunlei",
 }
 
 

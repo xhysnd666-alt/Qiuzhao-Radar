@@ -157,7 +157,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "G社",
     "position": "fps产品运营",
     "appliedAt": "2026-08-10",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -205,6 +205,54 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "蚂蚁集团",
     "position": "游戏运营",
     "appliedAt": "2026-08-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "lixiang",
+    "companyName": "理想",
+    "position": "人力资源",
+    "appliedAt": "2026-08-12",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "dewu",
+    "companyName": "的物",
+    "position": "招商运营 户外",
+    "appliedAt": "2026-08-12",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "zhangqu",
+    "companyName": "掌趣",
+    "position": "海外SLG游戏GS运营",
+    "appliedAt": "2026-08-12",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "zuoyebang",
+    "companyName": "作业帮",
+    "position": "招聘HR",
+    "appliedAt": "2026-08-12",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xunlei",
+    "companyName": "迅雷",
+    "position": "数据产品经理",
+    "appliedAt": "2026-08-12",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tencent",
+    "companyName": "腾讯",
+    "position": "用研",
+    "appliedAt": "2026-08-12",
     "stage": "已投递",
     "note": ""
   }

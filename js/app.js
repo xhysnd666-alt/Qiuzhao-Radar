@@ -405,11 +405,15 @@
     tbody.innerHTML = slice.map(function (r) {
       var apps = applicationsForRow(r);
       var appliedBadge = apps.length ? ' <span class="badge badge-ok">已投</span>' : "";
+      var rejectedApps = apps.filter(function (a) { return stageOf(a) === "已挂"; }).length;
+      if (rejectedApps) appliedBadge += ' <span class="badge badge-red">已挂 ' + rejectedApps + "</span>";
       var sourceBadge = r._clue
         ? ' <span class="badge badge-muted">朱迪线索</span>'
         : (r.verified ? "" : ' <span class="badge badge-muted">待核实</span>');
       var appliedNote = apps.length
-        ? '<div class="text-small applied-note">已投：' + esc(apps.map(function (a) { return a.position; }).join("、")) + "</div>"
+        ? '<div class="text-small applied-note">已投：' + esc(apps.map(function (a) {
+            return a.position + (stageOf(a) === "已挂" ? "（已挂）" : "");
+          }).join("、")) + "</div>"
         : "";
       var batchBadge = batchBadgeHtml(r.batch);
       var ivCount = interviewsFor(r.name).length;
@@ -649,10 +653,10 @@
         var progBtn = progUrl
           ? '<a class="btn btn-ghost app-progress-link" href="' + esc(extHref(progUrl)) + '" target="_blank" rel="noopener" title="登录官网后进入「投递记录/我的投递」查看进度">官网查进度</a>'
           : "";
-        return '<div class="kanban-card stage-' + esc(cur) + '">' +
+        return '<div class="kanban-card stage-' + esc(cur) + (cur === "已挂" ? " card-rejected" : "") + '">' +
           '<div class="kanban-top">' +
             '<span class="kanban-title">' + esc(app.companyName || (c && c.name) || "未知公司") + "</span>" +
-            (c ? '<span class="badge badge-muted">' + esc(c.batch) + "</span>" : "") +
+            '<span class="badge ' + (cur === "已挂" ? "badge-red" : "badge-muted") + '">' + (cur === "已挂" ? "已挂" : esc(c ? c.batch : "")) + "</span>" +
           "</div>" +
           '<div class="kanban-pos">' + esc(app.position) + "</div>" +
           '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
@@ -663,7 +667,7 @@
           "</div>" +
           "</div>";
       }).join("");
-      return '<div class="kanban-col"><h4>' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
+      return '<div class="kanban-col"><h4 class="kanban-col-title' + (stage === "已挂" ? " stage-rejected" : "") + '">' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
     }).join("");
 
     var summary = $("#app-summary");
@@ -673,7 +677,8 @@
         var s = stageOf(a);
         return s !== "Offer" && s !== "已挂";
       }).length;
-      summary.innerHTML = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length + " · 已结束 " + groups["已挂"].length +
+      summary.innerHTML = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length +
+        ' · <span class="rejected-sum">已挂 ' + groups["已挂"].length + "</span>" +
         '<div class="text-small muted">点「官网查进度」直达公司官网，登录后进入「投递记录 / 我的投递」查看实时状态</div>';
     }
 
@@ -692,7 +697,7 @@
       var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
         return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
       }).join("");
-      return "<tr>" +
+      return '<tr class="' + (cur === "已挂" ? "app-row-rejected" : "") + '">' +
         "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b></td>" +
         "<td>" + esc(app.position) + "</td>" +
         "<td>" + (ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : '<span class="text-small muted">—</span>') + "</td>" +
