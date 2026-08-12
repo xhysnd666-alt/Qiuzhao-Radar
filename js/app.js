@@ -159,6 +159,7 @@
   }
 
   var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
+  var BROAD_POSITION_KEYWORDS = ["运营", "发行", "营销", "市场", "策划", "人力", "HR", "用研", "用户研究", "品牌", "广告", "渠道", "社区", "内容", "商业化", "本地化", "GS", "GM"];
   var COMPANY_NAME_ALIASES = { "G社": ["Garena"] };
 
   function positionRank(row) {
@@ -172,6 +173,14 @@
 
   function isInternBatch(b) {
     return b && (b.indexOf("实习") !== -1 || b.indexOf("训练营") !== -1);
+  }
+
+  function zhuDiRowHit(r) {
+    if (!r.positions) return false;
+    if (TARGET_KEYWORDS.some(function (k) { return r.positions.indexOf(k) !== -1; })) return true;
+    var ind = r.industry || "";
+    if (ind.indexOf("游戏") === -1 && ind.indexOf("互联网") === -1) return false;
+    return BROAD_POSITION_KEYWORDS.some(function (k) { return r.positions.indexOf(k) !== -1; });
   }
 
   function overviewNoIntern() {
@@ -212,7 +221,7 @@
     var seen = {};
     (ZHUDI.rows || []).forEach(function (r) {
       if (noIntern && isInternBatch(r.batch)) return;
-      var hit = TARGET_KEYWORDS.some(function (k) { return r.positions && r.positions.indexOf(k) !== -1; });
+      var hit = zhuDiRowHit(r);
       if (!hit) return;
       var dup = rows.some(function (x) {
         return x.name === r.company || x.name.indexOf(r.company) !== -1 || r.company.indexOf(x.name) !== -1;
