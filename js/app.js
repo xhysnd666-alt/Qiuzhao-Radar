@@ -158,9 +158,22 @@
     return found;
   }
 
+  function progressUrlFor(app, c) {
+    if (app && PROGRESS_URL_OVERRIDES[app.companyName]) return PROGRESS_URL_OVERRIDES[app.companyName];
+    if (app && PROGRESS_URL_OVERRIDES[app.companyId]) return PROGRESS_URL_OVERRIDES[app.companyId];
+    return c ? (c.progressUrl || c.careerUrl || "") : "";
+  }
+
   var TARGET_KEYWORDS = ["人力资源", "HR", "游戏运营", "游戏发行", "游戏营销", "用户研究", "游戏策划", "游戏市场", "游戏生态", "游戏用户", "游戏社区", "游戏内容", "游戏商业化"];
   var BROAD_POSITION_KEYWORDS = ["运营", "发行", "营销", "市场", "策划", "人力", "HR", "用研", "用户研究", "品牌", "广告", "渠道", "社区", "内容", "商业化", "本地化", "GS", "GM"];
   var COMPANY_NAME_ALIASES = { "G社": ["Garena"] };
+  var PROGRESS_URL_OVERRIDES = {
+    "G社": "https://app.mokahr.com/candidate/applications/deliver-query/garena",
+    "理想": "https://www.lixiang.com/employ/campus/list.html",
+    "掌趣": "https://app.mokahr.com/candidate/applications/deliver-query/ourpalm",
+    "作业帮": "https://app.mokahr.com/candidate/applications/deliver-query/zuoyebang",
+    "迅雷": "https://campus.xunlei.com/"
+  };
 
   function positionRank(row) {
     var s = row.positions || "";
@@ -658,7 +671,7 @@
           return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
         }).join("");
         var ivBtn = ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : "";
-        var progUrl = c ? (c.progressUrl || c.careerUrl || "") : "";
+        var progUrl = progressUrlFor(app, c);
         var progBtn = progUrl
           ? '<a class="btn btn-ghost app-progress-link" href="' + esc(extHref(progUrl)) + '" target="_blank" rel="noopener" title="登录官网后进入「投递记录/我的投递」查看进度">官网查进度</a>'
           : "";
@@ -699,7 +712,7 @@
       var cur = stageOf(app);
       var o = progress[key];
       var ivCount = c ? interviewsFor(c.name).length : 0;
-      var progUrl = c ? (c.progressUrl || c.careerUrl || "") : "";
+      var progUrl = progressUrlFor(app, c);
       var progCell = progUrl
         ? '<a class="btn btn-ghost app-progress-link" href="' + esc(extHref(progUrl)) + '" target="_blank" rel="noopener">官网查进度</a>'
         : '<span class="text-small muted">—</span>';
