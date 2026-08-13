@@ -255,5 +255,117 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-12",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "xiaomi",
+    "companyName": "小米",
+    "position": "产品运营经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "moonton",
+    "companyName": "沐瞳",
+    "position": "招聘hr",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "moonton",
+    "companyName": "沐瞳",
+    "position": "HRBP",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里飞猪",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里巴巴控股集团",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "淘宝闪购",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里云",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里国际数字商业集团",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "Token Foundry",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "高德地图",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "菜鸟",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "虎鲸文娱集团",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "盒马",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "alibaba",
+    "companyName": "阿里健康",
+    "position": "AI 产品经理",
+    "appliedAt": "2026-08-13",
+    "stage": "已投递",
+    "note": ""
   }
 ];

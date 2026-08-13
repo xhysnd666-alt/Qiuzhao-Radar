@@ -56,6 +56,17 @@ COMPANY_MAP = {
     "拼多多": "pinduoduo",
     "阿里千问": "alibaba",
     "阿里灵犀互娱": "alibaba",
+    "阿里飞猪": "alibaba",
+    "阿里巴巴控股集团": "alibaba",
+    "淘宝闪购": "alibaba",
+    "阿里云": "alibaba",
+    "阿里国际数字商业集团": "alibaba",
+    "Token Foundry": "alibaba",
+    "高德地图": "alibaba",
+    "菜鸟": "alibaba",
+    "虎鲸文娱集团": "alibaba",
+    "盒马": "alibaba",
+    "阿里健康": "alibaba",
     "b站": "bilibili",
     "G社": "garena",
     "得物": "dewu",
@@ -70,6 +81,7 @@ COMPANY_MAP = {
     "掌趣": "zhangqu",
     "作业帮": "zuoyebang",
     "迅雷": "xunlei",
+    "沐瞳": "moonton",
 }
 
 
@@ -150,10 +162,16 @@ def import_applications() -> int:
 
 def import_zhudi() -> tuple:
     wb = openpyxl.load_workbook(ZHUDI_XLSX, data_only=True)
-    main = wb.worksheets[0]
-    codes_sheet = wb.worksheets[4]
+    main = next(
+        (ws for ws in wb.worksheets if "校招汇总表" in ws.title),
+        wb.worksheets[0],
+    )
+    codes_sheet = next(
+        (ws for ws in wb.worksheets if "内推码" in ws.title),
+        wb.worksheets[4] if len(wb.worksheets) > 4 else None,
+    )
     rows = list(main.iter_rows(values_only=True))
-    code_rows = list(codes_sheet.iter_rows(values_only=True))
+    code_rows = list(codes_sheet.iter_rows(values_only=True)) if codes_sheet else []
 
     out_rows = []
     for i in range(1, len(rows)):
@@ -201,9 +219,9 @@ def import_zhudi() -> tuple:
     )
     body = "window.QIUZHAO_ZHUDI = " + json.dumps(data, ensure_ascii=False, indent=1) + ";\n"
     ZHUDI_OUT.write_text(header + body, encoding="utf-8")
-    print(
-        f"zhudi: rows={len(out_rows)} codes={len(codes)} -> {ZHUDI_OUT.name}"
-    )
+    if codes_sheet is None:
+        print("zhudi: WARNING 未找到「内推码」sheet，内推码保持为空")
+    print(f"zhudi: rows={len(out_rows)} codes={len(codes)} -> {ZHUDI_OUT.name}")
     return len(out_rows), len(codes)
 
 
