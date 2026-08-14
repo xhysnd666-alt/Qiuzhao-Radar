@@ -42,7 +42,9 @@ ZHUDI_XLSX = newest_zhudi_xlsx()
 
 COMPANY_MAP = {
     "米哈游": "mihoyo",
+    "4399": "game4399",
     "莉莉丝": "lilith",
+    "点点": "diandian",
     "字节跳动": "bytedance",
     "大疆": "dji",
     "影石": "insta360",

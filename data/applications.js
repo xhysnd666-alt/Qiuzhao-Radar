@@ -431,5 +431,37 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-14",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "diandian",
+    "companyName": "点点",
+    "position": "CSM",
+    "appliedAt": "2026-08-15",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "diandian",
+    "companyName": "点点",
+    "position": "游戏PM",
+    "appliedAt": "2026-08-15",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "game4399",
+    "companyName": "4399",
+    "position": "AI储备人才",
+    "appliedAt": "2026-08-15",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "game4399",
+    "companyName": "4399",
+    "position": "运营培训生",
+    "appliedAt": "2026-08-15",
+    "stage": "已投递",
+    "note": ""
   }
 ];
