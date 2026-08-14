@@ -367,5 +367,69 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-13",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "didi",
+    "companyName": "滴滴",
+    "position": "产品运营",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaopeng",
+    "companyName": "小鹏",
+    "position": "HRBP培训生（机器人）",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "kuaishou",
+    "companyName": "快手",
+    "position": "HR招聘",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaopeng",
+    "companyName": "小鹏",
+    "position": "HRBP培训生（营销服BP）",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "shunfeng",
+    "companyName": "顺丰",
+    "position": "产品经理",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "游卡",
+    "position": "产品运营",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "游卡",
+    "position": "AI产品经理",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "kuaishou",
+    "companyName": "快手",
+    "position": "HRBP",
+    "appliedAt": "2026-08-14",
+    "stage": "已投递",
+    "note": ""
   }
 ];
