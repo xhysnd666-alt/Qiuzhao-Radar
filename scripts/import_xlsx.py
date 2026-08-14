@@ -27,7 +27,7 @@ ZHUDI_OUT = REPO_ROOT / "data" / "zhudi.js"
 
 def newest_zhudi_xlsx() -> Path:
     """自动选择 Downloads 里最新的朱迪学姐汇总表（支持带 (1) 的重复导出）。"""
-    pattern = "27-【暑期实习_秋招_春招】汇总表*.xlsx"
+    pattern = "27-*朱迪学姐*.xlsx"
     candidates = sorted(
         (Path(r"C:\Users\Lenovo\Downloads").glob(pattern)),
         key=lambda p: p.stat().st_mtime,
