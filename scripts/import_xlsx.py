@@ -135,7 +135,37 @@ def trunc(s: str, n: int) -> str:
 
 
 def cell(row, idx):
-    return row[idx] if row is not None and idx < len(row) else None
+    if idx is None or row is None or idx >= len(row):
+        return None
+    return row[idx]
+
+
+def header_cols(headers):
+    """按表头名称找列，兼容朱迪导出不同版本的列顺序。"""
+    h = [text(x) for x in headers]
+
+    def find(*needles):
+        for i, name in enumerate(h):
+            if not name:
+                continue
+            for n in needles:
+                if n in name:
+                    return i
+        return None
+
+    return {
+        "company": find("公司"),
+        "industry": find("行业类别", "行业"),
+        "batch": find("批次"),
+        "grad": find("届次"),
+        "locations": find("工作地点", "地点"),
+        "positions": find("招聘岗位", "岗位"),
+        "startDate": find("开始时间", "开始"),
+        "endDate": find("截止时间", "结束时间", "截止", "结束"),
+        "applyUrl": find("简历投递链接", "投递链接"),
+        "announceUrl": find("公告链接", "原文链接"),
+        "exam": find("是否笔试", "笔试"),
+    }
 
 
 def import_applications() -> int:
@@ -178,29 +208,30 @@ def import_zhudi() -> tuple:
     )
     rows = list(main.iter_rows(values_only=True))
     code_rows = list(codes_sheet.iter_rows(values_only=True)) if codes_sheet else []
+    cols = header_cols(rows[0]) if rows else {}
 
     out_rows = []
     for i in range(1, len(rows)):
         r = rows[i]
-        company = text(cell(r, 1))
+        company = text(cell(r, cols["company"]))
         if not company or "（必看）" in company:
             continue
-        grad = text(cell(r, 5))
+        grad = text(cell(r, cols["grad"]))
         if "2027" not in grad:
             continue
         out_rows.append(
             {
                 "company": trunc(company, 60),
-                "industry": trunc(text(cell(r, 3)), 40),
-                "batch": trunc(text(cell(r, 4)), 20),
+                "industry": trunc(text(cell(r, cols["industry"])), 40),
+                "batch": trunc(text(cell(r, cols["batch"])), 20),
                 "grad": trunc(grad, 40),
-                "locations": trunc(text(cell(r, 6)), 90),
-                "positions": trunc(text(cell(r, 7)), 160),
-                "startDate": norm_date(cell(r, 8)),
-                "endDate": norm_date(cell(r, 9)),
-                "applyUrl": text(cell(r, 10))[:300],
-                "announceUrl": text(cell(r, 11))[:300],
-                "exam": trunc(text(cell(r, 12)), 20),
+                "locations": trunc(text(cell(r, cols["locations"])), 90),
+                "positions": trunc(text(cell(r, cols["positions"])), 160),
+                "startDate": norm_date(cell(r, cols["startDate"])),
+                "endDate": norm_date(cell(r, cols["endDate"])),
+                "applyUrl": text(cell(r, cols["applyUrl"]))[:300],
+                "announceUrl": text(cell(r, cols["announceUrl"]))[:300],
+                "exam": trunc(text(cell(r, cols["exam"])), 20),
             }
         )
 
