@@ -50,5 +50,8 @@
   { "id": "gbits", "name": "吉比特", "url": "https://hr.g-bits.com/" },
   { "id": "shengqu", "name": "盛趣游戏", "url": "https://www.shengqugames.com/" },
   { "id": "zhihu", "name": "知乎", "url": "https://app.mokahr.com/campus_apply/zhihu/68321" },
-  { "id": "vip", "name": "唯品会", "url": "https://campus.vip.com/" }
+  { "id": "vip", "name": "唯品会", "url": "https://campus.vip.com/" },
+  { "id": "intsig", "name": "合合信息", "url": "https://intsig.zhiye.com/campus/jobs" },
+  { "id": "bambulab", "name": "拓竹科技", "url": "https://bambulab.jobs.feishu.cn/campus" },
+  { "id": "horizon", "name": "地平线", "url": "https://horizon-campus.hotjob.cn/" }
 ]

@@ -463,5 +463,61 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-15",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "intsig",
+    "companyName": "合合",
+    "position": "AI产品经理",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "intsig",
+    "companyName": "合合",
+    "position": "产品经理",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "intsig",
+    "companyName": "合合",
+    "position": "用户研究",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "cyou",
+    "companyName": "搜狐",
+    "position": "游戏运营策划",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "horizon",
+    "companyName": "地平线",
+    "position": "人力资源",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bambulab",
+    "companyName": "拓竹",
+    "position": "海外KOL",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bambulab",
+    "companyName": "拓竹",
+    "position": "海外市场营销",
+    "appliedAt": "2026-08-18",
+    "stage": "已投递",
+    "note": ""
   }
 ];

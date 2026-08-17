@@ -88,6 +88,10 @@ COMPANY_MAP = {
     "作业帮": "zuoyebang",
     "迅雷": "xunlei",
     "沐瞳": "moonton",
+    "合合": "intsig",
+    "搜狐": "cyou",
+    "地平线": "horizon",
+    "拓竹": "bambulab",
 }
 
 
