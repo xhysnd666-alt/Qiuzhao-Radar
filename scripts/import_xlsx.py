@@ -92,6 +92,11 @@ COMPANY_MAP = {
     "搜狐": "cyou",
     "地平线": "horizon",
     "拓竹": "bambulab",
+    "安可创新": "anker",
+    "shopee": "shopee",
+    "远景": "envision",
+    "吉利": "geely",
+    "韶音科技": "shokz",
 }
 
 

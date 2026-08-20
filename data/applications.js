@@ -519,5 +519,93 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-18",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "anker",
+    "companyName": "安可创新",
+    "position": "HR管培生",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "anker",
+    "companyName": "安可创新",
+    "position": "人因研究员",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "shopee",
+    "companyName": "shopee",
+    "position": "人力研究员",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xunlei",
+    "companyName": "迅雷",
+    "position": "数据产品经理",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "envision",
+    "companyName": "远景",
+    "position": "人力资源",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bilibili",
+    "companyName": "b站",
+    "position": "用增市场",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "geely",
+    "companyName": "吉利",
+    "position": "人力资源",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "geely",
+    "companyName": "吉利",
+    "position": "HRBP 1",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "geely",
+    "companyName": "吉利",
+    "position": "HRBP 2",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "shokz",
+    "companyName": "韶音科技",
+    "position": "人力资源管培生（企业文化方向）",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "shokz",
+    "companyName": "韶音科技",
+    "position": "人力资源管培生）",
+    "appliedAt": "2026-08-20",
+    "stage": "已投递",
+    "note": ""
   }
 ];

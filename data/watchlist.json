@@ -53,5 +53,10 @@
   { "id": "vip", "name": "唯品会", "url": "https://campus.vip.com/" },
   { "id": "intsig", "name": "合合信息", "url": "https://intsig.zhiye.com/campus/jobs" },
   { "id": "bambulab", "name": "拓竹科技", "url": "https://bambulab.jobs.feishu.cn/campus" },
-  { "id": "horizon", "name": "地平线", "url": "https://horizon-campus.hotjob.cn/" }
+  { "id": "horizon", "name": "地平线", "url": "https://horizon-campus.hotjob.cn/" },
+  { "id": "anker", "name": "安克创新", "url": "https://career.anker.com.cn" },
+  { "id": "shopee", "name": "Shopee（虾皮）", "url": "https://app.mokahr.com/su/nykvgs" },
+  { "id": "envision", "name": "远景能源", "url": "https://envision-career.com" },
+  { "id": "geely", "name": "吉利控股", "url": "https://campus.geely.com" },
+  { "id": "shokz", "name": "韶音科技", "url": "https://hr.shokz.com.cn" }
 ]
