@@ -607,5 +607,53 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-20",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "mbcloud",
+    "companyName": "招商云创",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "iflytek",
+    "companyName": "科大讯飞",
+    "position": "人力资源",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "yealink",
+    "companyName": "亿联",
+    "position": "产品市场经理",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "meituan",
+    "companyName": "美团",
+    "position": "AI招聘Builder",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "meituan",
+    "companyName": "美团",
+    "position": "AI智能学习",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "meituan",
+    "companyName": "美团",
+    "position": "沟通和关怀AI运营",
+    "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
   }
 ];

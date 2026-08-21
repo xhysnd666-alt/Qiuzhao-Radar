@@ -58,5 +58,8 @@
   { "id": "shopee", "name": "Shopee（虾皮）", "url": "https://app.mokahr.com/su/nykvgs" },
   { "id": "envision", "name": "远景能源", "url": "https://envision-career.com" },
   { "id": "geely", "name": "吉利控股", "url": "https://campus.geely.com" },
-  { "id": "shokz", "name": "韶音科技", "url": "https://hr.shokz.com.cn" }
+  { "id": "shokz", "name": "韶音科技", "url": "https://hr.shokz.com.cn" },
+  { "id": "mbcloud", "name": "招银云创", "url": "https://app.mokahr.com/campus-recruitment/mbcloud/150116" },
+  { "id": "iflytek", "name": "科大讯飞", "url": "https://iflytek.zhiye.com/campus/jobs" },
+  { "id": "yealink", "name": "亿联网络", "url": "https://yealink.zhiye.com/campus" }
 ]

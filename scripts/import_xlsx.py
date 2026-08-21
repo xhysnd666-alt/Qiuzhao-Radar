@@ -97,6 +97,10 @@ COMPANY_MAP = {
     "远景": "envision",
     "吉利": "geely",
     "韶音科技": "shokz",
+    "招商云创": "mbcloud",
+    "科大讯飞": "iflytek",
+    "亿联": "yealink",
+    "美团": "meituan",
 }
 
 
