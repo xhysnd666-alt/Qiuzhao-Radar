@@ -26,15 +26,16 @@ ZHUDI_OUT = REPO_ROOT / "data" / "zhudi.js"
 
 
 def newest_zhudi_xlsx() -> Path:
-    """自动选择 Downloads 里最新的朱迪学姐汇总表（支持带 (1) 的重复导出）。"""
+    """自动选择最新导出的朱迪学姐汇总表（支持 Downloads 与 E 盘根目录、带 (1) 的重复导出）。"""
     pattern = "27-*朱迪学姐*.xlsx"
-    candidates = sorted(
-        (Path(r"C:\Users\Lenovo\Downloads").glob(pattern)),
-        key=lambda p: p.stat().st_mtime,
-        reverse=True,
-    )
+    roots = [Path(r"C:\Users\Lenovo\Downloads"), Path(r"E:\\")]
+    candidates = []
+    for root in roots:
+        if root.exists():
+            candidates.extend(root.glob(pattern))
+    candidates.sort(key=lambda p: p.stat().st_mtime, reverse=True)
     if not candidates:
-        raise FileNotFoundError(f"未在 Downloads 找到 {pattern}")
+        raise FileNotFoundError(f"未在 Downloads/E 盘根目录找到 {pattern}")
     return candidates[0]
 
 
@@ -101,6 +102,9 @@ COMPANY_MAP = {
     "科大讯飞": "iflytek",
     "亿联": "yealink",
     "美团": "meituan",
+    "传音控股": "transsion",
+    "TP-Link": "tplink",
+    "海信": "hisense",
 }
 
 

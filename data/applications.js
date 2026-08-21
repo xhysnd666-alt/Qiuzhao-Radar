@@ -397,7 +397,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "小鹏",
     "position": "HRBP培训生（营销服BP）",
     "appliedAt": "2026-08-14",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -413,7 +413,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "游卡",
     "position": "产品运营",
     "appliedAt": "2026-08-14",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -653,6 +653,46 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "美团",
     "position": "沟通和关怀AI运营",
     "appliedAt": "2026-08-21",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaopeng",
+    "companyName": "小鹏",
+    "position": "招聘培训生（供产质）",
+    "appliedAt": "2026-08-22",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "transsion",
+    "companyName": "传音控股",
+    "position": "用户研究",
+    "appliedAt": "2026-08-22",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tplink",
+    "companyName": "TP-Link",
+    "position": "力资源专员（总部）- 人事行政类",
+    "appliedAt": "2026-08-22",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tplink",
+    "companyName": "TP-Link",
+    "position": "制造人力资源专员",
+    "appliedAt": "2026-08-22",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "hisense",
+    "companyName": "海信",
+    "position": "人力资源管理",
+    "appliedAt": "2026-08-22",
     "stage": "已投递",
     "note": ""
   }

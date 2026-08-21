@@ -61,5 +61,8 @@
   { "id": "shokz", "name": "韶音科技", "url": "https://hr.shokz.com.cn" },
   { "id": "mbcloud", "name": "招银云创", "url": "https://app.mokahr.com/campus-recruitment/mbcloud/150116" },
   { "id": "iflytek", "name": "科大讯飞", "url": "https://iflytek.zhiye.com/campus/jobs" },
-  { "id": "yealink", "name": "亿联网络", "url": "https://yealink.zhiye.com/campus" }
+  { "id": "yealink", "name": "亿联网络", "url": "https://yealink.zhiye.com/campus" },
+  { "id": "transsion", "name": "传音控股", "url": "https://transsion.zhiye.com/campus" },
+  { "id": "tplink", "name": "TP-Link联洲", "url": "https://join.tplinkglobal.com/campus" },
+  { "id": "hisense", "name": "海信集团", "url": "https://jobs.hisense.com" }
 ]
