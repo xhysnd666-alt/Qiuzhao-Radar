@@ -2,7 +2,7 @@
 // 数据政策：仅收录官方来源（公司校招官网 / 官方公众号 / 高校就业网发布的公司官方信息）。
 // verified: true = 官方入口已验证可访问；false = 待核实（状态与日期未确认）。
 window.QIUZHAO_DATA = {
-  updatedAt: "2026-08-24",
+  updatedAt: "2026-08-25",
   sourceNote: "信息来自官方校招官网/官方公众号/高校就业网，官方网址均已检测；未能核实的字段标记为待核实，投递前请以公司官方页面为准",
   companies: [
     { id: "bytedance", name: "字节跳动", industry: "互联网", batch: "正式批", startDate: "2026-08-03", endDate: "", status: "进行中", positions: ["人力资源", "运营", "市场"], applyUrl: "https://jobs.bytedance.com/campus/position", careerUrl: "https://jobs.bytedance.com/campus", note: "2027届校招8月3日启动，全年滚动共4次投递机会", source: "官网+公开报道", sourceUrl: "https://jobs.bytedance.com/campus", sourceLabel: "字节跳动校招官网", verified: true },
@@ -72,7 +72,8 @@ window.QIUZHAO_DATA = {
     { id: "tplink", name: "TP-Link联洲", industry: "科技", batch: "正式批", startDate: "2026-08-15", endDate: "", status: "进行中", positions: ["人力资源"], applyUrl: "https://join.tplinkglobal.com/campus", careerUrl: "https://join.tplinkglobal.com/campus", note: "2027届秋招8月中旬启动，含人力资源类（总部人事行政/制造HR）、营销类等岗位；PC端join.tplinkglobal.com/campus或公众号「TP-Link联洲招聘」投递", source: "高校就业网+官网", sourceUrl: "https://job.lzu.edu.cn/html/74/article/2026/90912.html", sourceLabel: "TP-Link联洲校园招聘官网", verified: true },
     { id: "hisense", name: "海信集团", industry: "科技", batch: "正式批", startDate: "", endDate: "", status: "进行中", positions: ["人力资源", "市场", "运营"], applyUrl: "https://jobs.hisense.com", careerUrl: "https://jobs.hisense.com", note: "海信集团校招官网进行中（2027届信动力计划5月已启动），含人力资源管理岗；投递以官网「校园招聘」版块为准", source: "高校就业网+官网", sourceUrl: "https://career.sdbys.com/campus/view/id/752223", sourceLabel: "海信集团招聘官网", verified: true },
     { id: "zhuoyu", name: "卓驭科技", industry: "科技", batch: "正式批", startDate: "2026-07-15", endDate: "", status: "进行中", positions: ["产品", "设计"], applyUrl: "https://we.zyt.com/campus/jobs", careerUrl: "https://we.zyt.com/campus/jobs", note: "2027届秋季校招7月启动，含产品/设计（UX体验设计师）与技术岗；深圳、上海、北京；另有「领航者计划」专项", source: "高校就业网+官网", sourceUrl: "https://scdc.jnu.edu.cn/campus/view/id/1035881", sourceLabel: "卓驭科技招聘官网", verified: true },
-    { id: "pudu", name: "普渡科技", industry: "科技", batch: "正式批", startDate: "2026-06-25", endDate: "", status: "进行中", positions: ["产品", "市场"], applyUrl: "https://pudutech.zhiye.com/campus", careerUrl: "https://pudutech.zhiye.com/campus", note: "2027届校招进行中（6月底启动），含软件/硬件产品经理、产品市场经理等岗位；官网pudutech.zhiye.com/campus投递", source: "高校就业网+官网", sourceUrl: "https://job.zzu.edu.cn/campus/view/id/1018524", sourceLabel: "普渡机器人招聘官网", verified: true }
+    { id: "pudu", name: "普渡科技", industry: "科技", batch: "正式批", startDate: "2026-06-25", endDate: "", status: "进行中", positions: ["产品", "市场"], applyUrl: "https://pudutech.zhiye.com/campus", careerUrl: "https://pudutech.zhiye.com/campus", note: "2027届校招进行中（6月底启动），含软件/硬件产品经理、产品市场经理等岗位；官网pudutech.zhiye.com/campus投递", source: "高校就业网+官网", sourceUrl: "https://job.zzu.edu.cn/campus/view/id/1018524", sourceLabel: "普渡机器人招聘官网", verified: true },
+    { id: "wind", name: "万得（Wind）", industry: "科技", batch: "正式批", startDate: "2026-08-21", endDate: "", status: "进行中", positions: ["人力资源"], applyUrl: "https://www.wind.com.cn/mobile/JoinUS/RecruitDetail/zh.html?entry=school", careerUrl: "https://www.wind.com.cn", note: "2027届校招网申8/21起开放（招满即止），含职能类（HR）与管培生岗；官网直通车www.wind.com.cn；提前批6月已开启", source: "官网+高校就业网", sourceUrl: "https://www.wind.com.cn/mobile/JoinUS/RecruitDetail/zh.html?entry=school", sourceLabel: "Wind-招聘官网（校招）", verified: true }
   ],
   feedback: [
     { id: "fb-1", company: "通用", platform: "牛客", title: "27届算法岗秋招春招时间线（提前批/正式批安排）", url: "https://www.nowcoder.com/feed/main/detail/f67a86240b5042fd8750a47c5b4d94e9", summary: "2027届秋招整体节奏：7-8月提前批、9-11月正式批、12月补录", status: "已收录", addedAt: "2026-08-08" },

@@ -107,6 +107,7 @@ COMPANY_MAP = {
     "海信": "hisense",
     "卓驭": "zhuoyu",
     "普渡": "pudu",
+    "wind": "wind",
 }
 
 

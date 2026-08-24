@@ -727,5 +727,13 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "wind",
+    "companyName": "wind",
+    "position": "HR",
+    "appliedAt": "2026-08-25",
+    "stage": "已投递",
+    "note": ""
   }
 ];
