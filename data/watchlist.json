@@ -64,5 +64,7 @@
   { "id": "yealink", "name": "亿联网络", "url": "https://yealink.zhiye.com/campus" },
   { "id": "transsion", "name": "传音控股", "url": "https://transsion.zhiye.com/campus" },
   { "id": "tplink", "name": "TP-Link联洲", "url": "https://join.tplinkglobal.com/campus" },
-  { "id": "hisense", "name": "海信集团", "url": "https://jobs.hisense.com" }
+  { "id": "hisense", "name": "海信集团", "url": "https://jobs.hisense.com" },
+  { "id": "zhuoyu", "name": "卓驭科技", "url": "https://we.zyt.com/campus/jobs" },
+  { "id": "pudu", "name": "普渡科技", "url": "https://pudutech.zhiye.com/campus" }
 ]

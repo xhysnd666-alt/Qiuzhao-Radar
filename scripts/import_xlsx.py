@@ -105,6 +105,8 @@ COMPANY_MAP = {
     "传音控股": "transsion",
     "TP-Link": "tplink",
     "海信": "hisense",
+    "卓驭": "zhuoyu",
+    "普渡": "pudu",
 }
 
 

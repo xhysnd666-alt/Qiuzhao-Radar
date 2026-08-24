@@ -660,7 +660,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyId": "xiaopeng",
     "companyName": "小鹏",
     "position": "招聘培训生（供产质）",
-    "appliedAt": "2026-08-22",
+    "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
   },
@@ -668,7 +668,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyId": "transsion",
     "companyName": "传音控股",
     "position": "用户研究",
-    "appliedAt": "2026-08-22",
+    "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
   },
@@ -676,7 +676,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyId": "tplink",
     "companyName": "TP-Link",
     "position": "力资源专员（总部）- 人事行政类",
-    "appliedAt": "2026-08-22",
+    "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
   },
@@ -684,7 +684,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyId": "tplink",
     "companyName": "TP-Link",
     "position": "制造人力资源专员",
-    "appliedAt": "2026-08-22",
+    "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
   },
@@ -692,7 +692,39 @@ window.QIUZHAO_APPLICATIONS = [
     "companyId": "hisense",
     "companyName": "海信",
     "position": "人力资源管理",
-    "appliedAt": "2026-08-22",
+    "appliedAt": "2026-08-24",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "zhuoyu",
+    "companyName": "卓驭",
+    "position": "体验设计师（UX）",
+    "appliedAt": "2026-08-24",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "zhuoyu",
+    "companyName": "卓驭",
+    "position": "数字化产品经理",
+    "appliedAt": "2026-08-24",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "pudu",
+    "companyName": "普渡",
+    "position": "产品经理（具身）",
+    "appliedAt": "2026-08-24",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "pudu",
+    "companyName": "普渡",
+    "position": "软件产品经理",
+    "appliedAt": "2026-08-24",
     "stage": "已投递",
     "note": ""
   }
