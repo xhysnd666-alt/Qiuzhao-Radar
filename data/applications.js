@@ -735,5 +735,85 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-25",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "catl",
+    "companyName": "宁德时代",
+    "position": "人力资源主管",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "catl",
+    "companyName": "宁德时代",
+    "position": "人力资源",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "dexmal",
+    "companyName": "原力",
+    "position": "产品尽量",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "fandow",
+    "companyName": "凡岛",
+    "position": "招聘经理",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "fandow",
+    "companyName": "凡岛",
+    "position": "HR经理",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "ninebot",
+    "companyName": "九号公司",
+    "position": "HR",
+    "appliedAt": "2026-08-26",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "carlsberg",
+    "companyName": "嘉伯士",
+    "position": "人力资源",
+    "appliedAt": "2026-08-27",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "ctrip",
+    "companyName": "携程",
+    "position": "用户运营",
+    "appliedAt": "2026-08-27",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "nio",
+    "companyName": "蔚来",
+    "position": "人力资源管理培训生",
+    "appliedAt": "2026-08-27",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "kuro",
+    "companyName": "库洛",
+    "position": "用户研究",
+    "appliedAt": "2026-08-27",
+    "stage": "已投递",
+    "note": ""
   }
 ];

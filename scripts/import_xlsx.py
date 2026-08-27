@@ -108,6 +108,14 @@ COMPANY_MAP = {
     "卓驭": "zhuoyu",
     "普渡": "pudu",
     "wind": "wind",
+    "宁德时代": "catl",
+    "蔚来": "nio",
+    "九号公司": "ninebot",
+    "凡岛": "fandow",
+    "原力": "dexmal",
+    "嘉伯士": "carlsberg",
+    "携程": "ctrip",
+    "库洛": "kuro",
 }
 
 

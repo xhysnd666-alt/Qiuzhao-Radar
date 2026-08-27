@@ -67,5 +67,11 @@
   { "id": "hisense", "name": "海信集团", "url": "https://jobs.hisense.com" },
   { "id": "zhuoyu", "name": "卓驭科技", "url": "https://we.zyt.com/campus/jobs" },
   { "id": "pudu", "name": "普渡科技", "url": "https://pudutech.zhiye.com/campus" },
-  { "id": "wind", "name": "万得（Wind）", "url": "https://www.wind.com.cn/mobile/JoinUS/RecruitDetail/zh.html?entry=school" }
+  { "id": "wind", "name": "万得（Wind）", "url": "https://www.wind.com.cn/mobile/JoinUS/RecruitDetail/zh.html?entry=school" },
+  { "id": "catl", "name": "宁德时代", "url": "https://talent.catl.com" },
+  { "id": "nio", "name": "蔚来", "url": "https://campus.nio.com" },
+  { "id": "ninebot", "name": "九号公司", "url": "https://join.ninebot.com/campus" },
+  { "id": "fandow", "name": "凡岛", "url": "https://job.fandow.com" },
+  { "id": "dexmal", "name": "原力灵机（DEXMAL）", "url": "https://dexmal-inc.jobs.feishu.cn" },
+  { "id": "carlsberg", "name": "嘉士伯中国", "url": "https://app.mokahr.com/su/cADK8" }
 ]
