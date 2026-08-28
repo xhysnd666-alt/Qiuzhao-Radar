@@ -33,7 +33,8 @@ The site is organized into four main areas: **Overview** (official company radar
 ### My Applications
 
 - Synced from the desktop `秋招简历投递.xlsx` (tell the AI assistant to re-import after updating the spreadsheet);
-- Kanban and table views, with stage management (Applied / Written Test / Interview / Offer / Rejected).
+- Kanban, table, and timeline views: the timeline calendar shows written tests, interviews, and assessments grouped by date, with "Today / Tomorrow / Countdown" highlights and grayed-out completed items;
+- Kanban and table views support stage management (Applied / Written Test / Interview / Offer / Rejected).
 
 ### ZhuDi Digest (Third-Party Lead Layer)
 

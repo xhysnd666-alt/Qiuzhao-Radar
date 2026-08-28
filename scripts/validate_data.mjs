@@ -89,7 +89,21 @@ try {
   errors.push("applications.js: " + e.message);
 }
 
-console.log(`companies=${companies.length} watchlist=${watchlist.length} applyRules=${applyRuleCount} zhudiRows=${zhudiRows} zhudiCodes=${zhudiCodes} applications=${appCount}`);
+let scheduleCount = 0;
+try {
+  const schedule = loadJs("data/schedule.js");
+  scheduleCount = (schedule.events || []).length;
+  for (const e of schedule.events || []) {
+    if (!e.id) errors.push("schedule event missing id");
+    if (!e.date || !/^\d{4}-\d{2}-\d{2}$/.test(e.date)) errors.push(`schedule event ${e.id || "(no id)"} bad date`);
+    if (!e.company) errors.push(`schedule event ${e.id || "(no id)"} missing company`);
+    if (!e.type) errors.push(`schedule event ${e.id || "(no id)"} missing type`);
+  }
+} catch (e) {
+  errors.push("schedule.js: " + e.message);
+}
+
+console.log(`companies=${companies.length} watchlist=${watchlist.length} applyRules=${applyRuleCount} zhudiRows=${zhudiRows} zhudiCodes=${zhudiCodes} applications=${appCount} schedule=${scheduleCount}`);
 if (errors.length) {
   console.error("ERRORS:\n" + errors.join("\n"));
   process.exit(1);

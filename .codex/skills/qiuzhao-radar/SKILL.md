@@ -12,6 +12,7 @@ description: 维护秋招雷达项目：收集和更新 2027 届秋招/校招信
 - `data/companies.js` — 45 家重点公司官方信息（唯一可信的官方层）
 - `data/apply_rules.js` — 每人可投递次数与规则（官方已核实层，未核实不写）
 - `data/applications.js` — 投递记录，由桌面「秋招简历投递.xlsx」生成，勿手改
+- `data/schedule.js` — 笔试/面试日程（时间线日历），由用户提供的安排同步
 - `data/zhudi.js` — 朱迪学姐汇总表（第三方线索层）
 - `data/interviews.js` / `data/ai_tips.js` — 面经库与 AI 面试准备
 - `data/guoqi.js` / `data/sources.js` — 央国企名录 / 信息源

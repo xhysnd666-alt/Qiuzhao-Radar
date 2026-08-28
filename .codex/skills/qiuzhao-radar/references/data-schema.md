@@ -74,6 +74,29 @@ window.QIUZHAO_APPLICATIONS = [
 
 来源：桌面 `C:\Users\Lenovo\Desktop\秋招简历投递.xlsx`。用户更新表格后重新导入生成，不要直接手改。
 
+## data/schedule.js — 笔试/面试日程（时间线日历）
+
+```js
+window.QIUZHAO_SCHEDULE = {
+  updatedAt: "YYYY-MM-DD",   // 最后更新时间；空字符串表示暂无数据
+  events: [
+    {
+      id: "sch-001",          // 唯一 id
+      date: "2026-09-03",     // 日期（必填，YYYY-MM-DD）
+      time: "19:00-20:00",    // 可选时间段
+      type: "笔试",            // 笔试/面试/测评/群面/HR面/宣讲会…
+      company: "字节跳动",     // 公司名（必填）
+      position: "人力资源",    // 可选岗位名
+      location: "线上 · 腾讯会议", // 可选地点
+      note: "提前15分钟进会议",  // 可选备注
+      status: "待参加"         // 待参加/已完成/已结束
+    }
+  ]
+};
+```
+
+来源：用户提供的笔试/面试/测评安排（文字或表格），由 Codex 同步写入，勿让第三方数据混入。
+
 ## data/zhudi.js — 朱迪学姐汇总表（第三方线索层）
 
 ```js

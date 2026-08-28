@@ -9,6 +9,7 @@
   var INTERVIEWS = window.QIUZHAO_INTERVIEWS || { items: [], generalQuestions: [] };
   var GUOQI = window.QIUZHAO_GUOQI || { items: [] };
   var AI_TIPS = window.QIUZHAO_AI_TIPS || { profile: "", zhudiNotes: [], generalTips: [], companyTips: {} };
+  var SCHEDULE = window.QIUZHAO_SCHEDULE || { updatedAt: "", events: [] };
   var LS_KEY = "qiuzhao-radar-progress-v1";
   var edgeOpen = true;
   try { edgeOpen = localStorage.getItem("qiuzhao-edge-open") !== "0"; } catch (e) { /* ignore */ }
@@ -731,6 +732,81 @@
     }).join("") || '<tr><td colspan="7" class="empty-cell">暂无投递记录</td></tr>';
   }
 
+  function weekdayCn(dateStr) {
+    var d = new Date(String(dateStr) + "T00:00:00");
+    return ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][d.getDay()] || "";
+  }
+
+  function scheduleTypeClass(type) {
+    var t = String(type || "");
+    if (t.indexOf("笔试") > -1) return "badge-warn";
+    if (t.indexOf("测评") > -1) return "badge-blue";
+    if (t.indexOf("面") > -1) return "badge-primary";
+    return "badge-muted";
+  }
+
+  function renderScheduleTimeline() {
+    var wrap = $("#application-timeline");
+    if (!wrap) return;
+    var events = (SCHEDULE.events || []).slice().sort(function (a, b) {
+      return (a.date + " " + (a.time || "")).localeCompare(b.date + " " + (b.time || ""));
+    });
+    if (!events.length) {
+      wrap.innerHTML =
+        '<div class="empty-box timeline-empty">' +
+          '<div class="timeline-empty-title">还没有笔试 / 面试安排</div>' +
+          '<div class="text-small muted">收到笔试、面试或测评通知后，把时间发给我（或发「时间线数据」表格），我会同步到这里</div>' +
+        "</div>";
+      return;
+    }
+    var today = todayStr();
+    var groups = {};
+    events.forEach(function (e) {
+      (groups[e.date] = groups[e.date] || []).push(e);
+    });
+    var html = Object.keys(groups).sort().map(function (date) {
+      var diff = daysUntil(date);
+      var past = diff !== null && diff < 0;
+      var flag = diff === 0
+        ? '<span class="timeline-flag flag-today">今天</span>'
+        : diff === 1
+          ? '<span class="timeline-flag flag-soon">明天</span>'
+          : diff !== null && diff > 1 && diff <= 7
+            ? '<span class="timeline-flag flag-soon">' + diff + "天后</span>"
+            : past
+              ? '<span class="timeline-flag flag-past">' + Math.abs(diff) + "天前</span>"
+              : "";
+      var items = groups[date].map(function (e) {
+        var st = e.status || "待参加";
+        var stCls = st === "已完成" || st === "已结束" ? "badge-done" : "badge-wait";
+        return '<div class="timeline-item' + (past ? " is-past" : "") + '">' +
+          '<div class="timeline-item-head">' +
+            '<span class="badge ' + scheduleTypeClass(e.type) + '">' + esc(e.type) + "</span>" +
+            "<b>" + esc(e.company) + "</b>" +
+            (e.position ? '<span class="muted text-small">' + esc(e.position) + "</span>" : "") +
+            '<span class="badge ' + stCls + '">' + esc(st) + "</span>" +
+          "</div>" +
+          (e.time || e.location
+            ? '<div class="timeline-item-meta">' +
+              (e.time ? "<span>⏰ " + esc(e.time) + "</span>" : "") +
+              (e.location ? "<span>📍 " + esc(e.location) + "</span>" : "") +
+            "</div>"
+            : "") +
+          (e.note ? '<div class="text-small muted timeline-item-note">' + esc(e.note) + "</div>" : "") +
+        "</div>";
+      }).join("");
+      return '<div class="timeline-group' + (past ? " is-past" : "") + '">' +
+        '<div class="timeline-date">' +
+          '<span class="timeline-day">' + esc(parseInt(date.split("-")[2], 10)) + "</span>" +
+          '<span class="timeline-month">' + esc(parseInt(date.split("-")[1], 10)) + "月 · " + weekdayCn(date) + "</span>" +
+          flag +
+        "</div>" +
+        '<div class="timeline-items">' + items + "</div>" +
+      "</div>";
+    }).join("");
+    wrap.innerHTML = '<div class="timeline">' + html + "</div>";
+  }
+
   function renderFeedback() {
     var list = $("#feedback-list");
     var items = DATA.feedback || [];
@@ -1082,6 +1158,7 @@
     renderTable();
     updateQuickUI();
     renderApplications();
+    renderScheduleTimeline();
     renderSources();
     $("#zhudi-date").textContent = ZHUDI.updatedAt || "";
     renderZhudiFilters();
@@ -1151,6 +1228,8 @@
         });
         $("#application-cols").hidden = v !== "kanban";
         $("#application-table").hidden = v !== "table";
+        var tl = $("#application-timeline");
+        if (tl) tl.hidden = v !== "timeline";
       });
     });
 
