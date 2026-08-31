@@ -73,5 +73,12 @@
   { "id": "ninebot", "name": "九号公司", "url": "https://join.ninebot.com/campus" },
   { "id": "fandow", "name": "凡岛", "url": "https://job.fandow.com" },
   { "id": "dexmal", "name": "原力灵机（DEXMAL）", "url": "https://dexmal-inc.jobs.feishu.cn" },
-  { "id": "carlsberg", "name": "嘉士伯中国", "url": "https://app.mokahr.com/su/cADK8" }
+  { "id": "carlsberg", "name": "嘉士伯中国", "url": "https://app.mokahr.com/su/cADK8" },
+  { "id": "tuyoo", "name": "途游游戏", "url": "https://www.tuyoo.com/job/campus?site=campus" },
+  { "id": "bluepoch", "name": "深蓝互动", "url": "https://app.mokahr.com/campus_apply/blueinteractive/38434" },
+  { "id": "qianli", "name": "千里科技", "url": "https://app.mokahr.com/campus-recruitment/qianli1/147197" },
+  { "id": "hirain", "name": "经纬恒润", "url": "http://zhaopin.hirain.com" },
+  { "id": "jee", "name": "巨一科技", "url": "https://www.jee-cn.com" },
+  { "id": "sensetime", "name": "商汤科技", "url": "https://hr.sensetime.com" },
+  { "id": "hesai", "name": "禾赛科技", "url": "https://kwh0jtf778.jobs.feishu.cn/229043" }
 ]

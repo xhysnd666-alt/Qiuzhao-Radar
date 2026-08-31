@@ -815,5 +815,61 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-27",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "tuyoo",
+    "companyName": "途游",
+    "position": "游戏运营",
+    "appliedAt": "2026-08-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bluepoch",
+    "companyName": "深蓝互动",
+    "position": "产品PM",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "qianli",
+    "companyName": "千里科技",
+    "position": "设计师（人因与用户研究方向）",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "hirain",
+    "companyName": "经纬恒润",
+    "position": "人力运营专员-campus",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "jee",
+    "companyName": "巨一科技",
+    "position": "国际项目经理",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "sensetime",
+    "companyName": "商汤",
+    "position": "AI产品运营经理",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "hesai",
+    "companyName": "禾赛经济",
+    "position": "产品经理（Fargo）",
+    "appliedAt": "2026-08-31",
+    "stage": "已投递",
+    "note": ""
   }
 ];

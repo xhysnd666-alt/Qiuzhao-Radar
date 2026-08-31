@@ -116,6 +116,13 @@ COMPANY_MAP = {
     "嘉伯士": "carlsberg",
     "携程": "ctrip",
     "库洛": "kuro",
+    "途游": "tuyoo",
+    "深蓝互动": "bluepoch",
+    "千里科技": "qianli",
+    "经纬恒润": "hirain",
+    "巨一科技": "jee",
+    "商汤": "sensetime",
+    "禾赛经济": "hesai",
 }
 
 
