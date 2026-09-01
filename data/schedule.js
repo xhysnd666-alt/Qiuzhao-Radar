@@ -10,6 +10,18 @@
 //   note:    可选备注
 //   status:  待参加 / 已完成 / 已结束
 window.QIUZHAO_SCHEDULE = {
-  updatedAt: "",
-  events: []
+  updatedAt: "2026-09-02",
+  events: [
+    {
+      id: "sch-001",
+      date: "2026-09-04",
+      time: "14:30-15:00",
+      type: "面试",
+      company: "顺丰",
+      position: "产品经理",
+      location: "线上（视频）",
+      note: "视频初试",
+      status: "待参加"
+    }
+  ]
 };

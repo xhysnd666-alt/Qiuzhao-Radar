@@ -405,8 +405,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "顺丰",
     "position": "产品经理",
     "appliedAt": "2026-08-14",
-    "stage": "已投递",
-    "note": ""
+    "stage": "面试",
+    "note": "9/4 14:30-15:00 视频初试（时间线已登记）"
   },
   {
     "companyId": "",
