@@ -1234,6 +1234,14 @@
       });
     });
 
+    var resetBtn = $("#reset-progress");
+    if (resetBtn) resetBtn.addEventListener("click", function () {
+      try { localStorage.removeItem(LS_KEY); } catch (e) { /* 忽略 */ }
+      progress = {};
+      renderApplications();
+      renderScheduleTimeline();
+    });
+
     $("#application-table-rows").addEventListener("change", function (e) {
       var sel = e.target && e.target.closest ? e.target.closest("select.app-stage-select") : null;
       if (!sel) return;
