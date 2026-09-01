@@ -871,5 +871,21 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-08-31",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "sifang",
+    "companyName": "四方",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-09-01",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "lisen",
+    "companyName": "李森",
+    "position": "产品经理",
+    "appliedAt": "2026-09-01",
+    "stage": "已投递",
+    "note": ""
   }
 ];

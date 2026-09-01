@@ -2,7 +2,7 @@
 // 数据政策：仅收录官方来源（公司校招官网 / 官方公众号 / 高校就业网发布的公司官方信息）。
 // verified: true = 官方入口已验证可访问；false = 待核实（状态与日期未确认）。
 window.QIUZHAO_DATA = {
-  updatedAt: "2026-08-31",
+  updatedAt: "2026-09-02",
   sourceNote: "信息来自官方校招官网/官方公众号/高校就业网，官方网址均已检测；未能核实的字段标记为待核实，投递前请以公司官方页面为准",
   companies: [
     { id: "bytedance", name: "字节跳动", industry: "互联网", batch: "正式批", startDate: "2026-08-03", endDate: "", status: "进行中", positions: ["人力资源", "运营", "市场"], applyUrl: "https://jobs.bytedance.com/campus/position", careerUrl: "https://jobs.bytedance.com/campus", note: "2027届校招8月3日启动，全年滚动共4次投递机会", source: "官网+公开报道", sourceUrl: "https://jobs.bytedance.com/campus", sourceLabel: "字节跳动校招官网", verified: true },
@@ -86,7 +86,9 @@ window.QIUZHAO_DATA = {
     { id: "hirain", name: "经纬恒润", industry: "科技", batch: "正式批", startDate: "2026-08-20", endDate: "", status: "进行中", positions: ["人力资源"], applyUrl: "http://zhaopin.hirain.com", careerUrl: "http://zhaopin.hirain.com", note: "2027届校招8月下旬启动，官方招聘站zhaopin.hirain.com；含人力运营专员（campus）等岗位", source: "高校就业网+官网", sourceUrl: "http://zhaopin.hirain.com", sourceLabel: "经纬恒润招聘官网", verified: true },
     { id: "jee", name: "巨一科技", industry: "车企", batch: "正式批", startDate: "2026-08-24", endDate: "", status: "进行中", positions: ["产品"], applyUrl: "https://www.jee-cn.com", careerUrl: "https://www.jee-cn.com", note: "2027届校招8月下旬启动，官网www.jee-cn.com「加入我们」投递；含国际项目经理等岗位", source: "高校就业网+官网", sourceUrl: "https://www.jee-cn.com", sourceLabel: "巨一科技官网", verified: true },
     { id: "sensetime", name: "商汤科技", industry: "科技", batch: "正式批", startDate: "", endDate: "", status: "进行中", positions: ["产品", "运营"], applyUrl: "https://hr.sensetime.com", careerUrl: "https://hr.sensetime.com", note: "2027届校招进行中（官方招聘站hr.sensetime.com），含AI产品运营经理等岗位；具体批次/截止以官网为准", source: "官网", sourceUrl: "https://hr.sensetime.com", sourceLabel: "商汤科技招聘官网", verified: true },
-    { id: "hesai", name: "禾赛科技", industry: "科技", batch: "正式批", startDate: "", endDate: "", status: "进行中", positions: ["产品"], applyUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", careerUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", note: "2027届校招进行中（飞书官方页），含产品经理（Fargo）等岗位；注：投递表写作「禾赛经济」，按禾赛科技处理", source: "官网", sourceUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", sourceLabel: "禾赛科技校招官网（飞书）", verified: true }
+    { id: "hesai", name: "禾赛科技", industry: "科技", batch: "正式批", startDate: "", endDate: "", status: "进行中", positions: ["产品"], applyUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", careerUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", note: "2027届校招进行中（飞书官方页），含产品经理（Fargo）等岗位；注：投递表写作「禾赛经济」，按禾赛科技处理", source: "官网", sourceUrl: "https://kwh0jtf778.jobs.feishu.cn/229043", sourceLabel: "禾赛科技校招官网（飞书）", verified: true },
+    { id: "sifang", name: "四方股份", industry: "科技", batch: "正式批", startDate: "2026-08-30", endDate: "", status: "进行中", positions: ["人力资源"], applyUrl: "https://sf-auto.zhiye.com/Campus", careerUrl: "https://www.sf-auto.com", note: "北京四方继保自动化2027届全球校招8月底启动，含人力管培生（人才发展/员工关系/校园招聘方向）；官网sf-auto.zhiye.com/Campus或公众号「四方继保招聘」", source: "高校就业网+官网", sourceUrl: "https://job.zzu.edu.cn/campus/view/id/1018945", sourceLabel: "四方股份校招官网（智联）", verified: true },
+    { id: "lisen", name: "李森智能", industry: "科技", batch: "正式批", startDate: "2026-08-25", endDate: "2026-09-22", status: "进行中", positions: ["产品", "运营", "市场"], applyUrl: "https://lisen.zhiye.com/campus/jobs", careerUrl: "https://lisen.zhiye.com/campus/jobs", note: "李森智能2027届校招8/25-9/22（毕业时间2026.9-2027.8），含产品经理、海外/国内电商运营、海外电商推广；官网lisen.zhiye.com/campus/jobs或公众号「李森智能招聘」", source: "高校就业网+官网", sourceUrl: "https://cug.91wllm.cn/campus/view/id/1002369", sourceLabel: "李森智能校招官网（智联）", verified: true }
   ],
   feedback: [
     { id: "fb-1", company: "通用", platform: "牛客", title: "27届算法岗秋招春招时间线（提前批/正式批安排）", url: "https://www.nowcoder.com/feed/main/detail/f67a86240b5042fd8750a47c5b4d94e9", summary: "2027届秋招整体节奏：7-8月提前批、9-11月正式批、12月补录", status: "已收录", addedAt: "2026-08-08" },

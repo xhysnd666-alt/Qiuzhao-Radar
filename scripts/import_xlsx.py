@@ -123,6 +123,8 @@ COMPANY_MAP = {
     "巨一科技": "jee",
     "商汤": "sensetime",
     "禾赛经济": "hesai",
+    "四方": "sifang",
+    "李森": "lisen",
 }
 
 
