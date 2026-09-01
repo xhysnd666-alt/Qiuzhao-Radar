@@ -69,8 +69,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "鹰角",
     "position": "招聘HR",
     "appliedAt": "2026-08-07",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "8/22挂"
   },
   {
     "companyId": "netease_game",
@@ -406,7 +406,7 @@ window.QIUZHAO_APPLICATIONS = [
     "position": "产品经理",
     "appliedAt": "2026-08-14",
     "stage": "面试",
-    "note": "9/4 14:30-15:00 视频初试（时间线已登记）"
+    "note": ""
   },
   {
     "companyId": "",
@@ -437,8 +437,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "点点",
     "position": "CSM",
     "appliedAt": "2026-08-15",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "8/28挂"
   },
   {
     "companyId": "diandian",
@@ -541,8 +541,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "shopee",
     "position": "人力研究员",
     "appliedAt": "2026-08-20",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "8/23挂"
   },
   {
     "companyId": "xunlei",
@@ -765,16 +765,16 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "凡岛",
     "position": "招聘经理",
     "appliedAt": "2026-08-26",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "8/28挂"
   },
   {
     "companyId": "fandow",
     "companyName": "凡岛",
     "position": "HR经理",
     "appliedAt": "2026-08-26",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "8/28挂"
   },
   {
     "companyId": "ninebot",
@@ -805,8 +805,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "蔚来",
     "position": "人力资源管理培训生",
     "appliedAt": "2026-08-27",
-    "stage": "已投递",
-    "note": ""
+    "stage": "已挂",
+    "note": "9/1挂"
   },
   {
     "companyId": "kuro",

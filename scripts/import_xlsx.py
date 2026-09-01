@@ -216,14 +216,15 @@ def import_applications() -> int:
         position = text(cell(row, 1))
         if not company or not position:
             continue
+        stage, note = normalize_stage(cell(row, 3))
         apps.append(
             {
                 "companyId": COMPANY_MAP.get(company, ""),
                 "companyName": company,
                 "position": position,
                 "appliedAt": excel_to_iso(cell(row, 2)),
-                "stage": text(cell(row, 3)) or "已投递",
-                "note": "",
+                "stage": stage,
+                "note": note,
             }
         )
     header = "// 自动从「秋招简历投递.xlsx」生成，请勿手改；用户更新表格后重新运行导入脚本\n"
@@ -231,6 +232,65 @@ def import_applications() -> int:
     APPLICATIONS_OUT.write_text(header + body, encoding="utf-8")
     print(f"applications: imported {len(apps)} rows -> {APPLICATIONS_OUT.name}")
     return len(apps)
+
+
+_CN_DIGIT = {"零": 0, "一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5, "六": 6, "七": 7, "八": 8, "九": 9}
+_KNOWN_STAGES = {"已投递", "笔试", "面试", "Offer", "已挂"}
+
+
+def _cn_to_int(s: str):
+    """中文数字 1-31 转整数：八->8 十->10 十二->12 二十->20 二十一->21"""
+    if not s:
+        return None
+    if s.isdigit():
+        return int(s)
+    total = 0
+    for i, ch in enumerate(s):
+        if ch == "十":
+            if total == 0:
+                total = 10
+            elif total < 10:
+                total *= 10
+        elif ch in _CN_DIGIT:
+            v = _CN_DIGIT[ch]
+            nxt = s[i + 1] if i + 1 < len(s) else ""
+            if nxt == "十":
+                total = v * 10
+            elif total == 10 and i > 0 and s[i - 1] == "十":
+                total += v
+            else:
+                total += v
+        else:
+            return None
+    return total
+
+
+def _normalize_date_note(s: str) -> str:
+    """「八月22号挂」->「8/22挂」；「9月一号挂」->「9/1挂」；无法解析则原样返回"""
+    import re
+
+    s = s.replace("号", "").replace("日", "")
+    m = re.search(r"(\d+|[一二三四五六七八九十两]+)月(\d+|[一二三四五六七八九十两]+)", s)
+    if m:
+        mo = _cn_to_int(m.group(1))
+        day = _cn_to_int(m.group(2))
+        if mo is not None and day is not None:
+            return f"{mo}/{day}挂"
+    return s
+
+
+def normalize_stage(raw) -> tuple:
+    """Excel「面试」列 -> (stage, note)。自由文本含「挂」归为已挂并保留日期备注。"""
+    s = text(raw).strip()
+    if not s:
+        return "已投递", ""
+    if s in _KNOWN_STAGES:
+        return s, ""
+    if "挂" in s:
+        return "已挂", _normalize_date_note(s)
+    if "面试" in s:
+        return "面试", s
+    return s, ""
 
 
 def import_zhudi() -> tuple:

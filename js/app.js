@@ -683,6 +683,7 @@
           "</div>" +
           '<div class="kanban-pos">' + esc(app.position) + "</div>" +
           '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
+          (app.note ? '<div class="text-small app-note' + (cur === "已挂" ? " note-rejected" : "") + '">' + esc(app.note) + "</div>" : "") +
           '<div class="kanban-actions">' +
             '<select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select>" +
             ivBtn +
@@ -725,7 +726,7 @@
         "<td>" + esc(app.position) + "</td>" +
         "<td>" + (ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : '<span class="text-small muted">—</span>') + "</td>" +
         '<td class="hide-sm">' + progCell + "</td>" +
-        '<td class="hide-sm">' + fmtDate(app.appliedAt) + "</td>" +
+        '<td class="hide-sm">' + fmtDate(app.appliedAt) + (app.note ? '<div class="text-small muted app-note">' + esc(app.note) + "</div>" : "") + "</td>" +
         '<td><select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select></td>" +
         '<td class="hide-sm">' + (o && o.updatedAt ? esc(o.updatedAt) : '<span class="text-small muted">默认</span>') + "</td>" +
         "</tr>";
