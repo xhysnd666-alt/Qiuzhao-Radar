@@ -493,7 +493,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "搜狐",
     "position": "游戏运营策划",
     "appliedAt": "2026-08-18",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -525,7 +525,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "安可创新",
     "position": "HR管培生",
     "appliedAt": "2026-08-20",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -669,7 +669,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "传音控股",
     "position": "用户研究",
     "appliedAt": "2026-08-24",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -885,6 +885,86 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "李森",
     "position": "产品经理",
     "appliedAt": "2026-09-01",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "heibaidiao",
+    "companyName": "黑白调",
+    "position": "CRM用户运营（跨境）",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "heibaidiao",
+    "companyName": "黑白调",
+    "position": "用户体验",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "nongfu",
+    "companyName": "养生堂农夫山泉",
+    "position": "人力校招生",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "midea",
+    "companyName": "美的",
+    "position": "人力资源管理-SSC",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "emdoor",
+    "companyName": "亿道",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "ecoflow",
+    "companyName": "正浩创新",
+    "position": "人才发展专员",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "metaapp",
+    "companyName": "meta app",
+    "position": "产品经理",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "leadshine",
+    "companyName": "雷赛",
+    "position": "HRBP专员",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "smoore",
+    "companyName": "思摩尔国际",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "gbits",
+    "companyName": "雷霆吉比特",
+    "position": "产品运营-MMO",
+    "appliedAt": "2026-09-04",
     "stage": "已投递",
     "note": ""
   }

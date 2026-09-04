@@ -24,7 +24,7 @@ The site is organized into four main areas: **Overview** (official company radar
 
 ### Overview (Radar Main View)
 
-- Official info for 46 key companies (internet / tech / games): industry, batch, position directions, start/end dates, and status;
+- Official info for 92 key companies (internet / tech / games / FMCG / foreign / automotive): industry, batch, position directions, start/end dates, and status;
 - **Applied companies on top**, then sorted by position priority: HR > Game Operations > Game Publishing > Game Marketing > User Research > Game Design;
 - Color-coded status badges (In Progress / Closing Soon / Opening Soon / Ended / Unverified) and batch badges (Early Batch ⚡ / Regular Batch / Supplementary) with subtle animations;
 - Countdown chips, recruitment-window progress bars, and a "Upcoming Milestones" banner (auto-aggregates deadlines within 14 days and openings within 7 days);
@@ -38,8 +38,8 @@ The site is organized into four main areas: **Overview** (official company radar
 
 ### ZhuDi Digest (Third-Party Lead Layer)
 
-- 2,380 job records + 297 referral codes (latest export 2026-08-08); search by company/position, filter by industry/batch, and hide internships;
-- The Overview automatically merges non-internship companies relevant to the target positions from this table (~27 companies), for ~73 rows in total.
+- 3,027 job records + 300 referral codes (latest export 2026-08-22); search by company/position, filter by industry/batch, and hide internships;
+- The Overview automatically merges non-internship companies relevant to the target positions from this table, so newly posted target roles flow into the overview automatically.
 
 ### Interview Library & AI Assistant
 

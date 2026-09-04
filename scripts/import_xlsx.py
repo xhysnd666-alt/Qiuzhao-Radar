@@ -125,6 +125,15 @@ COMPANY_MAP = {
     "禾赛经济": "hesai",
     "四方": "sifang",
     "李森": "lisen",
+    "黑白调": "heibaidiao",
+    "养生堂农夫山泉": "nongfu",
+    "美的": "midea",
+    "亿道": "emdoor",
+    "正浩创新": "ecoflow",
+    "meta app": "metaapp",
+    "雷赛": "leadshine",
+    "思摩尔国际": "smoore",
+    "雷霆吉比特": "gbits",
 }
 
 
@@ -284,8 +293,9 @@ def normalize_stage(raw) -> tuple:
     s = text(raw).strip()
     if not s:
         return "已投递", ""
-    if s in _KNOWN_STAGES:
-        return s, ""
+    clean = s.strip(" '\"'“‘”’")
+    if clean in _KNOWN_STAGES:
+        return clean, ""
     if "挂" in s:
         return "已挂", _normalize_date_note(s)
     if "面试" in s:

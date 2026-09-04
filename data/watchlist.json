@@ -82,5 +82,13 @@
   { "id": "sensetime", "name": "商汤科技", "url": "https://hr.sensetime.com" },
   { "id": "hesai", "name": "禾赛科技", "url": "https://kwh0jtf778.jobs.feishu.cn/229043" },
   { "id": "sifang", "name": "四方股份", "url": "https://sf-auto.zhiye.com/Campus" },
-  { "id": "lisen", "name": "李森智能", "url": "https://lisen.zhiye.com/campus/jobs" }
+  { "id": "lisen", "name": "李森智能", "url": "https://lisen.zhiye.com/campus/jobs" },
+  { "id": "heibaidiao", "name": "黑白调（傲风）", "url": "https://join.heibaidiao.com" },
+  { "id": "nongfu", "name": "养生堂农夫山泉", "url": "https://app.mokahr.com/su/ifzhmt" },
+  { "id": "midea", "name": "美的集团", "url": "https://careers.midea.com" },
+  { "id": "emdoor", "name": "亿道集团", "url": "https://emdoor1.zhiye.com" },
+  { "id": "ecoflow", "name": "正浩创新（EcoFlow）", "url": "https://jobs.ecoflow.com/602892" },
+  { "id": "metaapp", "name": "MetaApp", "url": "https://meta.jobs.feishu.cn/140297" },
+  { "id": "leadshine", "name": "雷赛智能", "url": "https://www.leisai.com" },
+  { "id": "smoore", "name": "思摩尔国际", "url": "https://careers.smooretech.com" }
 ]
