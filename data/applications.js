@@ -813,7 +813,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "库洛",
     "position": "用户研究",
     "appliedAt": "2026-08-27",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
