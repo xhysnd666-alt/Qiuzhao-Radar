@@ -464,14 +464,29 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 .kanban-card:hover { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(31, 45, 61, 0.10); }
 .kanban-card.stage-已投递 { border-left-color: var(--blue); }
 .kanban-card.stage-笔试 { border-left-color: var(--warn); }
-.kanban-card.stage-面试 { border-left-color: #9333ea; }
+.kanban-card.stage-面试 {
+  border-left-color: #9333ea;
+  box-shadow: 0 0 0 1px rgba(147, 51, 234, 0.13), 0 2px 10px rgba(147, 51, 234, 0.08);
+}
 .kanban-card.stage-Offer { border-left-color: var(--green); }
 .kanban-card.stage-已挂 { border-left-color: var(--muted); }
 .kanban-col-title.stage-rejected { color: var(--red); }
 .kanban-card.card-rejected { border-left-color: var(--red); }
-.kanban-card.card-rejected .kanban-title,
-.kanban-card.card-rejected .kanban-pos { color: var(--muted); text-decoration: line-through; }
-.app-row-rejected td { color: var(--muted); }
+.kanban-card.card-rejected {
+  background: linear-gradient(180deg, rgba(228, 69, 60, 0.13), rgba(228, 69, 60, 0.04)), var(--surface2);
+  border-color: rgba(228, 69, 60, 0.24);
+}
+.kanban-card.card-rejected .kanban-title { color: var(--red); }
+.kanban-card.card-rejected .kanban-pos { color: var(--text); }
+.kanban-card.card-rejected .kanban-meta .stage-badge-已挂 { box-shadow: 0 0 0 2px rgba(228, 69, 60, 0.12); }
+tr.app-row-rejected td { background: rgba(228, 69, 60, 0.07); color: var(--text); }
+tr.app-row-rejected:hover td { background: rgba(228, 69, 60, 0.12); }
+tr.app-row-rejected td:first-child { box-shadow: inset 3px 0 0 var(--red); }
+tr.app-row-rejected td:first-child b { color: var(--red); }
+tr.app-row-interview td { background: rgba(147, 51, 234, 0.06); }
+tr.app-row-interview:hover td { background: rgba(147, 51, 234, 0.11); }
+tr.app-row-interview td:first-child { box-shadow: inset 3px 0 0 #9333ea; }
+.kanban-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
 .app-note { margin-top: 3px; font-size: 12px; line-height: 1.4; color: var(--muted); }
 .kanban-card .app-note { margin-top: 4px; }
 .note-rejected { color: var(--red); font-weight: 600; }
@@ -482,6 +497,83 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 .kanban-actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 8px; }
 .kanban-actions .app-stage-select { flex: 0 1 auto; }
 .app-progress-link { color: var(--primary); }
+.kanban-col-title { display: flex; align-items: center; gap: 6px; padding: 2px 0; }
+.col-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); display: inline-block; flex: none; }
+.col-count { font-size: 14px; font-weight: 700; }
+.kanban-col-title.stage-已投递 .col-dot { background: var(--blue); }
+.kanban-col-title.stage-笔试 .col-dot { background: var(--warn); }
+.kanban-col-title.stage-面试 { color: #9333ea; }
+.kanban-col-title.stage-面试 .col-dot {
+  background: #9333ea;
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.14);
+  animation: qm-dot 1.6s ease-in-out infinite;
+}
+.kanban-col-title.stage-Offer .col-dot { background: var(--green); }
+.kanban-col-title.stage-rejected .col-dot { background: var(--red); box-shadow: 0 0 0 3px rgba(228, 69, 60, 0.14); }
+
+.stage-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  border-radius: 999px;
+  padding: 2px 10px;
+  font-size: 12.5px;
+  font-weight: 700;
+  line-height: 1.55;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  vertical-align: 1px;
+}
+.stage-badge::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex: none; }
+.stage-badge-已投递 { background: #e8efff; color: #2157c8; border-color: rgba(37, 99, 235, 0.18); }
+.stage-badge-笔试 { background: linear-gradient(135deg, #fff4dc, #ffe4b3); color: #9a6500; border-color: rgba(168, 105, 8, 0.18); }
+.stage-badge-面试 { background: linear-gradient(135deg, #f3e8ff, #e6d4ff); color: #7c2fc7; border-color: rgba(147, 51, 234, 0.22); }
+.stage-badge-面试::before { animation: qm-dot 1.6s ease-in-out infinite; }
+.stage-badge-Offer { background: linear-gradient(135deg, #fdf3d7, #fce3ae); color: #a16207; border-color: rgba(180, 83, 9, 0.2); }
+.stage-badge-已挂 { background: linear-gradient(135deg, #ffe6e2, #ffd0c9); color: #c42b21; border-color: rgba(228, 69, 60, 0.26); }
+.stage-badge-已挂::after { content: " ✕"; font-weight: 800; }
+
+.app-stage-bar { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 10px; }
+.app-pill {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  border-radius: 999px;
+  padding: 5px 13px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+.app-pill b { font-weight: 700; }
+.app-pill::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: none; }
+.app-pill:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(31, 45, 61, 0.08); }
+.app-pill.app-pill-interview::before { background: #9333ea; box-shadow: 0 0 0 2px rgba(147, 51, 234, 0.15); }
+.app-pill.app-pill-test::before { background: var(--warn); }
+.app-pill.app-pill-offer::before { background: #b45309; }
+.app-pill.app-pill-rejected::before { background: var(--red); }
+.app-pill.app-pill-active::before { background: var(--green); }
+.app-pill.active { font-weight: 700; }
+.app-pill.active::before { background: #fff; box-shadow: none; }
+.app-pill.app-pill-all.active { background: var(--primary); color: #fff; border-color: transparent; }
+.app-pill.app-pill-active.active { background: var(--green); color: #fff; border-color: transparent; }
+.app-pill.app-pill-interview.active {
+  background: linear-gradient(135deg, #9333ea, #7c2fc7);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: 0 0 0 3px rgba(147, 51, 234, 0.18);
+}
+.app-pill.app-pill-test.active { background: linear-gradient(135deg, #d97706, #b45309); color: #fff; border-color: transparent; }
+.app-pill.app-pill-offer.active { background: linear-gradient(135deg, #d97706, #92400e); color: #fff; border-color: transparent; }
+.app-pill.app-pill-rejected.active {
+  background: linear-gradient(135deg, #e8453c, #c42b21);
+  color: #fff;
+  border-color: transparent;
+  animation: qm-urgent 1.8s ease-in-out infinite;
+}
+.app-hide-rejected { margin-left: auto; }
 
 .kanban::-webkit-scrollbar, .kanban-col::-webkit-scrollbar, .table-wrap::-webkit-scrollbar { height: 8px; width: 8px; }
 .kanban::-webkit-scrollbar-thumb, .kanban-col::-webkit-scrollbar-thumb, .table-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 999px; }
@@ -628,7 +720,8 @@ tr.row-clue td { background: rgba(168, 85, 247, 0.045); }
 @media (prefers-reduced-motion: reduce) {
   .view.active, #detail:not([hidden]) { animation: none; }
   .badge-warn { animation: none; }
-  .badge-urgent, .badge-live::before, .badge-soon::after, .badge-early::after, .chip-urgent, .bar-urgent, .stats .stat:nth-child(2) b { animation: none; }
+  .badge-urgent, .badge-live::before, .badge-soon::after, .badge-early::after, .chip-urgent, .bar-urgent, .stats .stat:nth-child(2) b,
+  .stage-badge-面试::before, .kanban-col-title.stage-面试 .col-dot, .app-pill.app-pill-rejected.active { animation: none; }
   .table tbody tr { animation: none; }
   .stat, .panel, .kanban-col, .btn { transition: none; }
   .stat:hover, .panel:hover, .kanban-col:hover { transform: none; box-shadow: none; }

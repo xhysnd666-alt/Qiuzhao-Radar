@@ -263,6 +263,8 @@
 
   var overviewShown = 30;
   var quickFilter = null;
+  var appStageFilter = null; // null=全部；"active"=推进中；其他=单个阶段
+  var appHideRejected = false;
 
   function activeStatuses() {
     return ["进行中", "即将截止", "即将开启"];
@@ -652,7 +654,58 @@
     renderDetail(found);
   }
 
+  function stageBadgeHtml(stage) {
+    return '<span class="stage-badge stage-badge-' + esc(stage) + '">' + esc(stage) + "</span>";
+  }
+
+  function appStageFilterHit(app) {
+    var s = stageOf(app);
+    if (appStageFilter === "active") return s !== "Offer" && s !== "已挂";
+    if (appStageFilter) return s === appStageFilter;
+    return !(appHideRejected && s === "已挂");
+  }
+
+  function appKanbanColumns() {
+    if (appStageFilter === "active") return ["已投递", "笔试", "面试"];
+    if (appStageFilter) return [appStageFilter];
+    return STAGES;
+  }
+
+  function appStageLabel(key) {
+    return key === "active" ? "推进中" : (key || "全部");
+  }
+
+  function renderAppStageBar() {
+    var bar = $("#app-stage-bar");
+    if (!bar) return;
+    var counts = { "已投递": 0, "笔试": 0, "面试": 0, "Offer": 0, "已挂": 0 };
+    var total = 0;
+    APPLICATIONS.forEach(function (a) {
+      var s = stageOf(a);
+      total++;
+      if (counts[s] !== undefined) counts[s]++;
+    });
+    var active = total - counts.Offer - counts.已挂;
+    var pills = [
+      { key: "", label: "全部", count: total, cls: "app-pill-all" },
+      { key: "active", label: "推进中", count: active, cls: "app-pill-active" },
+      { key: "面试", label: "面试", count: counts.面试, cls: "app-pill-interview" },
+      { key: "笔试", label: "笔试", count: counts.笔试, cls: "app-pill-test" },
+      { key: "Offer", label: "Offer", count: counts.Offer, cls: "app-pill-offer" },
+      { key: "已挂", label: "已挂", count: counts.已挂, cls: "app-pill-rejected" }
+    ];
+    var html = pills.map(function (p) {
+      var on = appStageFilter === (p.key || null);
+      return '<button class="app-pill ' + p.cls + (on ? " active" : "") + '" type="button" data-app-stage-filter="' +
+        esc(p.key) + '" aria-pressed="' + (on ? "true" : "false") + '">' + p.label + " <b>" + p.count + "</b></button>";
+    }).join("");
+    html += '<label class="check app-hide-rejected"><input type="checkbox" id="app-hide-rejected"' +
+      (appHideRejected ? " checked" : "") + "> 折叠已挂</label>";
+    bar.innerHTML = html;
+  }
+
   function renderApplications() {
+    renderAppStageBar();
     var cols = $("#application-cols");
     var groups = {};
     STAGES.forEach(function (s) { groups[s] = []; });
@@ -661,7 +714,10 @@
       if (!groups[st]) groups[st] = [];
       groups[st].push(app);
     });
-    cols.innerHTML = STAGES.map(function (stage) {
+    var colsToShow = appKanbanColumns().filter(function (st) {
+      return !(appHideRejected && st === "已挂" && appStageFilter !== "已挂");
+    });
+    cols.innerHTML = colsToShow.map(function (stage) {
       var items = groups[stage];
       var cards = items.map(function (app) {
         var c = companyById(app.companyId);
@@ -682,7 +738,7 @@
             '<span class="badge ' + (cur === "已挂" ? "badge-red" : "badge-muted") + '">' + (cur === "已挂" ? "已挂" : esc(c ? c.batch : "")) + "</span>" +
           "</div>" +
           '<div class="kanban-pos">' + esc(app.position) + "</div>" +
-          '<div class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</div>" +
+          '<div class="kanban-meta">' + stageBadgeHtml(cur) + '<span class="text-small muted">投递于 ' + fmtDate(app.appliedAt) + "</span></div>" +
           (app.note ? '<div class="text-small app-note' + (cur === "已挂" ? " note-rejected" : "") + '">' + esc(app.note) + "</div>" : "") +
           '<div class="kanban-actions">' +
             '<select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select>" +
@@ -691,7 +747,7 @@
           "</div>" +
           "</div>";
       }).join("");
-      return '<div class="kanban-col"><h4 class="kanban-col-title' + (stage === "已挂" ? " stage-rejected" : "") + '">' + stage + "（" + items.length + "）</h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
+      return '<div class="kanban-col"><h4 class="kanban-col-title' + (stage === "已挂" ? " stage-rejected" : "") + (stage === "面试" ? " stage-interview" : "") + '"><span class="col-dot"></span>' + stage + ' <b class="col-count">' + items.length + "</b></h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
     }).join("");
 
     var summary = $("#app-summary");
@@ -701,14 +757,17 @@
         var s = stageOf(a);
         return s !== "Offer" && s !== "已挂";
       }).length;
-      summary.innerHTML = "共 " + total + " 条投递 · 推进中 " + active + " · Offer " + groups["Offer"].length +
-        ' · <span class="rejected-sum">已挂 ' + groups["已挂"].length + "</span>" +
-        '<div class="text-small muted">点「官网查进度」直达公司官网，登录后进入「投递记录 / 我的投递」查看实时状态</div>';
+      var shown = APPLICATIONS.filter(appStageFilterHit).length;
+      summary.innerHTML = "共 " + total + " 条投递 · 当前显示 " + shown + " 条" +
+        (appStageFilter ? " · 只看「" + appStageLabel(appStageFilter) + "」" : "") +
+        (appHideRejected && appStageFilter !== "已挂" ? " · 已折叠已挂" : "") +
+        '<div class="text-small muted">点胶囊按阶段查看 · 下拉框改阶段 · 「官网查进度」直达官网投递记录页</div>';
     }
 
     var tbody = $("#application-table-rows");
     if (!tbody) return;
-    tbody.innerHTML = APPLICATIONS.map(function (app) {
+    var filtered = APPLICATIONS.filter(appStageFilterHit);
+    tbody.innerHTML = filtered.map(function (app) {
       var c = companyById(app.companyId);
       var key = appKey(app);
       var cur = stageOf(app);
@@ -721,8 +780,9 @@
       var opts = ["已投递", "笔试", "面试", "Offer", "已挂"].map(function (s) {
         return '<option' + (cur === s ? " selected" : "") + ">" + s + "</option>";
       }).join("");
-      return '<tr class="' + (cur === "已挂" ? "app-row-rejected" : "") + '">' +
-        "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b></td>" +
+      var rowCls = cur === "已挂" ? "app-row-rejected" : (cur === "面试" ? "app-row-interview" : "");
+      return '<tr class="' + rowCls + '">' +
+        "<td><b>" + esc(app.companyName || (c && c.name) || "未知公司") + "</b> " + stageBadgeHtml(cur) + "</td>" +
         "<td>" + esc(app.position) + "</td>" +
         "<td>" + (ivCount ? '<button class="btn btn-ghost btn-iv" type="button" data-iv-company="' + esc(c.name) + '">面经 ' + ivCount + "</button>" : '<span class="text-small muted">—</span>') + "</td>" +
         '<td class="hide-sm">' + progCell + "</td>" +
@@ -730,7 +790,7 @@
         '<td><select class="select app-stage-select" data-key="' + esc(key) + '" aria-label="' + esc(app.position) + ' 的阶段">' + opts + "</select></td>" +
         '<td class="hide-sm">' + (o && o.updatedAt ? esc(o.updatedAt) : '<span class="text-small muted">默认</span>') + "</td>" +
         "</tr>";
-    }).join("") || '<tr><td colspan="7" class="empty-cell">暂无投递记录</td></tr>';
+    }).join("") || '<tr><td colspan="7" class="empty-cell">暂无符合条件的投递</td></tr>';
   }
 
   function weekdayCn(dateStr) {
@@ -1253,6 +1313,23 @@
         if (tl) tl.hidden = v !== "timeline";
       });
     });
+
+    var appStageBar = $("#app-stage-bar");
+    if (appStageBar) {
+      appStageBar.addEventListener("click", function (e) {
+        var btn = e.target && e.target.closest ? e.target.closest("button[data-app-stage-filter]") : null;
+        if (!btn) return;
+        var v = btn.getAttribute("data-app-stage-filter");
+        appStageFilter = v === "" ? null : v;
+        renderApplications();
+      });
+      appStageBar.addEventListener("change", function (e) {
+        var ck = e.target && e.target.id === "app-hide-rejected" ? e.target : null;
+        if (!ck) return;
+        appHideRejected = ck.checked;
+        renderApplications();
+      });
+    }
 
     var resetBtn = $("#reset-progress");
     if (resetBtn) resetBtn.addEventListener("click", function () {
