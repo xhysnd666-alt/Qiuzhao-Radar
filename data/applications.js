@@ -125,7 +125,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "拼多多",
     "position": "HR管培生",
     "appliedAt": "2026-08-10",
-    "stage": "已投递",
+    "stage": "面试",
     "note": ""
   },
   {
@@ -965,6 +965,46 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "雷霆吉比特",
     "position": "产品运营-MMO",
     "appliedAt": "2026-09-04",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tcl",
+    "companyName": "TCL",
+    "position": "海外用户产品经理",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tcl",
+    "companyName": "TCL",
+    "position": "人力资源类",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "funplus",
+    "companyName": "funplus",
+    "position": "用户运营",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "funplus",
+    "companyName": "funplus",
+    "position": "用户研究",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "tuhu",
+    "companyName": "途虎养车",
+    "position": "产品运营",
+    "appliedAt": "2026-09-07",
     "stage": "已投递",
     "note": ""
   }

@@ -90,5 +90,8 @@
   { "id": "ecoflow", "name": "正浩创新（EcoFlow）", "url": "https://jobs.ecoflow.com/602892" },
   { "id": "metaapp", "name": "MetaApp", "url": "https://meta.jobs.feishu.cn/140297" },
   { "id": "leadshine", "name": "雷赛智能", "url": "https://www.leisai.com" },
-  { "id": "smoore", "name": "思摩尔国际", "url": "https://careers.smooretech.com" }
+  { "id": "smoore", "name": "思摩尔国际", "url": "https://careers.smooretech.com" },
+  { "id": "tcl", "name": "TCL", "url": "https://zhaopin.tcl.com/industries" },
+  { "id": "funplus", "name": "趣加（FunPlus）", "url": "https://campus.funplus.com.cn" },
+  { "id": "tuhu", "name": "途虎养车", "url": "https://app.mokahr.com/campus_apply/tuhu/28398" }
 ]

@@ -134,6 +134,9 @@ COMPANY_MAP = {
     "雷赛": "leadshine",
     "思摩尔国际": "smoore",
     "雷霆吉比特": "gbits",
+    "TCL": "tcl",
+    "funplus": "funplus",
+    "途虎养车": "tuhu",
 }
 
 
