@@ -749,6 +749,26 @@
   function renderScheduleTimeline() {
     var wrap = $("#application-timeline");
     if (!wrap) return;
+    var now = new Date();
+    function scheduleEventEnd(e) {
+      var m = (e.time || "").match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);
+      var hh, mm;
+      if (m) {
+        hh = parseInt(m[3], 10);
+        mm = parseInt(m[4], 10);
+      } else {
+        hh = 23;
+        mm = 59;
+      }
+      return new Date(e.date + "T" + String(hh).padStart(2, "0") + ":" + String(mm).padStart(2, "0") + ":00");
+    }
+    function scheduleStatus(e) {
+      var st = e.status || "待参加";
+      if ((st === "待参加" || st === "") && String(e.type || "").indexOf("面") > -1 && now >= scheduleEventEnd(e)) {
+        return "已参加";
+      }
+      return st;
+    }
     var events = (SCHEDULE.events || []).slice().sort(function (a, b) {
       return (a.date + " " + (a.time || "")).localeCompare(b.date + " " + (b.time || ""));
     });
@@ -778,8 +798,8 @@
               ? '<span class="timeline-flag flag-past">' + Math.abs(diff) + "天前</span>"
               : "";
       var items = groups[date].map(function (e) {
-        var st = e.status || "待参加";
-        var stCls = st === "已完成" || st === "已结束" ? "badge-done" : "badge-wait";
+        var st = scheduleStatus(e);
+        var stCls = st === "已完成" || st === "已结束" || st === "已参加" ? "badge-done" : "badge-wait";
         return '<div class="timeline-item' + (past ? " is-past" : "") + '">' +
           '<div class="timeline-item-head">' +
             '<span class="badge ' + scheduleTypeClass(e.type) + '">' + esc(e.type) + "</span>" +

@@ -8,7 +8,8 @@
 //   position: 可选岗位名
 //   location: 可选：线上 / 线下地点
 //   note:    可选备注
-//   status:  待参加 / 已完成 / 已结束
+//   status:  待参加 / 已参加 / 已完成 / 已结束
+//            （面试类日程过时后页面会自动显示「已参加」，无需手动改）
 window.QIUZHAO_SCHEDULE = {
   updatedAt: "2026-09-07",
   events: [
@@ -21,7 +22,7 @@ window.QIUZHAO_SCHEDULE = {
       position: "产品经理",
       location: "线上（视频）",
       note: "视频初试",
-      status: "待参加"
+      status: "已参加"
     },
     {
       id: "sch-002",
