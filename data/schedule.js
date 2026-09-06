@@ -10,7 +10,7 @@
 //   note:    可选备注
 //   status:  待参加 / 已完成 / 已结束
 window.QIUZHAO_SCHEDULE = {
-  updatedAt: "2026-09-02",
+  updatedAt: "2026-09-07",
   events: [
     {
       id: "sch-001",
@@ -21,6 +21,17 @@ window.QIUZHAO_SCHEDULE = {
       position: "产品经理",
       location: "线上（视频）",
       note: "视频初试",
+      status: "待参加"
+    },
+    {
+      id: "sch-002",
+      date: "2026-09-10",
+      time: "11:00-11:30",
+      type: "面试",
+      company: "拼多多",
+      position: "HR管培生",
+      location: "",
+      note: "",
       status: "待参加"
     }
   ]
