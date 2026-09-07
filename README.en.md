@@ -24,7 +24,7 @@ The site is organized into four main areas: **Overview** (official company radar
 
 ### Overview (Radar Main View)
 
-- Official info for 95 key companies (internet / tech / games / FMCG / foreign / automotive): industry, batch, position directions, start/end dates, and status;
+- Official info for 98 key companies (internet / tech / games / FMCG / foreign / automotive): industry, batch, position directions, start/end dates, and status;
 - **Applied companies on top**, then sorted by position priority: HR > Game Operations > Game Publishing > Game Marketing > User Research > Game Design;
 - Color-coded status badges (In Progress / Closing Soon / Opening Soon / Ended / Unverified) and batch badges (Early Batch ⚡ / Regular Batch / Supplementary) with subtle animations;
 - Countdown chips, recruitment-window progress bars, and a "Upcoming Milestones" banner (auto-aggregates deadlines within 14 days and openings within 7 days);

@@ -93,5 +93,8 @@
   { "id": "smoore", "name": "思摩尔国际", "url": "https://careers.smooretech.com" },
   { "id": "tcl", "name": "TCL", "url": "https://zhaopin.tcl.com/industries" },
   { "id": "funplus", "name": "趣加（FunPlus）", "url": "https://campus.funplus.com.cn" },
-  { "id": "tuhu", "name": "途虎养车", "url": "https://app.mokahr.com/campus_apply/tuhu/28398" }
+  { "id": "tuhu", "name": "途虎养车", "url": "https://app.mokahr.com/campus_apply/tuhu/28398" },
+  { "id": "ruijie", "name": "锐捷网络", "url": "https://www.ruijie.com.cn/campus-recruiting/" },
+  { "id": "qishi", "name": "骑士集团（探途网络）", "url": "https://app.mokahr.com/campus_apply/black-unique/29232" },
+  { "id": "hollyland", "name": "猛玛（HOLLYLAND·昊一源）", "url": "https://hollyland.zhiye.com" }
 ]

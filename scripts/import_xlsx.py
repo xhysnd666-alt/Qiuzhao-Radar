@@ -137,6 +137,9 @@ COMPANY_MAP = {
     "TCL": "tcl",
     "funplus": "funplus",
     "途虎养车": "tuhu",
+    "锐捷": "ruijie",
+    "骑士集团": "qishi",
+    "HOLLYLAND猛玛": "hollyland",
 }
 
 

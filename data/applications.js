@@ -1007,5 +1007,29 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-09-07",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "ruijie",
+    "companyName": "锐捷",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "qishi",
+    "companyName": "骑士集团",
+    "position": "HR管培生",
+    "appliedAt": "2026-09-07",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "hollyland",
+    "companyName": "HOLLYLAND猛玛",
+    "position": "海外社群运营管培生",
+    "appliedAt": "2026-09-08",
+    "stage": "已投递",
+    "note": ""
   }
 ];
