@@ -11,7 +11,7 @@
 //   status:  待参加 / 已参加 / 已完成 / 已结束
 //            （面试类日程过时后页面会自动显示「已参加」，无需手动改）
 window.QIUZHAO_SCHEDULE = {
-  updatedAt: "2026-09-07",
+  updatedAt: "2026-09-09",
   events: [
     {
       id: "sch-001",
@@ -33,6 +33,17 @@ window.QIUZHAO_SCHEDULE = {
       position: "HR管培生",
       location: "",
       note: "",
+      status: "待参加"
+    },
+    {
+      id: "sch-003",
+      date: "2026-09-15",
+      time: "14:40 起",
+      type: "面试",
+      company: "网易游戏（互娱）",
+      position: "游戏用户运营",
+      location: "远程视频面试",
+      note: "面试官叫号后生成面试链接，请提前留意消息通知",
       status: "待参加"
     }
   ]
