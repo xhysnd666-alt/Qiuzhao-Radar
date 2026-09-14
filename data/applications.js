@@ -77,8 +77,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "网易互娱",
     "position": "用户运营",
     "appliedAt": "2026-08-07",
-    "stage": "已投递",
-    "note": ""
+    "stage": "面试",
+    "note": "9/15 14:40 远程视频面试（Excel 面试列待补填）"
   },
   {
     "companyId": "jd",
@@ -1013,7 +1013,7 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "锐捷",
     "position": "人力资源专员",
     "appliedAt": "2026-09-07",
-    "stage": "已投递",
+    "stage": "已挂",
     "note": ""
   },
   {
@@ -1029,6 +1029,150 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "HOLLYLAND猛玛",
     "position": "海外社群运营管培生",
     "appliedAt": "2026-09-08",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "gree",
+    "companyName": "格力",
+    "position": "人力资源",
+    "appliedAt": "2026-09-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "yotta",
+    "companyName": "友塔",
+    "position": "游戏运营管培生",
+    "appliedAt": "2026-09-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaohongshu",
+    "companyName": "小红书",
+    "position": "用户研究",
+    "appliedAt": "2026-09-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaohongshu",
+    "companyName": "小红书",
+    "position": "HR",
+    "appliedAt": "2026-09-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "xiaohongshu",
+    "companyName": "小红书",
+    "position": "IT运营项目经理",
+    "appliedAt": "2026-09-10",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "明源云",
+    "position": "人力资源岗",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "阳光保险",
+    "position": "集团AI+人力方向",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "阳光保险",
+    "position": "寿险深圳分公司人力资源方向",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "众安校园",
+    "position": "招聘专员",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "众安校园",
+    "position": "人才发展专员",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "众安校园",
+    "position": "用户运营专员",
+    "appliedAt": "2026-09-11",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "robosense",
+    "position": "HRBP",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "欣旺达",
+    "position": "人力资源 泰国",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "欣旺达",
+    "position": "人力资源 深圳",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "富特科技",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "三环集团",
+    "position": "人力资源管培生 泰国",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "康冠科技",
+    "position": "招聘专员（新媒体）",
+    "appliedAt": "2026-09-14",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "新能安",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-14",
     "stage": "已投递",
     "note": ""
   }

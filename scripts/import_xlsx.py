@@ -140,6 +140,9 @@ COMPANY_MAP = {
     "锐捷": "ruijie",
     "骑士集团": "qishi",
     "HOLLYLAND猛玛": "hollyland",
+    "小红书": "xiaohongshu",
+    "格力": "gree",
+    "友塔": "yotta",
 }
 
 
