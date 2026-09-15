@@ -51,6 +51,7 @@ COMPANY_MAP = {
     "影石": "insta360",
     "网易雷火": "netease_game",
     "网易互娱": "netease_game",
+    "网易": "netease_group",
     "鹰角": "hypergryph",
     "京东": "jd",
     "联想": "lenovo",

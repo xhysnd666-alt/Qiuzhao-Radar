@@ -1175,5 +1175,13 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-09-14",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "netease_group",
+    "companyName": "网易",
+    "position": "产品经理（人力资源方向）",
+    "appliedAt": "2026-09-15",
+    "stage": "已投递",
+    "note": ""
   }
 ];
