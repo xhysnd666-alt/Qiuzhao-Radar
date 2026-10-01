@@ -409,7 +409,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "youka",
     "companyName": "游卡",
     "position": "产品运营",
     "appliedAt": "2026-08-14",
@@ -417,7 +417,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "youka",
     "companyName": "游卡",
     "position": "AI产品经理",
     "appliedAt": "2026-08-14",
@@ -1073,7 +1073,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "mingyuan",
     "companyName": "明源云",
     "position": "人力资源岗",
     "appliedAt": "2026-09-11",
@@ -1081,7 +1081,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "sinosig",
     "companyName": "阳光保险",
     "position": "集团AI+人力方向",
     "appliedAt": "2026-09-11",
@@ -1089,7 +1089,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "sinosig",
     "companyName": "阳光保险",
     "position": "寿险深圳分公司人力资源方向",
     "appliedAt": "2026-09-11",
@@ -1097,7 +1097,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "zhongan",
     "companyName": "众安校园",
     "position": "招聘专员",
     "appliedAt": "2026-09-11",
@@ -1105,7 +1105,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "zhongan",
     "companyName": "众安校园",
     "position": "人才发展专员",
     "appliedAt": "2026-09-11",
@@ -1113,7 +1113,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "zhongan",
     "companyName": "众安校园",
     "position": "用户运营专员",
     "appliedAt": "2026-09-11",
@@ -1121,7 +1121,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "robosense",
     "companyName": "robosense",
     "position": "HRBP",
     "appliedAt": "2026-09-14",
@@ -1129,7 +1129,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "sunwoda",
     "companyName": "欣旺达",
     "position": "人力资源 泰国",
     "appliedAt": "2026-09-14",
@@ -1137,7 +1137,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "sunwoda",
     "companyName": "欣旺达",
     "position": "人力资源 深圳",
     "appliedAt": "2026-09-14",
@@ -1145,7 +1145,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "futer",
     "companyName": "富特科技",
     "position": "人力资源管培生",
     "appliedAt": "2026-09-14",
@@ -1153,7 +1153,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "cctc",
     "companyName": "三环集团",
     "position": "人力资源管培生 泰国",
     "appliedAt": "2026-09-14",
@@ -1161,7 +1161,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "ktc",
     "companyName": "康冠科技",
     "position": "招聘专员（新媒体）",
     "appliedAt": "2026-09-14",
@@ -1169,7 +1169,7 @@ window.QIUZHAO_APPLICATIONS = [
     "note": ""
   },
   {
-    "companyId": "",
+    "companyId": "ampace",
     "companyName": "新能安",
     "position": "人力资源专员",
     "appliedAt": "2026-09-14",
@@ -1181,6 +1181,150 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "网易",
     "position": "产品经理（人力资源方向）",
     "appliedAt": "2026-09-15",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "haojing",
+    "companyName": "浩鲸科技",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "fmg",
+    "companyName": "FMG 时尚动势",
+    "position": "人力资源培训生",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "manlun",
+    "companyName": "上海曼伦",
+    "position": "组织发展",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "bochu",
+    "companyName": "柏楚电子",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "lingyun",
+    "companyName": "凌云光",
+    "position": "海外管培生（英语）",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "yunlan",
+    "companyName": "云览科技",
+    "position": "音乐产品运营",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "wondershare",
+    "companyName": "万兴科技",
+    "position": "用户运营专员",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "wondershare",
+    "companyName": "万兴科技",
+    "position": "行业研究",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "wondershare",
+    "companyName": "万兴科技",
+    "position": "社媒策划",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "sany",
+    "companyName": "三一集团",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "sany",
+    "companyName": "三一集团",
+    "position": "国际营销管理专员",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "woan",
+    "companyName": "卧安机器人",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-28",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "anta",
+    "companyName": "安踏",
+    "position": "可隆人力资源岗",
+    "appliedAt": "2026-09-30",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "skechers",
+    "companyName": "斯凯奇",
+    "position": "斯凯奇中国2027届校招培训生",
+    "appliedAt": "2026-09-30",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "lens",
+    "companyName": "蓝思科技",
+    "position": "人力资源专员",
+    "appliedAt": "2026-09-30",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "ti",
+    "companyName": "德州仪器",
+    "position": "人力资源培训生项目",
+    "appliedAt": "2026-09-30",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "synear",
+    "companyName": "思念食品",
+    "position": "人力资源管培生（思创生）",
+    "appliedAt": "2026-09-30",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "medtronic",
+    "companyName": "美敦力",
+    "position": "人力资源和零售",
+    "appliedAt": "2026-09-30",
     "stage": "已投递",
     "note": ""
   }
