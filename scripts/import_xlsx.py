@@ -169,6 +169,12 @@ COMPANY_MAP = {
     "康冠科技": "ktc",
     "新能安": "ampace",
     "游卡": "youka",
+    "当纳利亚洲": "donnelley",
+    "东江控股": "dongjiang",
+    "未来一手": "weilaiyishou",
+    "雀巢": "nestle",
+    "亿滋": "mondelez",
+    "美钛中国": "meiti",
 }
 
 

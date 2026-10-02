@@ -1327,5 +1327,69 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-09-30",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "donnelley",
+    "companyName": "当纳利亚洲",
+    "position": "人力资源（深圳/东莞）",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "dongjiang",
+    "companyName": "东江控股",
+    "position": "人力资源专员",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "weilaiyishou",
+    "companyName": "未来一手",
+    "position": "用户运营管培生",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "weilaiyishou",
+    "companyName": "未来一手",
+    "position": "人力管培生",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "nestle",
+    "companyName": "雀巢",
+    "position": "广冻工厂管理培训生-HR/行政方向",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "nestle",
+    "companyName": "雀巢",
+    "position": "HR Trainee - Shanghai",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "mondelez",
+    "companyName": "亿滋",
+    "position": "人力资源部管理培训生",
+    "appliedAt": "2026-10-02",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "meiti",
+    "companyName": "美钛中国",
+    "position": "人力资源&运营",
+    "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
   }
 ];
