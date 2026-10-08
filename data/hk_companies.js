@@ -1,9 +1,9 @@
 ﻿// 秋招雷达 · 留港专区 · 香港公司官方层
-// 来源：根据「香港岗位投递.xlsx」整理；官方链接为公开渠道整理的官方站点，尚未实测，标 verified:false / 待核实
+// 来源：整理自「香港岗位投递.xlsx」；官方链接为公开渠道整理的官方站点，尚未实测，标 verified:false / 待核实
 // 字段：id / name / industry / jobType / batch / positions[] / startDate / endDate / status /
 //       visa / languages / applyUrl / careerUrl / note / source / sourceUrl / sourceLabel / verified
 window.QIUZHAO_HK_DATA = {
-  updatedAt: "2026-10-08",
+  updatedAt: "2026-10-09",
   sourceNote: "留港专区：来源以公司官方站点为准；标「待核实」表示入口/批次尚未实测确认",
   companies: [
     { id: "vocalbeats", name: "Vocalbeats", industry: "音乐/科技", jobType: "管培生MT", batch: "HR Management Trainee", positions: ["人力资源"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语", applyUrl: "https://www.vocalbeats.com", careerUrl: "https://www.vocalbeats.com", note: "HR 管培生：正式 full time，落选可转实习；官方入口待实测", source: "公开渠道整理", sourceUrl: "https://www.vocalbeats.com", sourceLabel: "Vocalbeats 官网", verified: false },
@@ -11,7 +11,8 @@ window.QIUZHAO_HK_DATA = {
     { id: "tungwah", name: "东华三院（Tung Wah Group of Hospitals）", industry: "医疗/社福", jobType: "全职", batch: "人力资源主任（福利）/ 人力资源助理", positions: ["人力资源"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.tungwah.org.hk", careerUrl: "https://www.tungwah.org.hk", note: "香港大型慈善机构；人力资源主任（福利）与人力资源助理岗位；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.tungwah.org.hk", sourceLabel: "东华三院官网", verified: false },
     { id: "michaelpage", name: "Michael Page", industry: "猎头/招聘", jobType: "猎头顾问", batch: "Recruitment Consultant (Intern)", positions: ["猎头顾问"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语", applyUrl: "https://www.michaelpage.com.hk", careerUrl: "https://www.michaelpage.com.hk", note: "国际猎头公司香港办公室；Recruitment Consultant 实习岗位；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.michaelpage.com.hk", sourceLabel: "Michael Page 香港官网", verified: false },
     { id: "teach4hk", name: "Teach For Hong Kong（TFHK）", industry: "教育/NGO", jobType: "全职", batch: "Fellowship Program", positions: ["教育项目"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.teach4hk.org", careerUrl: "https://www.teach4hk.org", note: "两年制 Fellowship 教育项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.teach4hk.org", sourceLabel: "Teach For Hong Kong 官网", verified: false },
-    { id: "hktvmall", name: "HKTVmall（香港科技探索）", industry: "电商/科技", jobType: "管培生MT", batch: "Management Trainee / Graduate Trainee", positions: ["管理培训生"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.hktv.com.hk", careerUrl: "https://www.hktv.com.hk", note: "香港电商平台；Management Trainee 与 Graduate Trainee 项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.hktv.com.hk", sourceLabel: "HKTVmall 官网", verified: false }
+    { id: "hktvmall", name: "HKTVmall（香港科技探索）", industry: "电商/科技", jobType: "管培生MT", batch: "Management Trainee / Graduate Trainee", positions: ["管理培训生"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.hktv.com.hk", careerUrl: "https://www.hktv.com.hk", note: "香港电商平台；Management Trainee 与 Graduate Trainee 项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.hktv.com.hk", sourceLabel: "HKTVmall 官网", verified: false },
+    { id: "sunlife", name: "Sun Life 永明金融", industry: "金融/保险", jobType: "管培生MT", batch: "FLAME Management Trainee Program", positions: ["管理培训生"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.sunlife.com.hk", careerUrl: "https://www.sunlife.com.hk", note: "FLAME 管理培训生项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.sunlife.com.hk", sourceLabel: "Sun Life 香港官网", verified: false }
   ],
   reviewQueue: []
 };
