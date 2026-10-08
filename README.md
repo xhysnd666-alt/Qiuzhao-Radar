@@ -95,6 +95,12 @@
     scripts/              导入、检测、校验脚本
     .github/workflows/    Pages 部署、每日检测、飞书同步
 
+## 一键复刻（Handout）
+
+想给同学 / 朋友复刻一套？看 [`HANDOUT.md`](HANDOUT.md)（English: [`HANDOUT.en.md`](HANDOUT.en.md)）。
+Windows 一行命令：
+
+    irm https://raw.githubusercontent.com/xhysnd666-alt/Qiuzhao-Radar/main/setup.ps1 | iex
 ## 快速开始
 
     git clone https://github.com/xhysnd666-alt/Qiuzhao-Radar.git
