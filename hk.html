@@ -1,0 +1,257 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>秋招雷达 · 留港专区</title>
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .hk-hero { display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; justify-content:space-between; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin-bottom:12px; }
+  .hk-hero h1 { margin:0; font-size:19px; font-weight:600; }
+  .hk-tabs { display:flex; gap:8px; margin-bottom:12px; }
+  .hk-tab { border:1px solid var(--border); background:var(--surface); color:var(--muted); border-radius:999px; padding:6px 16px; font-size:14px; cursor:pointer; }
+  .hk-tab.active { background:var(--primary); border-color:transparent; color:#fff; font-weight:600; }
+  .hk-view { display:none; }
+  .hk-view.active { display:block; }
+  .hk-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:12px; }
+  .hk-stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; }
+  .hk-stat b { display:block; font-size:20px; }
+  .hk-stat span { color:var(--muted); font-size:13px; }
+  .visa-badge { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:2px 10px; font-size:12.5px; font-weight:600; border:1px solid transparent; white-space:nowrap; }
+  .visa-赞助 { background:#e2f7f0; color:#0f9d6e; }
+  .visa-IANG友好 { background:#e8efff; color:#2157c8; }
+  .visa-需自带工作权 { background:#fbf0dc; color:#a86908; }
+  .visa-待核实 { background:var(--surface2); color:var(--muted); border-style:dashed; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-text">留港专区</span><span class="brand-year">HK</span></div>
+    <div class="head-right"><a class="btn btn-ghost" href="index.html">← 返回秋招雷达</a></div>
+  </header>
+
+  <div class="hk-hero">
+    <div>
+      <h1>香港求职 · 公司总览</h1>
+      <div class="text-small muted">猎头 / HR / 管培生 MT / Graduate Trainee / 暑期·冬季实习 · 官方入口优先，未核实字段标「待核实」</div>
+    </div>
+    <div class="text-small muted" id="hk-updated"></div>
+  </div>
+
+  <div class="hk-tabs" role="tablist">
+    <button class="hk-tab active" type="button" data-hk-view="companies">香港总览</button>
+    <button class="hk-tab" type="button" data-hk-view="apps">我的港投</button>
+  </div>
+
+  <section class="hk-view active" data-hk-panel="companies">
+    <div class="filters">
+      <input class="input" id="hk-search" type="search" placeholder="搜索公司 / 项目 / 岗位…">
+      <select class="select" id="hk-jobtype"></select>
+      <select class="select" id="hk-visa"></select>
+      <select class="select" id="hk-status"></select>
+    </div>
+    <div class="hk-stats" id="hk-stats"></div>
+    <div class="table-wrap">
+      <table class="table">
+        <thead><tr><th>公司</th><th>项目 / 岗位方向</th><th>类型</th><th>签证支持</th><th class="hide-sm">语言</th><th class="hide-sm">截止</th><th>状态</th><th></th></tr></thead>
+        <tbody id="hk-rows"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="hk-view" data-hk-panel="apps">
+    <div class="app-toolbar">
+      <div class="seg" role="group">
+        <button class="seg-btn" type="button" data-hk-app-view="kanban" aria-selected="true">看板</button>
+        <button class="seg-btn" type="button" data-hk-app-view="table" aria-selected="false">表格</button>
+        <button class="seg-btn" type="button" data-hk-app-view="timeline" aria-selected="false">时间线</button>
+      </div>
+      <div class="text-small muted" id="hk-app-summary"></div>
+    </div>
+    <div class="kanban" id="hk-app-cols"></div>
+    <div class="table-wrap" id="hk-app-table" hidden>
+      <table class="table">
+        <thead><tr><th>公司</th><th>岗位</th><th>类型</th><th class="hide-sm">投递时间</th><th>阶段</th><th class="hide-sm">备注</th></tr></thead>
+        <tbody id="hk-app-rows"></tbody>
+      </table>
+    </div>
+    <div class="timeline-wrap" id="hk-timeline" hidden></div>
+  </section>
+
+  <footer class="foot muted text-small">留港专区：数据以官方来源为准；点「投递」直达官方页面。</footer>
+</div>
+
+<script src="data/hk_companies.js"></script>
+<script src="data/hk_applications.js"></script>
+<script src="data/hk_schedule.js"></script>
+<script>
+(function () {
+  "use strict";
+  var DATA = window.QIUZHAO_HK_DATA || { companies: [] };
+  var APPS = window.QIUZHAO_HK_APPLICATIONS || [];
+  var SCHEDULE = window.QIUZHAO_HK_SCHEDULE || { events: [] };
+  var COMPANIES = DATA.companies || [];
+  var STAGES = ["已投递", "笔试", "面试", "Offer", "已挂"];
+  var JOB_TYPES = ["全职", "管培生MT", "毕业培训生", "暑期实习", "冬季实习", "普通实习", "猎头顾问"];
+  var VISAS = ["赞助", "IANG友好", "需自带工作权", "待核实"];
+  var STATUSES = ["进行中", "即将截止", "即将开启", "未开始", "已结束", "待核实"];
+  function $(s) { return document.querySelector(s); }
+  function esc(s) { return String(s == null ? "" : s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;"); }
+  function isUrl(u) { return typeof u === "string" && /^https?:/i.test(u); }
+  function daysUntil(s) { if (!s) return null; var t = new Date(s + "T00:00:00"); var n = new Date(); n.setHours(0, 0, 0, 0); return Math.round((t - n) / 86400000); }
+  function fmtDate(s) { if (!s) return "待定"; var p = String(s).split("-"); return p.length === 3 ? parseInt(p[1], 10) + "/" + parseInt(p[2], 10) : s; }
+  function weekdayCn(s) { var d = new Date(s + "T00:00:00"); return ["周日", "周一", "周二", "周三", "周四", "周五", "周六"][d.getDay()] || ""; }
+  function stageOf(a) { return a.stage || "已投递"; }
+  function appsOf(id) { return APPS.filter(function (a) { return a.companyId === id; }); }
+  function stageBadge(st) { return '<span class="stage-badge stage-badge-' + esc(st) + '">' + esc(st) + "</span>"; }
+  function visaBadge(v) { var t = v || "待核实"; return '<span class="visa-badge visa-' + esc(t) + '">' + esc(t) + "</span>"; }
+  function statusBadge(st) {
+    var cls = { "进行中": "badge-live", "即将截止": "badge-urgent", "即将开启": "badge-soon", "未开始": "badge-wait", "已结束": "badge-done", "待核实": "badge-muted badge-dashed" }[st] || "badge-muted";
+    return '<span class="badge ' + cls + '">' + esc(st) + "</span>";
+  }
+  function fillSelect(sel, list, allLabel) {
+    if (!sel) return;
+    sel.innerHTML = '<option value="">' + allLabel + "</option>" + list.map(function (v) { return "<option>" + esc(v) + "</option>"; }).join("");
+  }
+  function renderStats() {
+    var el = $("#hk-stats");
+    if (!el) return;
+    var active = COMPANIES.filter(function (c) { return c.status === "进行中" || c.status === "即将截止"; }).length;
+    var intern = COMPANIES.filter(function (c) { return String(c.jobType || "").indexOf("实习") > -1; }).length;
+    el.innerHTML =
+      '<div class="hk-stat"><b>' + COMPANIES.length + '</b><span>收录公司</span></div>' +
+      '<div class="hk-stat"><b>' + active + '</b><span>在招 / 即将截止</span></div>' +
+      '<div class="hk-stat"><b>' + intern + '</b><span>实习类机会</span></div>' +
+      '<div class="hk-stat"><b>' + APPS.length + '</b><span>我的港投</span></div>';
+  }
+  function hit(c, q, jt, visa, st) {
+    if (q) { var s = [c.name, c.batch, c.positions, c.industry, c.note].join(" ").toLowerCase(); if (s.indexOf(q) === -1) return false; }
+    if (jt && c.jobType !== jt) return false;
+    if (visa && (c.visa || "待核实") !== visa) return false;
+    if (st && c.status !== st) return false;
+    return true;
+  }
+  function renderOverview() {
+    var tbody = $("#hk-rows");
+    if (!tbody) return;
+    var q = ($("#hk-search") && $("#hk-search").value || "").trim().toLowerCase();
+    var jt = $("#hk-jobtype") ? $("#hk-jobtype").value : "";
+    var visa = $("#hk-visa") ? $("#hk-visa").value : "";
+    var st = $("#hk-status") ? $("#hk-status").value : "";
+    var list = COMPANIES.filter(function (c) { return hit(c, q, jt, visa, st); });
+    if (!list.length) {
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-cell">' + (COMPANIES.length ? "没有符合条件的公司，换个筛选试试" : "还没有香港公司的数据 —— 把公司/岗位发我，或按 data/hk_companies.js 的字段注释手动添加") + "</td></tr>";
+    } else {
+      tbody.innerHTML = list.map(function (c) {
+        var apps = appsOf(c.id);
+        var links = (isUrl(c.applyUrl) ? '<a class="btn btn-ghost" href="' + esc(c.applyUrl) + '" target="_blank" rel="noopener">投递</a>' : "") +
+          (isUrl(c.careerUrl) && c.careerUrl !== c.applyUrl ? '<a class="btn btn-ghost" href="' + esc(c.careerUrl) + '" target="_blank" rel="noopener">官网</a>' : "");
+        var d = daysUntil(c.endDate);
+        var deadline = fmtDate(c.endDate) + (d !== null ? (d < 0 ? ' <span class="chip chip-done">已截止</span>' : (d <= 7 ? ' <span class="chip chip-urgent">剩 ' + d + ' 天</span>' : "")) : "");
+        return "<tr>" +
+          "<td><b>" + esc(c.name) + "</b>" + (apps.length ? ' <span class="badge badge-ok">已投 ' + apps.length + "</span>" : "") + (c.note ? '<div class="text-small muted">' + esc(c.note) + "</div>" : "") + "</td>" +
+          "<td>" + esc(c.batch || "") + (c.positions && c.positions.length ? '<div class="text-small muted">' + esc(c.positions.join(" / ")) + "</div>" : "") + "</td>" +
+          "<td>" + esc(c.jobType || "待核实") + "</td>" +
+          "<td>" + visaBadge(c.visa) + "</td>" +
+          '<td class="hide-sm">' + esc(c.languages || "待核实") + "</td>" +
+          '<td class="hide-sm">' + deadline + "</td>" +
+          "<td>" + statusBadge(c.status || "待核实") + "</td>" +
+          "<td>" + links + "</td>" +
+          "</tr>";
+      }).join("");
+    }
+    renderStats();
+  }
+  function renderApps() {
+    var cols = $("#hk-app-cols"), rows = $("#hk-app-rows"), summary = $("#hk-app-summary");
+    var groups = {};
+    STAGES.forEach(function (s) { groups[s] = []; });
+    APPS.forEach(function (a) { var s = stageOf(a); if (!groups[s]) groups[s] = []; groups[s].push(a); });
+    if (cols) {
+      cols.innerHTML = STAGES.map(function (stage) {
+        var items = groups[stage] || [];
+        var cards = items.map(function (a) {
+          var meta = [a.jobType, a.note].filter(Boolean).join(" · ");
+          return '<div class="kanban-card">' +
+            '<div class="kanban-top"><span class="kanban-title">' + esc(a.companyName) + "</span>" + stageBadge(stageOf(a)) + "</div>" +
+            '<div class="kanban-pos">' + esc(a.position) + "</div>" +
+            '<div class="text-small muted">投递于 ' + esc(fmtDate(a.appliedAt)) + "</div>" +
+            (meta ? '<div class="text-small muted">' + esc(meta) + "</div>" : "") + "</div>";
+        }).join("");
+        return '<div class="kanban-col"><h4 class="kanban-col-title"><span class="col-dot"></span>' + stage + ' <b class="col-count">' + items.length + "</b></h4>" + (cards || '<div class="text-small muted">暂无</div>') + "</div>";
+      }).join("");
+    }
+    if (rows) {
+      rows.innerHTML = APPS.length ? APPS.map(function (a) {
+        return "<tr><td><b>" + esc(a.companyName) + "</b></td><td>" + esc(a.position) + "</td><td>" + esc(a.jobType || "—") + '</td><td class="hide-sm">' + esc(fmtDate(a.appliedAt)) + "</td><td>" + stageBadge(stageOf(a)) + '</td><td class="hide-sm text-small muted">' + esc(a.note || "") + "</td></tr>";
+      }).join("") : '<tr><td colspan="6" class="empty-cell">还没有港投记录 —— 把「香港投递.xlsx」发我，我导入到这里</td></tr>';
+    }
+    if (summary) {
+      var active = APPS.filter(function (a) { var s = stageOf(a); return s !== "Offer" && s !== "已挂"; }).length;
+      summary.innerHTML = "共 " + APPS.length + " 条港投 · 推进中 " + active + " · Offer " + (groups["Offer"] || []).length + " · 已挂 " + (groups["已挂"] || []).length;
+    }
+    renderTimeline();
+  }
+  function renderTimeline() {
+    var wrap = $("#hk-timeline");
+    if (!wrap) return;
+    var events = (SCHEDULE.events || []).slice().sort(function (a, b) { return (a.date + " " + (a.time || "")).localeCompare(b.date + " " + (b.time || "")); });
+    if (!events.length) {
+      wrap.innerHTML = '<div class="empty-box timeline-empty"><div class="timeline-empty-title">还没有香港笔试 / 面试安排</div><div class="text-small muted">收到笔试、面试或测评通知后把时间发给我，我会同步到这里</div></div>';
+      return;
+    }
+    var now = new Date();
+    function endOf(e) {
+      var m = (e.time || "").match(/(\d{1,2}):(\d{2})\s*-\s*(\d{1,2}):(\d{2})/);
+      var hh = m ? parseInt(m[3], 10) : 23, mm = m ? parseInt(m[4], 10) : 59;
+      return new Date(e.date + "T" + String(hh).padStart(2, "0") + ":" + String(mm).padStart(2, "0") + ":00");
+    }
+    function st(e) {
+      var s = e.status || "待参加";
+      if ((s === "待参加" || s === "") && String(e.type || "").indexOf("面") > -1 && now >= endOf(e)) return "已参加";
+      return s;
+    }
+    var groups = {};
+    events.forEach(function (e) { (groups[e.date] = groups[e.date] || []).push(e); });
+    wrap.innerHTML = '<div class="timeline">' + Object.keys(groups).sort().map(function (date) {
+      var diff = daysUntil(date);
+      var past = diff !== null && diff < 0;
+      var flag = diff === 0 ? '<span class="timeline-flag flag-today">今天</span>' : diff === 1 ? '<span class="timeline-flag flag-soon">明天</span>' : (diff !== null && diff > 1 && diff <= 7 ? '<span class="timeline-flag flag-soon">' + diff + "天后</span>" : (past ? '<span class="timeline-flag flag-past">' + Math.abs(diff) + "天前</span>" : ""));
+      var items = groups[date].map(function (e) {
+        var s = st(e);
+        var cls = (s === "已完成" || s === "已结束" || s === "已参加") ? "badge-done" : "badge-wait";
+        return '<div class="timeline-item' + (past ? " is-past" : "") + '"><div class="timeline-item-head"><span class="badge badge-primary">' + esc(e.type) + "</span><b>" + esc(e.company) + "</b>" + (e.position ? '<span class="muted text-small">' + esc(e.position) + "</span>" : "") + '<span class="badge ' + cls + '">' + esc(s) + "</span></div>" + (e.time || e.location ? '<div class="timeline-item-meta">' + (e.time ? "<span>⏰ " + esc(e.time) + "</span>" : "") + (e.location ? "<span>📍 " + esc(e.location) + "</span>" : "") + "</div>" : "") + (e.note ? '<div class="text-small muted timeline-item-note">' + esc(e.note) + "</div>" : "") + "</div>";
+      }).join("");
+      return '<div class="timeline-group' + (past ? " is-past" : "") + '"><div class="timeline-date"><span class="timeline-day">' + parseInt(date.split("-")[2], 10) + '</span><span class="timeline-month">' + parseInt(date.split("-")[1], 10) + "月 · " + weekdayCn(date) + "</span>" + flag + '</div><div class="timeline-items">' + items + "</div></div>";
+    }).join("") + "</div>";
+  }
+  fillSelect($("#hk-jobtype"), JOB_TYPES, "全部类型");
+  fillSelect($("#hk-visa"), VISAS, "全部签证支持");
+  fillSelect($("#hk-status"), STATUSES, "全部状态");
+  ["#hk-search", "#hk-jobtype", "#hk-visa", "#hk-status"].forEach(function (s) {
+    var el = $(s);
+    if (el) { el.addEventListener("input", renderOverview); el.addEventListener("change", renderOverview); }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-hk-view]"), function (b) {
+    b.addEventListener("click", function () {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-hk-view]"), function (x) { x.classList.toggle("active", x === b); });
+      Array.prototype.forEach.call(document.querySelectorAll("[data-hk-panel]"), function (p) { p.classList.toggle("active", p.getAttribute("data-hk-panel") === b.getAttribute("data-hk-view")); });
+    });
+  });
+  Array.prototype.forEach.call(document.querySelectorAll("[data-hk-app-view]"), function (b) {
+    b.addEventListener("click", function () {
+      var v = b.getAttribute("data-hk-app-view");
+      Array.prototype.forEach.call(document.querySelectorAll("[data-hk-app-view]"), function (x) { x.setAttribute("aria-selected", x === b ? "true" : "false"); });
+      $("#hk-app-cols").hidden = v !== "kanban";
+      $("#hk-app-table").hidden = v !== "table";
+      $("#hk-timeline").hidden = v !== "timeline";
+    });
+  });
+  $("#hk-updated").textContent = "数据更新：" + (DATA.updatedAt || "—");
+  renderOverview();
+  renderApps();
+})();
+</script>
+</body>
+</html>

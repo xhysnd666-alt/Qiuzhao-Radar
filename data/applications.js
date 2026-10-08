@@ -77,8 +77,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "网易互娱",
     "position": "用户运营",
     "appliedAt": "2026-08-07",
-    "stage": "面试",
-    "note": "9/15 14:40 远程视频面试（Excel 面试列待补填）"
+    "stage": "已投递",
+    "note": ""
   },
   {
     "companyId": "jd",
@@ -1389,6 +1389,54 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "美钛中国",
     "position": "人力资源&运营",
     "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "旷世集团",
+    "position": "人力资源管培生",
+    "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "ABB",
+    "position": "人力资源",
+    "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "福特汽车",
+    "position": "人力资源应届培训生 HR GT",
+    "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "雅诗兰黛",
+    "position": "人力资源",
+    "appliedAt": "2026-10-03",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "广发银行香港分行",
+    "position": "分行人力资源与综合行政类（香港）",
+    "appliedAt": "2026-10-05",
+    "stage": "已投递",
+    "note": ""
+  },
+  {
+    "companyId": "",
+    "companyName": "中国中车",
+    "position": "人力资源岗",
+    "appliedAt": "2026-10-05",
     "stage": "已投递",
     "note": ""
   }
