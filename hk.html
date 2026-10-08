@@ -6,45 +6,90 @@
 <title>秋招雷达 · 留港专区</title>
 <link rel="stylesheet" href="css/style.css">
 <style>
-  .hk-hero { display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; justify-content:space-between; background:var(--surface); border:1px solid var(--border); border-radius:14px; padding:14px 16px; margin-bottom:12px; }
-  .hk-hero h1 { margin:0; font-size:19px; font-weight:600; }
-  .hk-tabs { display:flex; gap:8px; margin-bottom:12px; }
-  .hk-tab { border:1px solid var(--border); background:var(--surface); color:var(--muted); border-radius:999px; padding:6px 16px; font-size:14px; cursor:pointer; }
-  .hk-tab.active { background:var(--primary); border-color:transparent; color:#fff; font-weight:600; }
-  .hk-view { display:none; }
-  .hk-view.active { display:block; }
-  .hk-stats { display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:12px; }
-  .hk-stat { background:var(--surface); border:1px solid var(--border); border-radius:12px; padding:10px 14px; }
-  .hk-stat b { display:block; font-size:20px; }
-  .hk-stat span { color:var(--muted); font-size:13px; }
-  .visa-badge { display:inline-flex; align-items:center; gap:5px; border-radius:999px; padding:2px 10px; font-size:12.5px; font-weight:600; border:1px solid transparent; white-space:nowrap; }
-  .visa-赞助 { background:#e2f7f0; color:#0f9d6e; }
-  .visa-IANG友好 { background:#e8efff; color:#2157c8; }
-  .visa-需自带工作权 { background:#fbf0dc; color:#a86908; }
-  .visa-待核实 { background:var(--surface2); color:var(--muted); border-style:dashed; }
+  :root { --neon-pink:#ff4fa3; --neon-cyan:#3ff0e0; --neon-amber:#ffd166; --mtr-red:#e2231a; --mtr-blue:#0075c2; --mtr-green:#00a040; --mtr-purple:#a05eb5; --mtr-orange:#f7941d; }
+  body::before { background: linear-gradient(165deg, #070b18 0%, #0f1a33 42%, #1b1233 100%); }
+  body::after {
+    background:
+      radial-gradient(680px 340px at 12% 6%, rgba(255,79,163,0.16), transparent 65%),
+      radial-gradient(560px 320px at 88% 12%, rgba(63,240,224,0.13), transparent 65%),
+      radial-gradient(820px 420px at 50% 108%, rgba(255,209,102,0.10), transparent 70%);
+  }
+  .hk-top { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.14); box-shadow: none; }
+  .hk-top .brand-text { background: linear-gradient(90deg, var(--neon-pink), var(--neon-cyan)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hk-top .brand-year { background: none; color: var(--neon-amber); -webkit-text-fill-color: currentColor; }
+  .hk-top .btn-ghost { color: #dbe4f5; border-color: rgba(255,255,255,0.22); }
+  .hk-hero { position: relative; overflow: hidden; border-radius: 16px; margin: 12px 0 14px; padding: 26px 22px 96px; background: linear-gradient(160deg, #0b1224 0%, #16203d 40%, #2a1440 100%); border: 1px solid rgba(255,255,255,0.10); }
+  .hk-neon { font-size: 34px; font-weight: 800; letter-spacing: 6px; color: #fff; text-shadow: 0 0 6px rgba(255,79,163,0.95), 0 0 18px rgba(255,79,163,0.65), 0 0 34px rgba(255,79,163,0.40); animation: hk-flicker 4.5s ease-in-out infinite; }
+  .hk-neon-en { margin-top: 6px; font-size: 12.5px; letter-spacing: 4px; color: var(--neon-cyan); text-shadow: 0 0 10px rgba(63,240,224,0.55); }
+  .hk-hero-sub { margin-top: 12px; max-width: 620px; color: #b9c6e0; font-size: 13px; line-height: 1.7; }
+  .hk-hero-meta { margin-top: 10px; font-size: 13px; color: var(--neon-amber); }
+  .hk-skyline { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 92px; }
+  .hk-window { fill: rgba(255,209,102,0.55); }
+  @keyframes hk-flicker { 0%,100% { opacity: 1; } 46% { opacity: 1; } 48% { opacity: 0.72; } 50% { opacity: 1; } 62% { opacity: 0.86; } 64% { opacity: 1; } }
+  .mtr-tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 14px; }
+  .mtr-tab { display: inline-flex; align-items: center; gap: 9px; border: 1px solid rgba(255,255,255,0.16); background: rgba(255,255,255,0.06); color: #c8d4ea; border-radius: 10px; padding: 9px 18px; font-size: 14.5px; font-weight: 600; cursor: pointer; transition: transform .15s ease, box-shadow .15s ease; }
+  .mtr-tab:hover { transform: translateY(-1px); }
+  .mtr-tab .mtr-dot { width: 11px; height: 11px; border-radius: 50%; background: var(--c, #fff); box-shadow: 0 0 0 3px color-mix(in srgb, var(--c, #fff) 25%, transparent); }
+  .mtr-tab.active { background: #ffffff; color: #0b1224; border-color: transparent; box-shadow: 0 6px 22px rgba(255,255,255,0.16); }
+  .hk-view { display: none; }
+  .hk-view.active { display: block; }
+  .mtr-line { display: flex; align-items: center; gap: 10px; margin: 4px 0 12px; }
+  .mtr-line .bar { width: 34px; height: 6px; border-radius: 3px; background: var(--c, var(--mtr-red)); }
+  .mtr-line .name { font-size: 15.5px; font-weight: 700; color: #eaf1ff; letter-spacing: .5px; }
+  .mtr-line .en { font-size: 12px; color: #93a3bf; letter-spacing: 1px; }
+  .hk-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-bottom: 12px; }
+  .hk-stat { position: relative; background: #fffdf7; border: 2px solid rgba(226,35,26,0.55); border-radius: 12px; padding: 12px 14px; box-shadow: 0 6px 18px rgba(0,0,0,0.22); }
+  .hk-stat::after { content: ""; position: absolute; right: 10px; top: 10px; width: 22px; height: 3px; background: var(--mtr-red); border-radius: 2px; }
+  .hk-stat b { display: block; font-size: 24px; font-weight: 800; color: var(--mtr-red); letter-spacing: 1px; }
+  .hk-stat span { color: #6b4a45; font-size: 12.5px; }
+  .visa-badge { display: inline-flex; align-items: center; gap: 5px; border-radius: 999px; padding: 2px 10px; font-size: 12.5px; font-weight: 600; border: 1px solid transparent; white-space: nowrap; }
+  .visa-赞助 { background: #e2f7f0; color: #0f9d6e; }
+  .visa-IANG友好 { background: #e8efff; color: #2157c8; }
+  .visa-需自带工作权 { background: #fbf0dc; color: #a86908; }
+  .visa-待核实 { background: #eef2f6; color: #556170; border-color: #dde3ea; border-style: dashed; }
+  .seg { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.18); }
+  .seg-btn { color: rgba(255,255,255,0.75); }
+  .seg-btn[aria-selected="true"] { background: #fff; color: #0b1224; box-shadow: 0 2px 8px rgba(0,0,0,0.25); }
+  .app-toolbar .text-small.muted { color: #a9b7d2; }
+  #hk-app-cols .kanban-col { border-top: 3px solid var(--mtr-blue); }
+  #hk-app-cols .kanban-col:nth-child(2) { border-top-color: var(--mtr-orange); }
+  #hk-app-cols .kanban-col:nth-child(3) { border-top-color: var(--mtr-purple); }
+  #hk-app-cols .kanban-col:nth-child(4) { border-top-color: var(--mtr-green); }
+  #hk-app-cols .kanban-col:nth-child(5) { border-top-color: var(--mtr-red); }
+  .kanban-card:has(.stage-badge-已挂) { background: repeating-linear-gradient(135deg, rgba(226,35,26,0.07) 0 8px, rgba(255,255,255,0.5) 8px 16px, rgba(0,117,194,0.07) 16px 24px); }
+  .foot.muted { color: #8b9ab6; }
+  @media (prefers-reduced-motion: reduce) { .hk-neon { animation: none; } .mtr-tab { transition: none; } }
+  @media (max-width: 640px) { .hk-neon { font-size: 26px; letter-spacing: 3px; } .hk-hero { padding-bottom: 78px; } }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="top">
-    <div class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-text">留港专区</span><span class="brand-year">HK</span></div>
+  <header class="top hk-top">
+    <div class="brand"><span class="logo" aria-hidden="true"></span><span class="brand-text">留港专区</span><span class="brand-year">HONG KONG</span></div>
     <div class="head-right"><a class="btn btn-ghost" href="index.html">← 返回秋招雷达</a></div>
   </header>
 
-  <div class="hk-hero">
-    <div>
-      <h1>香港求职 · 公司总览</h1>
-      <div class="text-small muted">猎头 / HR / 管培生 MT / Graduate Trainee / 暑期·冬季实习 · 官方入口优先，未核实字段标「待核实」</div>
-    </div>
-    <div class="text-small muted" id="hk-updated"></div>
-  </div>
+  <section class="hk-hero">
+    <div class="hk-neon">留港專區</div>
+    <div class="hk-neon-en">HONG KONG CAREER RADAR</div>
+    <div class="hk-hero-sub">猎头 · HR · 管培生 MT · Graduate Trainee · 暑期 / 冬季实习<br>官方入口优先，未核实字段标「待核实」，投递前以公司官方页面为准。</div>
+    <div class="hk-hero-meta" id="hk-updated"></div>
+    <svg class="hk-skyline" viewBox="0 0 1200 180" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,180 L0,126 L36,126 L36,98 L66,98 L66,126 L104,126 L104,74 L146,74 L146,126 L176,126 L176,104 L212,104 L212,142 L248,142 L248,62 L266,62 L266,44 L284,44 L284,62 L302,62 L302,142 L338,142 L338,112 L370,112 L370,150 L408,150 L408,92 L438,92 L438,150 L468,150 L468,122 L498,122 L498,66 L518,66 L518,46 L538,46 L538,66 L558,66 L558,122 L598,122 L598,150 L638,150 L638,102 L670,102 L670,150 L708,150 L708,82 L738,82 L738,150 L778,150 L778,122 L818,122 L818,98 L848,98 L848,122 L888,122 L888,150 L928,150 L928,72 L948,72 L948,54 L968,54 L968,72 L988,72 L988,150 L1028,150 L1028,112 L1058,112 L1058,150 L1098,150 L1098,92 L1128,92 L1128,150 L1168,150 L1168,126 L1200,126 L1200,180 Z" fill="rgba(5,9,20,0.88)"/>
+      <rect class="hk-window" x="118" y="88" width="6" height="8"/><rect class="hk-window" x="130" y="88" width="6" height="8"/>
+      <rect class="hk-window" x="418" y="106" width="6" height="8"/><rect class="hk-window" x="428" y="118" width="6" height="8"/>
+      <rect class="hk-window" x="948" y="86" width="6" height="8"/><rect class="hk-window" x="960" y="100" width="6" height="8"/>
+      <rect class="hk-window" x="258" y="76" width="5" height="7"/><rect class="hk-window" x="522" y="80" width="5" height="7"/>
+    </svg>
+  </section>
 
-  <div class="hk-tabs" role="tablist">
-    <button class="hk-tab active" type="button" data-hk-view="companies">香港总览</button>
-    <button class="hk-tab" type="button" data-hk-view="apps">我的港投</button>
+  <div class="mtr-tabs" role="tablist">
+    <button class="mtr-tab active" type="button" data-hk-view="companies" style="--c:var(--mtr-red)"><span class="mtr-dot"></span>香港总览 · HK Openings</button>
+    <button class="mtr-tab" type="button" data-hk-view="apps" style="--c:var(--mtr-blue)"><span class="mtr-dot"></span>我的港投 · My Applications</button>
   </div>
 
   <section class="hk-view active" data-hk-panel="companies">
+    <div class="mtr-line" style="--c:var(--mtr-red)"><span class="bar"></span><span class="name">香港总览</span><span class="en">HK OPENINGS</span></div>
     <div class="filters">
       <input class="input" id="hk-search" type="search" placeholder="搜索公司 / 项目 / 岗位…">
       <select class="select" id="hk-jobtype"></select>
@@ -61,6 +106,7 @@
   </section>
 
   <section class="hk-view" data-hk-panel="apps">
+    <div class="mtr-line" style="--c:var(--mtr-blue)"><span class="bar"></span><span class="name">我的港投</span><span class="en">MY APPLICATIONS</span></div>
     <div class="app-toolbar">
       <div class="seg" role="group">
         <button class="seg-btn" type="button" data-hk-app-view="kanban" aria-selected="true">看板</button>
@@ -79,12 +125,12 @@
     <div class="timeline-wrap" id="hk-timeline" hidden></div>
   </section>
 
-  <footer class="foot muted text-small">留港专区：数据以官方来源为准；点「投递」直达官方页面。</footer>
+  <footer class="foot muted text-small">留港专区 · 数据以公司官方来源为准，点「投递」直达官方页面。</footer>
 </div>
 
-<script src="data/hk_companies.js?v=1009"></script>
-<script src="data/hk_applications.js?v=1009"></script>
-<script src="data/hk_schedule.js?v=1009"></script>
+<script src="data/hk_companies.js?v=1010"></script>
+<script src="data/hk_applications.js?v=1010"></script>
+<script src="data/hk_schedule.js?v=1010"></script>
 <script>
 (function () {
   "use strict";
@@ -141,7 +187,7 @@
     var st = $("#hk-status") ? $("#hk-status").value : "";
     var list = COMPANIES.filter(function (c) { return hit(c, q, jt, visa, st); });
     if (!list.length) {
-      tbody.innerHTML = '<tr><td colspan="8" class="empty-cell">' + (COMPANIES.length ? "没有符合条件的公司，换个筛选试试" : "还没有香港公司的数据 —— 把公司/岗位发我，或按 data/hk_companies.js 的字段注释手动添加") + "</td></tr>";
+      tbody.innerHTML = '<tr><td colspan="8" class="empty-cell">' + (COMPANIES.length ? "冇符合条件嘅公司，换个筛选试下" : "仲未有香港公司数据 —— 把公司/岗位发我，我核验官方入口后写进来") + "</td></tr>";
     } else {
       tbody.innerHTML = list.map(function (c) {
         var apps = appsOf(c.id);
@@ -185,7 +231,7 @@
     if (rows) {
       rows.innerHTML = APPS.length ? APPS.map(function (a) {
         return "<tr><td><b>" + esc(a.companyName) + "</b></td><td>" + esc(a.position) + "</td><td>" + esc(a.jobType || "—") + '</td><td class="hide-sm">' + esc(fmtDate(a.appliedAt)) + "</td><td>" + stageBadge(stageOf(a)) + '</td><td class="hide-sm text-small muted">' + esc(a.note || "") + "</td></tr>";
-      }).join("") : '<tr><td colspan="6" class="empty-cell">还没有港投记录 —— 把「香港投递.xlsx」发我，我导入到这里</td></tr>';
+      }).join("") : '<tr><td colspan="6" class="empty-cell">仲未有港投记录 —— 把「香港岗位投递.xlsx」发我，我帮你整理入来</td></tr>';
     }
     if (summary) {
       var active = APPS.filter(function (a) { var s = stageOf(a); return s !== "Offer" && s !== "已挂"; }).length;
@@ -198,7 +244,7 @@
     if (!wrap) return;
     var events = (SCHEDULE.events || []).slice().sort(function (a, b) { return (a.date + " " + (a.time || "")).localeCompare(b.date + " " + (b.time || "")); });
     if (!events.length) {
-      wrap.innerHTML = '<div class="empty-box timeline-empty"><div class="timeline-empty-title">还没有香港笔试 / 面试安排</div><div class="text-small muted">收到笔试、面试或测评通知后把时间发给我，我会同步到这里</div></div>';
+      wrap.innerHTML = '<div class="empty-box timeline-empty"><div class="timeline-empty-title">仲未有香港笔试 / 面试安排</div><div class="text-small muted">收到笔试、面试或测评通知后把时间发我，我会同步到这里</div></div>';
       return;
     }
     var now = new Date();
@@ -248,7 +294,7 @@
       $("#hk-timeline").hidden = v !== "timeline";
     });
   });
-  $("#hk-updated").textContent = "数据更新：" + (DATA.updatedAt || "—");
+  $("#hk-updated").textContent = "数据更新：" + (DATA.updatedAt || "—") + " · 共 " + COMPANIES.length + " 家公司 / " + APPS.length + " 条港投";
   renderOverview();
   renderApps();
 })();
