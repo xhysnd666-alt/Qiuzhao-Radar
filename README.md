@@ -23,10 +23,10 @@
 ### 我的投递（内地）
 
 - 与桌面 `秋招简历投递.xlsx` 同步（当前 180 条），更新表格后跑一次导入脚本即可；
-- **看板 / 表格 / 时间线** 三视图：看板按「已投递 / 笔试 / 面试 / Offer / 已挂」分组，时间线集中展示笔试/面试/测评日程；
+- **看板 / 表格 / 时间线** 三视图：看板按「已投递 / 笔试 / 面试 / Offer / 已挂」分组，时间线集中展示笔试、面试、测评日程；
 - 阶段用彩色大徽章 + 整行染色：面试=紫色跳动、已挂=红色警示、Offer=金色，一眼看出重点；
 - 顶部统计胶囊可一键筛选阶段，支持「折叠已挂」；
-- 每条投递都有「官网查进度」直达链接（京东、米哈游、B站、巨人、鹰角等已配到官方「投递记录」页）；
+- 每条投递都有「官网查进度」直达链接（京东、米哈游、B站、巨人、鹰角等已配到官方投递记录页）；
 - 面试类日程过了时间会自动标「已参加」。
 
 ### 留港专区（香港）
@@ -51,14 +51,14 @@
 
 - **央国企名录**：119 家央国企与事业单位，含官方网址；
 - **信息源**：精选账号清单，分「岗位信息 / 行业面试经验」；
-- **反馈池**：面经 / 内推 / 资讯链接聚合（只存链接 + 摘要）；
+- **反馈池**：面经、内推、资讯链接聚合（只存链接 + 摘要）；
 - **待确认队列**：官网自动检测发现的变化，人工核实后才进正式数据。
 
 ## 数据政策（为什么可以信）
 
 - **L1 官方层**：`data/companies.js`、`data/hk_companies.js` — 只收录公司官网、官方招聘页、官方公众号、高校就业网发布的官方信息；未核实字段标「待核实」，不猜日期；官方入口逐一实测。
 - **L2 线索层**：`data/zhudi.js`、`data/sources.js` — 第三方整理，用来发现机会，不等于官方事实。
-- **L3 面经/反馈**：`data/interviews.js`、`feedback` — 只存链接 + 摘要，保留原文关键细节。
+- **L3 面经 / 反馈**：`data/interviews.js`、`feedback` — 只存链接 + 摘要，保留原文关键细节。
 - `data/applications.js`、`data/hk_applications.js` 由表格生成，不建议手改。
 
 ## 数据怎么更新
@@ -74,49 +74,59 @@
 
 ## 项目结构
 
-index.html            内地主页面
-hk.html               留港专区（香港）
-css/style.css         全站样式
-js/app.js             内地页面逻辑
-data/
-  companies.js        内地官方层（101 家）
-  apply_rules.js      投递次数与规则
-  applications.js     我的投递（Excel 生成）
-  zhudi.js            朱迪汇总表（线索层）
-  interviews.js       面经库与通用问题
-  ai_tips.js          AI 面试建议
-  guoqi.js            央国企名录
-  sources.js          信息源清单
-  schedule.js         内地笔试/面试时间线
-  watchlist.json      官网监控清单
-  hk_companies.js     香港官方层
-  hk_applications.js  我的港投
-  hk_schedule.js      香港时间线
-scripts/              导入、检测、校验脚本
-.github/workflows/    Pages 部署、每日检测、飞书同步
+    index.html            内地主页面
+    hk.html               留港专区（香港）
+    css/style.css         全站样式
+    js/app.js             内地页面逻辑
+    data/
+      companies.js        内地官方层（101 家）
+      apply_rules.js      投递次数与规则
+      applications.js     我的投递（Excel 生成）
+      zhudi.js            朱迪汇总表（线索层）
+      interviews.js       面经库与通用问题
+      ai_tips.js          AI 面试建议
+      guoqi.js            央国企名录
+      sources.js          信息源清单
+      schedule.js         内地笔试 / 面试时间线
+      watchlist.json      官网监控清单
+      hk_companies.js     香港官方层
+      hk_applications.js  我的港投
+      hk_schedule.js      香港时间线
+    scripts/              导入、检测、校验脚本
+    .github/workflows/    Pages 部署、每日检测、飞书同步
 
 ## 快速开始
 
-```bash
-git clone https://github.com/xhysnd666-alt/Qiuzhao-Radar.git
-cd Qiuzhao-Radar
-npx serve .        # 或直接双击 index.html
-部署：仓库 Settings → Pages → Source 选 GitHub Actions，push 到 main 后自动部署。
-自动化
-- Deploy to GitHub Pages：push 后自动部署；
-- Daily / Sync 工作流：定时检测官网变化、同步飞书多维表（需要配置 Secrets）。
-配合 Codex 使用（qiuzhao-radar skill）
-把 秋招简历投递.xlsx（或 香港岗位投递.xlsx）发给我，或用自然语言说：
+    git clone https://github.com/xhysnd666-alt/Qiuzhao-Radar.git
+    cd Qiuzhao-Radar
+    npx serve .        # 或直接双击 index.html
+
+部署：仓库 Settings → Pages → Source 选 GitHub Actions，push 到 `main` 后自动部署。
+
+## 自动化
+
+- `Deploy to GitHub Pages`：push 后自动部署；
+- `Daily / Sync` 工作流：定时检测官网变化、同步飞书多维表（需要配置 Secrets）。
+
+## 配合 Codex 使用（qiuzhao-radar skill）
+
+把 `秋招简历投递.xlsx`（或 `香港岗位投递.xlsx`）发给我，或用自然语言说：
+
 - 「跑一次今天的秋招」「更新投递表格」「帮我加公司 / 检查官网链接」
 - 「我 X 月 X 日有 XX 公司的面试」→ 自动写进时间线
 - 「把这个岗位加到留港专区」
+
 我会按「核验官方来源 → 写入数据 → 跑校验 → 提交推送」的流程处理。
-Roadmap
+
+## Roadmap
+
 - [ ] 核验留港专区 7 家公司的官方链接（当前标「待核实」）
 - [ ] 补齐内地 26 家新公司的官方校招入口
 - [ ] 留港专区扩充：银行 MT、四大、保险、更多猎头公司
 - [ ] 微信 / 浏览器通知（开岗、临近截止、面试提醒）
 - [ ] 学生反馈与面经 UGC（在站内提交）
-免责声明
+
+## 免责声明
+
 站内第三方线索（朱迪汇总、小红书、牛客等）仅作参考，不构成官方信息；
 所有岗位的开岗、截止、投递规则请以公司官方页面为准。
