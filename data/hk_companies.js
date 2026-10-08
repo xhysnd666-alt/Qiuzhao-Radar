@@ -1,33 +1,17 @@
 ﻿// 秋招雷达 · 留港专区 · 香港公司官方层
-// 数据政策：只收录官方来源（公司官网 / 官方招聘页 / 官方公众号 / 高校就业网发布的官方信息）
-// 字段说明：
-//   id         唯一英文 id（小写）
-//   name       公司名
-//   industry   行业（金融 / 专业服务 / 科技 / 快消 / 零售 / 医疗 / 咨询 / 猎头 …）
-//   jobType    岗位类型：全职 / 管培生MT / 毕业培训生 / 暑期实习 / 冬季实习 / 普通实习 / 猎头顾问
-//   batch      项目名，如 "2027 MT"、"2027 Summer Intern"
-//   positions  岗位方向数组，如 ["人力资源","猎头","管理培训生"]
-//   startDate  开放时间 "YYYY-MM-DD"，"" = 未知
-//   endDate    截止时间 "YYYY-MM-DD"，"" = 未知/滚动招聘
-//   status     进行中 / 即将截止 / 即将开启 / 未开始 / 已结束 / 待核实
-//   visa       签证支持：赞助 / IANG友好 / 需自带工作权 / 待核实
-//   languages  语言要求，如 "英语+粤语" / "英语" / "普通话"
-//   applyUrl   官方投递入口（必须 http/https）
-//   careerUrl  官方招聘主页
-//   note       一句话备注
-//   source / sourceUrl / sourceLabel  信息来源
-//   verified   true = 官方入口已实测可访问
+// 来源：根据「香港岗位投递.xlsx」整理；官方链接为公开渠道整理的官方站点，尚未实测，标 verified:false / 待核实
+// 字段：id / name / industry / jobType / batch / positions[] / startDate / endDate / status /
+//       visa / languages / applyUrl / careerUrl / note / source / sourceUrl / sourceLabel / verified
 window.QIUZHAO_HK_DATA = {
   updatedAt: "2026-10-08",
-  sourceNote: "留港专区：只收录官方来源；未核实字段标注「待核实」，投递前请以公司官方页面为准",
+  sourceNote: "留港专区：来源以公司官方站点为准；标「待核实」表示入口/批次尚未实测确认",
   companies: [
-    // 添加示例（复制到下方并取消注释）：
-    // { id: "hsbc", name: "汇丰香港", industry: "金融", jobType: "管培生MT", batch: "2027 MT",
-    //   positions: ["管理培训生", "人力资源"], startDate: "", endDate: "", status: "待核实",
-    //   visa: "IANG友好", languages: "英语+粤语",
-    //   applyUrl: "https://www.hsbc.com/careers", careerUrl: "https://www.hsbc.com/careers",
-    //   note: "示例条目", source: "官网", sourceUrl: "https://www.hsbc.com/careers",
-    //   sourceLabel: "汇丰招聘官网", verified: true }
+    { id: "vocalbeats", name: "Vocalbeats", industry: "音乐/科技", jobType: "管培生MT", batch: "HR Management Trainee", positions: ["人力资源"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语", applyUrl: "https://www.vocalbeats.com", careerUrl: "https://www.vocalbeats.com", note: "HR 管培生：正式 full time，落选可转实习；官方入口待实测", source: "公开渠道整理", sourceUrl: "https://www.vocalbeats.com", sourceLabel: "Vocalbeats 官网", verified: false },
+    { id: "kingfook", name: "景福珠宝（King Fook Holdings）", industry: "零售/珠宝", jobType: "管培生MT", batch: "Management Trainee", positions: ["管理培训生"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.kingfook.com", careerUrl: "https://www.kingfook.com", note: "港交所上市珠宝零售商（0280）；Management Trainee 项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.kingfook.com", sourceLabel: "景福珠宝官网", verified: false },
+    { id: "tungwah", name: "东华三院（Tung Wah Group of Hospitals）", industry: "医疗/社福", jobType: "全职", batch: "人力资源主任（福利）/ 人力资源助理", positions: ["人力资源"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.tungwah.org.hk", careerUrl: "https://www.tungwah.org.hk", note: "香港大型慈善机构；人力资源主任（福利）与人力资源助理岗位；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.tungwah.org.hk", sourceLabel: "东华三院官网", verified: false },
+    { id: "michaelpage", name: "Michael Page", industry: "猎头/招聘", jobType: "猎头顾问", batch: "Recruitment Consultant (Intern)", positions: ["猎头顾问"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语", applyUrl: "https://www.michaelpage.com.hk", careerUrl: "https://www.michaelpage.com.hk", note: "国际猎头公司香港办公室；Recruitment Consultant 实习岗位；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.michaelpage.com.hk", sourceLabel: "Michael Page 香港官网", verified: false },
+    { id: "teach4hk", name: "Teach For Hong Kong（TFHK）", industry: "教育/NGO", jobType: "全职", batch: "Fellowship Program", positions: ["教育项目"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.teach4hk.org", careerUrl: "https://www.teach4hk.org", note: "两年制 Fellowship 教育项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.teach4hk.org", sourceLabel: "Teach For Hong Kong 官网", verified: false },
+    { id: "hktvmall", name: "HKTVmall（香港科技探索）", industry: "电商/科技", jobType: "管培生MT", batch: "Management Trainee / Graduate Trainee", positions: ["管理培训生"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语+粤语", applyUrl: "https://www.hktv.com.hk", careerUrl: "https://www.hktv.com.hk", note: "香港电商平台；Management Trainee 与 Graduate Trainee 项目；入口待实测", source: "公开渠道整理", sourceUrl: "https://www.hktv.com.hk", sourceLabel: "HKTVmall 官网", verified: false }
   ],
   reviewQueue: []
 };
