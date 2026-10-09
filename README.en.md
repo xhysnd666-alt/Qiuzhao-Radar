@@ -1,14 +1,14 @@
-﻿# Qiuzhao Radar
+# Qiuzhao Radar
 
 > Built by an applied-psychology grad who got tired of losing track of campus recruiting, so she built a radar instead.
-> It watches 101 mainland companies plus Hong Kong, and remembers what I keep forgetting: openings, deadlines, applications, interviews.
+> It watches 102 mainland companies plus Hong Kong, and remembers what I keep forgetting: openings, deadlines, applications, interviews.
 
-> Snapshot: 101 mainland companies, 180 applications, 3,027 ZhuDi job rows / 300 referral codes; HK zone: 7 companies, 9 applications.
+> Snapshot: 102 mainland companies, 181 applications, 3,027 ZhuDi job rows / 300 referral codes; HK zone: 7 companies, 9 applications.
 > (Rejection count omitted for morale reasons.)
 
 ## What it does
 
-- **Mainland Overview** - official info for 101 companies (industry, batch, roles, dates, status); applied companies pinned on top so I can see my own battlefield; priority sort by role (HR > game ops > publishing > marketing > user research > game design); countdown chips and filters.
+- **Mainland Overview** - official info for 102 companies (industry, batch, roles, dates, status); applied companies pinned on top so I can see my own battlefield; priority sort by role (HR > game ops > publishing > marketing > user research > game design); countdown chips and filters.
 - **My Applications** - synced from the application spreadsheet (180 records) with kanban / table / timeline; colour-coded stages (interview purple, rejected red, offer gold); stage filter pills and a collapse-rejected button that is really a mental-health feature.
 - **Hong Kong Zone** (`hk.html`) - neon-harbour theme with an HK openings table (job type, visa support incl. IANG, language requirements, deadlines) and a separate HK kanban / table / timeline.
 - **ZhuDi Digest** - third-party lead layer (3,027 rows, 300 referral codes), for finding chances, not for quoting as facts.

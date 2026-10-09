@@ -175,6 +175,7 @@ COMPANY_MAP = {
     "雀巢": "nestle",
     "亿滋": "mondelez",
     "美钛中国": "meiti",
+    "宇通集团": "yutong",
 }
 
 

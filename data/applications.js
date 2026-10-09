@@ -1439,5 +1439,13 @@ window.QIUZHAO_APPLICATIONS = [
     "appliedAt": "2026-10-05",
     "stage": "已投递",
     "note": ""
+  },
+  {
+    "companyId": "yutong",
+    "companyName": "宇通集团",
+    "position": "人力管培生",
+    "appliedAt": "2026-10-09",
+    "stage": "已投递",
+    "note": ""
   }
 ];
