@@ -331,7 +331,7 @@ def _normalize_date_note(s: str) -> str:
 
 
 def normalize_stage(raw) -> tuple:
-    """Excel「面试」列 -> (stage, note)。自由文本含「挂」归为已挂并保留日期备注。"""
+    """Excel「面试」列 -> (stage, note)。支持自由文本：三面时间、笔试截止等。"""
     s = text(raw).strip()
     if not s:
         return "已投递", ""
@@ -340,9 +340,14 @@ def normalize_stage(raw) -> tuple:
         return clean, ""
     if "挂" in s:
         return "已挂", _normalize_date_note(s)
-    if "面试" in s:
+    low = s.lower()
+    if "offer" in low:
+        return "Offer", s
+    if "面试" in s or any(k in s for k in ("一面", "二面", "三面", "四面", "初面", "复面", "终面", "hr面")):
         return "面试", s
-    return s, ""
+    if "笔试" in s or "测评" in s:
+        return "笔试", s
+    return "已投递", s
 
 
 def import_zhudi() -> tuple:

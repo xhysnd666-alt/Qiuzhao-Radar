@@ -11,7 +11,7 @@
 //   status:  待参加 / 已参加 / 已完成 / 已结束
 //            （面试类日程过时后页面会自动显示「已参加」，无需手动改）
 window.QIUZHAO_SCHEDULE = {
-  updatedAt: "2026-09-09",
+  updatedAt: "2026-10-18",
   events: [
     {
       id: "sch-001",
@@ -44,6 +44,28 @@ window.QIUZHAO_SCHEDULE = {
       position: "游戏用户运营",
       location: "远程视频面试",
       note: "面试官叫号后生成面试链接，请提前留意消息通知",
+      status: "待参加"
+    },
+    {
+      id: "sch-004",
+      date: "2026-10-22",
+      time: "21:00",
+      type: "三面",
+      company: "拼多多",
+      position: "HR管培生",
+      location: "",
+      note: "来自秋招简历投递表",
+      status: "待参加"
+    },
+    {
+      id: "sch-005",
+      date: "2026-10-31",
+      time: "",
+      type: "笔试截止",
+      company: "网易（集团）",
+      position: "产品经理（人力资源方向）",
+      location: "",
+      note: "笔试需在 10/31 前完成",
       status: "待参加"
     }
   ]

@@ -126,7 +126,7 @@ window.QIUZHAO_APPLICATIONS = [
     "position": "HR管培生",
     "appliedAt": "2026-08-10",
     "stage": "面试",
-    "note": ""
+    "note": "10月22号 21：00三面"
   },
   {
     "companyId": "alibaba",
@@ -1181,8 +1181,8 @@ window.QIUZHAO_APPLICATIONS = [
     "companyName": "网易",
     "position": "产品经理（人力资源方向）",
     "appliedAt": "2026-09-15",
-    "stage": "已投递",
-    "note": ""
+    "stage": "笔试",
+    "note": "笔试 10月31号之前截至"
   },
   {
     "companyId": "haojing",
@@ -1214,7 +1214,7 @@ window.QIUZHAO_APPLICATIONS = [
     "position": "人力资源管培生",
     "appliedAt": "2026-09-28",
     "stage": "已投递",
-    "note": ""
+    "note": "美的"
   },
   {
     "companyId": "lingyun",
