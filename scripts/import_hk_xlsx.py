@@ -27,6 +27,18 @@ COMPANY_MAP = {
     "永明": "sunlife",
 }
 
+NAME_MAP = {
+    "vocalbeats": "Vocalbeats",
+    "kingfookholdingslimited景福珠宝": "景福珠宝（King Fook）",
+    "tungwahgroupofhospital": "东华三院",
+    "michaelpage": "Michael Page",
+    "teachforhongkongtfhk": "Teach For Hong Kong（TFHK）",
+    "teachforhongkong": "Teach For Hong Kong（TFHK）",
+    "hktvmall": "HKTVmall",
+    "sunlifecareers": "Sun Life 永明金融",
+    "sunlife": "Sun Life 永明金融",
+}
+
 
 def norm(s):
     return re.sub(r"[\s（）()\-_/,.]", "", str(s or "")).lower()
@@ -40,6 +52,14 @@ def company_id(name):
         if k and (k in n or n in k):
             return v
     return ""
+
+
+def display_name(name: str) -> str:
+    n = norm(name)
+    for k, v in NAME_MAP.items():
+        if n == k or (k and k in n):
+            return v
+    return str(name or "").strip()
 
 
 def to_iso(v):
@@ -87,11 +107,11 @@ def stage_of(raw):
         return "已挂"
     if "offer" in s.lower():
         return "Offer"
-    if "面试" in s:
-        return "面试"
     if "笔试" in s or "测评" in s:
         return "笔试"
-    return "已投递"
+    if s in ("已投递", "已投", "无"):
+        return "已投递"
+    return "面试"
 
 
 def main():
@@ -110,18 +130,23 @@ def main():
         if not cid:
             unmapped.add(company)
         note_type = str(r[3] or "").strip() if len(r) > 3 else ""
+        schedule_raw = str(r[4] or "").strip() if len(r) > 4 else ""
         jt = job_type(position, note_type)
-        st = stage_of(r[4] if len(r) > 4 else "")
+        st = stage_of(schedule_raw)
+        note_parts = [note_type]
+        if schedule_raw and st == "面试":
+            note_parts.append("一面：" + schedule_raw)
+        note = " · ".join([p for p in note_parts if p])
         apps.append({
             "companyId": cid,
-            "companyName": company,
+            "companyName": display_name(company),
             "position": position,
             "jobType": jt,
             "appliedAt": to_iso(r[2] if len(r) > 2 else ""),
             "stage": st,
-            "note": note_type,
+            "note": note,
         })
-        print("  - " + company + " | " + position + " | " + jt + " | " + apps[-1]["appliedAt"] + " | " + st + " | " + note_type)
+        print("  - " + apps[-1]["companyName"] + " | " + position + " | " + jt + " | " + apps[-1]["appliedAt"] + " | " + st + " | " + note)
     body = "window.QIUZHAO_HK_APPLICATIONS = " + json.dumps(apps, ensure_ascii=False, indent=2) + ";\n"
     header = "// 留港专区 · 我的港投（由「香港岗位投递.xlsx」自动生成，请勿手改）\n"
     OUT.write_text(header + body, encoding="utf-8")

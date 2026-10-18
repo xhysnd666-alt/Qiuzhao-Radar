@@ -1,9 +1,9 @@
-﻿// 秋招雷达 · 留港专区 · 香港公司官方层
+// 秋招雷达 · 留港专区 · 香港公司官方层
 // 来源：整理自「香港岗位投递.xlsx」；官方链接为公开渠道整理的官方站点，尚未实测，标 verified:false / 待核实
 // 字段：id / name / industry / jobType / batch / positions[] / startDate / endDate / status /
 //       visa / languages / applyUrl / careerUrl / note / source / sourceUrl / sourceLabel / verified
 window.QIUZHAO_HK_DATA = {
-  updatedAt: "2026-10-09",
+  updatedAt: "2026-10-18",
   sourceNote: "留港专区：来源以公司官方站点为准；标「待核实」表示入口/批次尚未实测确认",
   companies: [
     { id: "vocalbeats", name: "Vocalbeats", industry: "音乐/科技", jobType: "管培生MT", batch: "HR Management Trainee", positions: ["人力资源"], startDate: "", endDate: "", status: "待核实", visa: "待核实", languages: "英语", applyUrl: "https://www.vocalbeats.com", careerUrl: "https://www.vocalbeats.com", note: "HR 管培生：正式 full time，落选可转实习；官方入口待实测", source: "公开渠道整理", sourceUrl: "https://www.vocalbeats.com", sourceLabel: "Vocalbeats 官网", verified: false },
